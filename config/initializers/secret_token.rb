@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-BayFilmApp::Application.config.secret_key_base = 'ddaa046d58bbb44ad4aa794ccec27f83acc2eea35f68443395694ed80c9c857270f460de8f9ef49f405b3c23fe265907016f4623587901802066f62c4714511d'
+
+require 'securerandom'
+
+def secure_token
+	token_file = Rails.root.join('.secret')
+	if File.exist?(token_file)
+		#Use the existing token
+		File.read(token_file).chomp
+	else
+		#Generate new token and store it in token_file
+		token = SecureRandom.hex(64)
+		File.write(token_file, token)
+		token
+	end
+end
+BayFilmApp::Application.config.secret_key_base = secure_token
