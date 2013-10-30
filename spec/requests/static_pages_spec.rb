@@ -11,10 +11,9 @@ describe "StaticPages" do
   end
 
   describe "Contact" do
-  	it "title contains base | contact" do
-  		visit '/static_pages/contact'
-  		expect( page ).to have_title( "now is night | contact" )
-  	end
+    it "title contains base | contact" do
+      visit '/static_pages/contact'
+      expect( page ).to have_title( "ncw is night | contact" )
+    end
   end
 end
-

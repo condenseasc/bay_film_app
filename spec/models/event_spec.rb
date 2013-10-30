@@ -4,7 +4,7 @@ describe Event do
 
   describe "validation" do
 
-    let( :event ) { Event.new( title: "Breathless", time: Time.new, description: "blah blah") }
+    let( :event ) { Factorygirl.create}
     subject  { event }
 
     it { should be_valid }
