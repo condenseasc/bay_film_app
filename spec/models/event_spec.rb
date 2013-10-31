@@ -4,7 +4,7 @@ describe Event do
 
   describe "validation" do
 
-    let( :event ) { Factorygirl.create}
+    let( :event ) { FactoryGirl.create(:event) }
     subject  { event }
 
     it { should be_valid }

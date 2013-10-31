@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'haml', '~> 4.0.2'
 gem 'haml-rails', '~> 0.4'
-gem 'faker', '~> 1.1.2'
+gem 'faker', '~> 1.2.0'
 gem 'nokogiri', '~> 1.5.9'
 gem 'mechanize', '~> 2.6.0'
 

@@ -1,4 +1,7 @@
 BayFilmApp::Application.routes.draw do
+
+  resources :venues, :events
+
   get "static_pages/home"
   get "static_pages/contact"
   # The priority is based upon order of creation: first created -> highest priority.
