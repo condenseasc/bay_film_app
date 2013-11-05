@@ -1,2 +1,4 @@
-%h1 Events#index
-%p Find me in app/views/events/index.html.haml
+- content_for(:title, "events")
+
+%h1 things happening
+%ul= render @events

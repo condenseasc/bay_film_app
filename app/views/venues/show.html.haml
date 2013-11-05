@@ -1,0 +1,12 @@
+- content_for(:title, "#{@venue.name}")
+
+%ul
+  %li= @venue.name
+  %li= @venue.street_address
+  %li= @venue.city
+  %li= @venue.description
+
+%ul= render @events
+
+= link_to "see all venues", venues_path
+= link_to "see all events", events_path

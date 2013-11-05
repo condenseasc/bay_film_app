@@ -1,0 +1,10 @@
+- content_for(:title, "#{@event.title}")
+
+%ul
+  %li= @event.title
+  %li= @event.time
+  %li= @event.description
+  %li= link_to @event.venue.name, @event.venue
+
+= link_to "see all events", events_path
+= link_to "see all venues", venues_path

@@ -1,13 +1,18 @@
 require 'spec_helper'
 
 describe Event do
+  let( :event ) { FactoryGirl.build(:event) }
+  subject  { event }
+
+  it { should respond_to(:title) }
+  it { should respond_to(:time) }
+  it { should respond_to(:description) }
+  it { should respond_to(:venue) }
 
   describe "validation" do
 
-    let( :event ) { FactoryGirl.create(:event) }
-    subject  { event }
-
     it { should be_valid }
+
 
     describe "requires a title" do
       before { event.title = nil }
