@@ -12,4 +12,9 @@ FactoryGirl.define do
     street_address "3849 54th Street"
     city ["Oakland", "Berkeley", "San Francisco"].sample
   end
+
+  factory :series do
+    sequence(:title) { |n| "Films from Territory #{n}" }
+    description "Lorem ipsum"
+  end
 end

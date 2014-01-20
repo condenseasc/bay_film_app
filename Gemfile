@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 gem 'pg', '~> 0.16.0'
+gem 'angularjs-rails', '~> 1.2.7'
 
 group :development, :test do
 	gem 'rspec-rails', '~> 2.14.0'
@@ -21,7 +22,8 @@ group :test do
 	gem 'libnotify', '~> 0.8.0'
 end
 
-gem 'sass-rails', '~> 4.0.0'
+gem 'bootstrap-sass', '~> 3.0.3.0'
+gem "sass-rails", "~> 4.0.1"
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes

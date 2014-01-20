@@ -1,11 +1,10 @@
 require 'spec_helper'
 
 describe Venue do
+  let(:venue) { FactoryGirl.build :venue }
+  subject { venue }
 
   describe "Validation" do
-    let(:venue) { FactoryGirl.build :venue }
-    subject { venue }
-
     it { should be_valid }
 
     it { should respond_to(:name) }
@@ -23,6 +22,20 @@ describe Venue do
     describe "with a city outside the bay" do
       before { venue.city = "Kalamazoo" }
       it { should_not be_valid }
+    end
+  end
+
+  describe "event associations" do
+    before { venue.save }
+    let!(:near_future_event) do
+      FactoryGirl.create(:event, venue: venue, time: Time.now.end_of_hour)
+    end
+    let!(:distant_future_event) do
+      FactoryGirl.create(:event, venue: venue, time: Time.now.end_of_day)
+    end
+
+    it "should have the right events in the right order" do
+      venue.events.upcoming.should == [near_future_event, distant_future_event]
     end
   end
 end

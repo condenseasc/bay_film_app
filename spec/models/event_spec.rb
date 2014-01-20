@@ -23,6 +23,10 @@ describe Event do
       before { event.time = nil }
       it { should_not be_valid }
     end
+  end
 
+  describe "venue association" do
+    before { event.venue = nil }
+    it { should_not be_valid }
   end
 end
