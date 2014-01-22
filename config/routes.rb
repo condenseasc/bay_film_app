@@ -1,10 +1,11 @@
 BayFilmApp::Application.routes.draw do
 
-  # root to: "main#index"
-  # get "calendar/index"
-  # resources :venues, :events, :series
   root to: 'main#index'
-  get '/index', to: 'main#index'
+
+  namespace :api, defaults: {format: :json} do
+    resources :events, only: [:index, :show]
+  end
+
   get '/contact', to: 'static_pages#contact'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -7,7 +7,13 @@ class Event < ActiveRecord::Base
   validates :time, presence: true
   validates :venue, presence:true
 
-  scope :upcoming, -> { where( "time > ?", Time.zone.now).order( "time ASC") }
+  this_morning = Time.zone.now.beginning_of_day
+  scope :upcoming, -> { where( "time >= ?", this_morning ).order( "time ASC") }
+  scope :this_week, -> { 
+    where "time >= :start_time AND time <= :end_time", 
+    start_time: this_morning, end_time: this_morning.advance(days: 7)
+  }
+  scope :includes_venue_series, -> { includes :venue, :series }
 
   def display_time
     time = self.time
