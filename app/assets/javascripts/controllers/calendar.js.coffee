@@ -1,3 +1,4 @@
-@bayfilmControllers.controller 'CalendarCtrl', ['$scope', ($scope) ->
-  $scope.data = events: [{title:"Saturday Night Fever"}, {title:"Tony Manero"}]
+@bayfilmControllers.controller 'CalendarCtrl', ['$scope', '$resource' ($scope, $resource) ->
+  Events = $resource('/api/events')
+  $scope.events = Events.query
 ]
