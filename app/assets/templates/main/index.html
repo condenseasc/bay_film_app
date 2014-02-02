@@ -1,6 +1,26 @@
-<h1>Calendar</h1>
-<div class="calendar-scroll">
-  <ul>
-    <li ng-repeat="event in events">{{event.title}}</li>
-  </ul>
+<h1>Organizize</h1>
+<div class="main-page-calendar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <ul class="nav nav-pills">
+          <li></li>
+        </ul>
+        <ul>
+          <li ng-repeat="event in events">
+            <span class="event-time">{{event.time | date:'medium'}}</span> {{event.title}}</li>
+        </ul>
+      </div>
+      <div class="col-md-8">
+        <input type="text" ng-model="date">
+        <ul>
+          <li ng-repeat="event in events | ooDay:date" ng-model="event">
+            <span>{{event.title}} {{event.time | date:'medium'}}</span>
+            <br>
+            <span ng-bind-hmtl="event.description"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

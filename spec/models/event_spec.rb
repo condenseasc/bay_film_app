@@ -29,4 +29,9 @@ describe Event do
     before { event.venue = nil }
     it { should_not be_valid }
   end
+
+  describe "scopes" do
+    describe "default scope orders by time ascending" do
+    end
+  end
 end

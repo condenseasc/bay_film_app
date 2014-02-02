@@ -20,45 +20,46 @@ require 'uri'
 # a = Mechanize.new
 # a.get( PFA_PATH )
 
-namespace :scrape do
-  desc "scrape pfa by series"
-  task pfa_mechanize: :environment do
-    PFA_PATH = "http://www.bampfa.berkeley.edu/filmseries/"
-    PFA_SERIES_CSS = ".textblack b" #formerly had it "a b"
-    PFA_MOVIE_CSS = "p a"
-    TIME_ZONE = 'Pacific Time (US & Canada)'
+# namespace :scrape do
+#   desc "scrape pfa by series"
+#   task pfa_mechanize: :environment do
+#     PFA_PATH = "http://www.bampfa.berkeley.edu/filmseries/"
+#     PFA_SERIES_CSS = ".textblack b" #formerly had it "a b"
+#     PFA_MOVIE_CSS = "p a"
+#     TIME_ZONE = 'Pacific Time (US & Canada)'
 
 
-    agent = Mechanize.new
-    agent.get(PFA_PATH)
+#     agent = Mechanize.new
+#     agent.get(PFA_PATH)
 
-    doc = Nokogiri::HTML(open(PFA_PATH))
-    doc.css(PFA_SERIES_CSS).each do |series_link|
+#     doc = Nokogiri::HTML(open(PFA_PATH))
+#     doc.css(PFA_SERIES_CSS).each do |series_link|
 
-      agent.get(PFA_PATH)
-      agent.page.link_with(text: series_link.content).click
-      agent.page.search(PFA_MOVIE_CSS).each do |movie_link|
+#       agent.get(PFA_PATH)
+#       agent.page.link_with(text: series_link.content).click
+#       agent.page.search(PFA_MOVIE_CSS).each do |movie_link|
 
-        ## Running into a scheme error here, have no idea why
-        #  hm, i bet it's cuz I don't renavigate to the same page,
-        #  I end up looking irrelevant links
-        agent.page.link_with(text: movie_link.content).click
+#         ## Running into a scheme error here, have no idea why
+#         #  hm, i bet it's cuz I don't renavigate to the same page,
+#         #  I end up looking irrelevant links
+#         agent.page.link_with(text: movie_link.content).click
         
-        title = agent.page.search("#sub_maintext span").inner_html
-        date = agent.page.search(".sub_wrapper div:nth-child(3)").inner_html
-        time = agent.page.search(".sub_wrapper tr:nth-child(1) td:nth-child(1)").inner_html
-        parsed_date_time = Time.zone.parse("#{date}, #{time} #{TIME_ZONE}")
+#         title = agent.page.search("#sub_maintext span").inner_html
+#         date = agent.page.search(".sub_wrapper div:nth-child(3)").inner_html
+#         time = agent.page.search(".sub_wrapper tr:nth-child(1) td:nth-child(1)").inner_html
+#         parsed_date_time = Time.zone.parse("#{date}, #{time} #{TIME_ZONE}")
 
-        v = Venue.find_or_create_by_name("Pacific Film Archive")
-        v.events.create!( title: title, time: parsed_date_time )
-      end
-    end
-  end
+#         v = Venue.find_or_create_by_name("Pacific Film Archive")
+#         v.events.create!( title: title, time: parsed_date_time )
+#       end
+#     end
+#   end
 
+namespace :scrape do
   desc "scrape pfa with nokogiri"
   task pfa: :environment do
     PFA_URL = "http://www.bampfa.berkeley.edu/filmseries/"
-    PFA_SERIES_CSS = ".textblack b" #formerly had it "a b"
+    PFA_SERIES_CSS = ".textblack a b"
     PFA_MOVIE_CSS = "p a"
     TIME_ZONE = 'Pacific Time (US & Canada)'
     STYLE_TAGS = %w{i b}
@@ -72,10 +73,10 @@ namespace :scrape do
 
 
 
-      url = series_url
+      # url = series_url
       title = doc.css("h2")
 
-      series = Series.create!( )
+      # series = Series.create!( )
 
       movie_urls = find_links( series_url, PFA_MOVIE_CSS )
       movie_urls.delete_if { |url| url !~ %r'/film/' }
@@ -128,7 +129,7 @@ namespace :scrape do
 
         array = string.split("\r")
         # \r all over, lots of empty strings, especially want no leading or tailing empty strings
-        array.delete_if { |string| string.empty? }
+        array.delete_if { |str| str.empty? }
 
         # string = array.join("<br>")
 

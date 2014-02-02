@@ -1,12 +1,13 @@
 BayFilmApp::Application.routes.draw do
 
-  root to: 'main#index'
-
   namespace :api, defaults: {format: :json} do
     resources :events, only: [:index, :show]
   end
 
   get '/contact', to: 'static_pages#contact'
+
+  root to: 'main#index'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'active_model_serializers'
 
 gem 'faker', '~> 1.2.0'
-gem 'nokogiri', '~> 1.5.9'
+gem 'nokogiri', '~> 1.6.1'
 gem 'mechanize', '~> 2.6.0'
 
 
