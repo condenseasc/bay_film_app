@@ -17,7 +17,7 @@
           <li ng-repeat="event in events | ooDay:date" ng-model="event">
             <span>{{event.title}} {{event.time | date:'medium'}}</span>
             <br>
-            <span ng-bind-hmtl="event.description"></span>
+            <span ng-bind-html="event.description"></span>
           </li>
         </ul>
       </div>
