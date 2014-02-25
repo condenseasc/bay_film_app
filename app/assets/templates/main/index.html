@@ -8,7 +8,8 @@
         </ul>
         <ul>
           <li ng-repeat="event in events">
-            <span class="event-time">{{event.time | date:'medium'}}</span> {{event.title}}</li>
+            <span>{{event.venue.name}}</span>
+            <span class="event-time">{{event.time | date:'MMM h:mm a'}}</span> {{event.title}}</li>
         </ul>
       </div>
       <div class="col-md-8">

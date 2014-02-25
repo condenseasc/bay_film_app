@@ -30,7 +30,7 @@ namespace :scrape do
     # Construct an array of hashes defining series
     series_urls.each_with_index do | series_url, i |
       doc = Nokogiri::HTML(open( series_url ))
-      doc = fix_links(doc, PFA_URL)
+      doc = fix_links(doc, series_url)
       title = doc.css( SERIES_TITLE ).text
       descr = doc.css( SERIES_DESCRIPTION )
 
@@ -62,7 +62,7 @@ namespace :scrape do
 
     event_objects.each_with_index do | event, i |
       doc = Nokogiri::HTML(open( event[:url] ))
-      doc = fix_links(doc, PFA_URL)
+      doc = fix_links(doc, event[:url])
 
       date = doc.css( EVENT_DATE ).text
       time = doc.css( EVENT_TIME ).text

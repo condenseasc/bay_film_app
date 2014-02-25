@@ -2,10 +2,13 @@ class Event < ActiveRecord::Base
   # attr_accessible :title, :time, :description
   belongs_to :venue
   belongs_to :series
+  belongs_to :day
 
   validates :title, presence: true
   validates :time, presence: true
   validates :venue, presence:true
+
+  before_validation :associate_day
 
   default_scope -> { order("time ASC") }
 
@@ -28,4 +31,16 @@ class Event < ActiveRecord::Base
       time.to_s(:with_year)
     end
   end
+
+  protected
+
+  def associate_day
+    if (this.day.blank?)
+      date = Date.new(this.time)
+      d = find_or_create_by( date: date )
+      this.day = d
+    end
+  end
+
+  
 end

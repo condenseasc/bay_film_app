@@ -222,7 +222,6 @@ DEPENDENCIES
   bootstrap-sass (~> 3.0.3.0)
   capybara (~> 2.1.0)
   childprocess (~> 0.3.9)
-  coffee-rails (~> 4.0.0)
   database_cleaner!
   factory_girl_rails (~> 4.2.1)
   faker (~> 1.2.0)
