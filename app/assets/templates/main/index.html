@@ -1,27 +1,11 @@
 <h1>Organizize</h1>
 <div class="main-page-calendar">
-  <div class="container">
+  <oo-events-container class="container">
     <div class="row">
-      <div class="col-md-4">
-        <ul class="nav nav-pills">
-          <li></li>
-        </ul>
-        <ul>
-          <li ng-repeat="event in events">
-            <span>{{event.venue.name}}</span>
-            <span class="event-time">{{event.time | date:'MMM h:mm a'}}</span> {{event.title}}</li>
-        </ul>
-      </div>
       <div class="col-md-8">
-        <input type="text" ng-model="date">
-        <ul>
-          <li ng-repeat="event in events | ooDay:date" ng-model="event">
-            <span>{{event.title}} {{event.time | date:'medium'}}</span>
-            <br>
-            <span ng-bind-html="event.description"></span>
-          </li>
-        </ul>
+        <oo-events-day-titles>
+        </oo-events-day-titles>
       </div>
     </div>
-  </div>
+  </oo-events-container>
 </div>
