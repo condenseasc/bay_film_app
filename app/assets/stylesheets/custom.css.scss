@@ -1,12 +1,45 @@
 
+$grid-gutter-width: 10;
 
-/* universal */
-ul{
- list-style-type: none;
- padding: 0;
- margin-left: 0; 
+@import 'bootstrap';
+// universal
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 0; 
 }
 
-li{
-  margin: 0 0;
+li {
+  margin: 0;
+}
+
+// default: uses $grid-gutter-width
+.wrapper {
+  @include make-row();
+}
+
+.sidebar-titles {
+  @include make-md-column(4);
+  border-color: $gray-darker;
+}
+
+.event-feed {
+  @include make-md-column(8);
+  border: 2px solid navy;
+  // border-color: Navy;
+}
+
+.event-feed-date {
+  background-color: yellow;
+}
+
+.event-capsule {
+  border: 2px solid red;
+  padding: 5px;
+  margin: 10px;
+  // border-color: OrangeRed;
+}
+
+.event-feed-title {
+  background-color: lightyellow;
 }

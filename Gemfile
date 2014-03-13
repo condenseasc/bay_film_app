@@ -20,6 +20,7 @@ group :test do
 	gem 'factory_girl_rails', '~> 4.2.1'
 	gem 'database_cleaner', github: 'bmabey/database_cleaner'
 	gem 'libnotify', '~> 0.8.0'
+	gem 'jasmine'
 end
 
 gem 'bootstrap-sass', '~> 3.0.3.0'

@@ -6,9 +6,7 @@ class Event < ActiveRecord::Base
 
   validates :title, presence: true
   validates :time, presence: true
-  validates :venue, presence:true
-
-  before_validation :associate_day
+  validates :venue, presence: true
 
   default_scope -> { order("time ASC") }
 
@@ -19,6 +17,30 @@ class Event < ActiveRecord::Base
     start_time: this_morning, end_time: this_morning.advance(days: 7)
   }
   scope :includes_venue_series, -> { includes :venue, :series }
+
+  def self.get_range_between(first, last)
+    first_day = parse_date(first)
+    last_day = parse_date(last)
+    Event.where "time >= :start_time AND time <= :end_time",
+      start_time: first_day, end_time: last_day
+  end
+
+  def self.get_range(first, days)
+    first_day = parse_date(first)
+    last_day = first_day.advance(days: days)
+    Event.where "time >= :start_time AND time <= :end_time",
+      start_time: first_day, end_time: last_day
+  end
+
+  def self.get_week(sunday)
+    self.get_range(sunday, 7)
+  end
+
+  # parses the frontends requests, which come in the form
+  # YYYYMMDD
+  def self.parse_date(date)
+    Time.zone.parse("#{date.slice(0,4)}-#{date.slice(4,2)}-#{date.slice(6,2)}")
+  end
 
   def display_time
     time = self.time
@@ -31,16 +53,4 @@ class Event < ActiveRecord::Base
       time.to_s(:with_year)
     end
   end
-
-  protected
-
-  def associate_day
-    if (this.day.blank?)
-      date = Date.new(this.time)
-      d = find_or_create_by( date: date )
-      this.day = d
-    end
-  end
-
-  
 end

@@ -1,11 +1,31 @@
-<h1>Organizize</h1>
-<div class="main-page-calendar">
-  <oo-events-container class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <oo-events-day-titles day="selected_day">
-        </oo-events-day-titles>
+ <div class="container">
+  <h1>Organizize</h1>
+  <div class="wrapper">
+    <div class="day-selector">
+      <button ng-repeat="weekday in weekdays" 
+        ng-click="selectDay(weekday.date)">
+        {{weekday.date | date:'MMM d'}}
+      </button>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="sidebar-titles">
+      <div class="sidebar-title-in-list" ng-repeat="event in events">
+        {{event.title}}
       </div>
     </div>
-  </oo-events-container>
+    <div class="event-feed">
+    
+      <div class="event-capsule" ng-repeat="event in events">
+        <div class="event-feed-date" ng-if="event.newDay">
+          // {{event.time | date:'EEEE, MMMM d'}} //
+        </div>
+        <div class="event-feed-title">
+          {{event.title}} at {{event.venue.name}}
+        </div>
+        <div class="event-feed-body"
+          ng-bind-html="event.description"></div>
+      </div>
+    </div>
+  </div>
 </div>
