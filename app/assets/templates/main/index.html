@@ -10,21 +10,23 @@
   </div>
   <div class="wrapper">
     <div class="sidebar-titles">
-      <div class="sidebar-title-in-list" ng-repeat="event in events">
+      <div class="sidebar-title-in-list" ng-repeat="event in events | ooDay:selected_day">
         {{event.title}}
       </div>
     </div>
     <div class="event-feed">
-    
-      <div class="event-capsule" ng-repeat="event in events">
-        <div class="event-feed-date" ng-if="event.newDay">
-          // {{event.time | date:'EEEE, MMMM d'}} //
+      <div class="day-container" ng-repeat="date in dates">
+          <div class="event-feed-date">
+            // {{date | date:'EEEE, MMMM d'}} //
+          </div>
+        <div class="event-capsule" ng-repeat="event in events | ooDay:date">
+          <div class="event-feed-title">
+            {{event.title}} at {{event.venue.name}}, {{event.time|date:'h:mm a'}}
+
+          </div>
+          <div class="event-feed-body"
+            ng-bind-html="event.description"></div>
         </div>
-        <div class="event-feed-title">
-          {{event.title}} at {{event.venue.name}}
-        </div>
-        <div class="event-feed-body"
-          ng-bind-html="event.description"></div>
       </div>
     </div>
   </div>

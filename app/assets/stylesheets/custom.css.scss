@@ -29,8 +29,14 @@ li {
   // border-color: Navy;
 }
 
+.day-container {
+  border: 2px solid navy;
+}
+
 .event-feed-date {
   background-color: yellow;
+  padding: 5px;
+  margin: 5px;
 }
 
 .event-capsule {
