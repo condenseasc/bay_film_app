@@ -18,6 +18,13 @@ li {
   @include make-row();
 }
 
+.day-selector {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: 500px;
+}
+
 .sidebar-titles {
   @include make-md-column(4);
   border-color: $gray-darker;

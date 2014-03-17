@@ -1,11 +1,18 @@
  <div class="container">
   <h1>Organizize</h1>
   <div class="wrapper">
+    <div class="calendar-nav">
+      
+    </div>
+
+    
     <div class="day-selector">
       <button ng-repeat="weekday in weekdays" 
-        ng-click="selectDay(weekday.date)">
+        ng-click="selectDay(weekday.date)" class="col-md-1">
         {{weekday.date | date:'MMM d'}}
       </button>
+      <button ng-click="lastWeek()">One Week Back</button>
+      <button ng-click="nextWeek()">One Week Ahead</button>
     </div>
   </div>
   <div class="wrapper">
@@ -14,20 +21,27 @@
         {{event.title}}
       </div>
     </div>
-    <div class="event-feed">
-      <div class="day-container" ng-repeat="date in dates">
-          <div class="event-feed-date">
-            // {{date | date:'EEEE, MMMM d'}} //
-          </div>
-        <div class="event-capsule" ng-repeat="event in events | ooDay:date">
-          <div class="event-feed-title">
-            {{event.title}} at {{event.venue.name}}, {{event.time|date:'h:mm a'}}
 
+    <div class="event-feed">
+
+      <div ng-repeat='week in weeks'>
+        <div class="day-container" ng-repeat="day in week.days">
+            <div class="event-feed-date">
+              // {{day.date | date:'EEEE, MMMM d'}} //
+            </div>
+          <div class="event-capsule" ng-repeat="event in day.events">
+            <div class="event-feed-title">
+              {{event.title}} at {{event.venue.name}}, {{event.time|date:'h:mm a'}}
+
+            </div>
+            <div class="event-feed-body"
+              ng-bind-html="event.description"></div>
           </div>
-          <div class="event-feed-body"
-            ng-bind-html="event.description"></div>
         </div>
       </div>
+
     </div>
+
+
   </div>
 </div>
