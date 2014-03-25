@@ -1,23 +1,28 @@
  <div class="container">
-  <h1>Organizize</h1>
+
+
   <div class="wrapper">
     <div class="calendar-nav">
       
     </div>
 
     
-    <div class="day-selector">
-      <button ng-repeat="weekday in weekdays" 
-        ng-click="selectDay(weekday.date)" class="col-md-1">
+    <div ui-scrollfix class="day-selector">
+      <h1>Organizize</h1>
+
+      <datepicker date-disabled="isInactive(date, mode)" ng-model="selected.day"></datepicker>
+
+<!--       <button ng-repeat="weekday in weekdays" 
+        ng-click="scrollTo(weekday.date)" class="col-md-1">
         {{weekday.date | date:'MMM d'}}
       </button>
       <button ng-click="lastWeek()">One Week Back</button>
       <button ng-click="nextWeek()">One Week Ahead</button>
+ -->      <div>Currently on {{selected.day | date:'MMMM d'}}</div>
     </div>
-  </div>
-  <div class="wrapper">
+
     <div class="sidebar-titles">
-      <div class="sidebar-title-in-list" ng-repeat="event in events | ooDay:selected_day">
+      <div class="sidebar-title-in-list" ng-repeat="event in week.events">
         {{event.title}}
       </div>
     </div>
@@ -26,7 +31,7 @@
 
       <div ng-repeat='week in weeks'>
         <div class="day-container" ng-repeat="day in week.days">
-            <div class="event-feed-date">
+            <div id="{{day.date | date: 'd'}}" class="event-feed-date" >
               // {{day.date | date:'EEEE, MMMM d'}} //
             </div>
           <div class="event-capsule" ng-repeat="event in day.events">

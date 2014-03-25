@@ -14,5 +14,8 @@
 //= require angular-route
 //= require angular-resource
 //= require angular-sanitize
+//= require ui-templates
+//= require angular-ui-utils/ui-utils
+//= require angular-bootstrap/ui-bootstrap
 //= require main
 //= require_tree .

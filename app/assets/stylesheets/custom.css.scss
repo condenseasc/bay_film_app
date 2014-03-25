@@ -18,6 +18,14 @@ li {
   @include make-row();
 }
 
+.calendar-nav {
+  
+}
+
+.btn {
+  border-radius: 0;
+}
+
 .day-selector {
   position: fixed;
   top: 5%;

@@ -14,24 +14,36 @@ class Event < ActiveRecord::Base
   scope :upcoming, -> { where( "time >= ?", this_morning ) }
   scope :this_week, -> { 
     where "time >= :start_time AND time <= :end_time", 
-    start_time: this_morning, end_time: this_morning.advance(days: 7)
+    start_time: this_morning, end_time: this_morning.advance(days: 7).end_of_day
   }
   scope :includes_venue_series, -> { includes :venue, :series }
 
   def self.get_range_between(first, last)
-    first_day = parse_date(first)
-    last_day = parse_date(last)
+    first_day = parse_date(first).beginning_of_day
+    last_day = parse_date(last).end_of_day
     Event.where "time >= :start_time AND time <= :end_time",
       start_time: first_day, end_time: last_day
   end
 
   def self.get_range(first, days)
-    first_day = parse_date(first)
-    last_day = first_day.advance(days: days)
+    first_day = parse_date(first).beginning_of_day
+    last_day = first_day.advance(days: days).end_of_day
     Event.where "time >= :start_time AND time <= :end_time",
       start_time: first_day, end_time: last_day
   end
 
+  def self.get_active_dates(first, last)
+    first_day = parse_date(first).beginning_of_day
+    last_day = parse_date(last).end_of_day
+
+    Event.unscoped
+      .select("date(time)")
+      .distinct
+      .where("time >= :start_time AND time <= :end_time",
+      start_time: first_day, end_time: last_day)
+      .order("date(time) ASC")
+  end
+  
   def self.get_week(sunday)
     self.get_range(sunday, 7)
   end

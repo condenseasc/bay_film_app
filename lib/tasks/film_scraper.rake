@@ -26,6 +26,7 @@ namespace :scrape do
 
     series_urls = find_links( PFA_URL, PFA_SERIES_CSS)
     series_urls.delete_if { |url| url !~ %r'/filmseries/' }
+    series_urls = series_urls.uniq
 
     # Construct an array of hashes defining series
     series_urls.each_with_index do | series_url, i |
@@ -52,6 +53,7 @@ namespace :scrape do
     series_objects.each do |series|
       arr = find_links( series[:url], EVENT )
       arr.delete_if { |url| url !~ %r'/film/' }
+      arr = arr.uniq
       events = []
       # make array of event hashes from array of urls, then append
       arr.each_with_index do |event_url, i| 
@@ -69,7 +71,23 @@ namespace :scrape do
       Time.zone = TIME_ZONE
       event[:time] = Time.zone.parse("#{date}, #{time}")
       event[:title] = doc.css( EVENT_TITLE ).text
-      event[:description] = doc.css( EVENT_BLURB ).inner_html
+
+      # PFA makes a lot of invalid HTML
+      # If I don't check for divs inside the description <p> tag,
+      # I get an empty string back.
+      wrapper = doc.css( ".sub_wrapper" ).inner_html
+      if /ldheader/.match(wrapper)
+        partitioned = wrapper.partition(/<div.+class=.*"ldheader">.*<\/div>/m)
+
+        # I don't have anywhere to put this yet
+        ldheader = partitioned[1]
+
+        # open that <p></p> back up manually
+        # partitioned[0].slice! '</p>'
+        event[:description] = '<p>'+partitioned[2]+'</p>'
+      else
+        event[:description] = doc.css( EVENT_BLURB ).inner_html
+      end
     end
 
     # create events
@@ -100,9 +118,12 @@ namespace :scrape do
   end
 
   def fix_node_link( node, page_url )
-    if node.name === "a" && node.attr("href")
-      fixed = to_absolute_url(page_url, node.attr("href"))
-      node.set_attribute("href", fixed)
+    if node.name === 'a' && node.attr('href')
+      fixed = to_absolute_url(page_url, URI.encode(node.attr('href')))
+      node.set_attribute('href', fixed)
+    elsif node.name === 'img' && node.attr('src')
+      fixed = to_absolute_url(page_url, URI.encode(node.attr('src')))
+      node.set_attribute('src', fixed)
     end
   end
 
