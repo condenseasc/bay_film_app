@@ -10,7 +10,7 @@
     <div ui-scrollfix class="day-selector">
       <h1>Organizize</h1>
 
-      <datepicker date-disabled="isInactive(date, mode)" ng-model="selected.day"></datepicker>
+      <datepicker oo-refresh-datepicker refresh-on="{{selected.month}}" date-disabled="isDateDisabled(date, mode)" ng-model="selected.day"></datepicker>
 
 <!--       <button ng-repeat="weekday in weekdays" 
         ng-click="scrollTo(weekday.date)" class="col-md-1">

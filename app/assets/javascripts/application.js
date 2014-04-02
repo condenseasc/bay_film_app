@@ -10,12 +10,14 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require underscore/underscore
 //= require angular
 //= require angular-route
 //= require angular-resource
 //= require angular-sanitize
 //= require ui-templates
 //= require angular-ui-utils/ui-utils
-//= require angular-bootstrap/ui-bootstrap
+//= require angular-bootstrap/position/position
+//= require angular-bootstrap/datepicker/datepicker
 //= require main
 //= require_tree .
