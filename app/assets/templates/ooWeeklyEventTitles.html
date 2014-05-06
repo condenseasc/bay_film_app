@@ -1,0 +1,10 @@
+
+<div class="weekly-event-titles">
+  <ul ng-repeat="day in currentWeek.days">
+    <span class="sidebar-date-label">{{ day.date | date:'EEEE, MMMM dd' }}</span>
+    <li ng-repeat="event in day.events">
+      <span>{{event.title}} </span>
+      <span>{{event.venue.name}} </span>
+    </li>
+  </ul>
+</div>

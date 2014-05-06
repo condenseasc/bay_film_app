@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
 
   def self.get_range(first, days)
     first_day = parse_date(first).beginning_of_day
-    last_day = first_day.advance(days: days).end_of_day
+    last_day = first_day.advance(days: days - 1).end_of_day
     Event.where "time >= :start_time AND time <= :end_time",
       start_time: first_day, end_time: last_day
   end

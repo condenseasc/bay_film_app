@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/bampfastyle.css">
+<link rel="stylesheet" type="text/css" href="/css/content.css">
+<script type="text/javascript" src="/code/js/general.js"></script><script type="text/javascript" src="/code/js/title_bar.js"></script><!-- Collapsible Menu --><script type="text/javascript" src="/code/js/collapsible.js"></script><script type="text/javascript" src="/code/js/milonic_src.js"></script><script type="text/javascript" src="/code/js/mmenudom.js"></script><script type="text/javascript" src="/code/js/menu_data.js"></script><!--[if lt IE 7]>
+<script defer type="text/javascript" src="/code/js/pngfix.js"></script>
+<![endif]--><title>BAM/PFA - Film Programs</title>
+</head>
+<body>
+
+<div class="milonic">
+<a href="http://www.milonic.com/">DHTML Menu By Milonic JavaScript</a>
+</div>
+
+<div id="content">
+
+<!-- Header -->
+<div id="header" class="themecolor1">
+
+<!-- Search box -->
+<div id="searchboxwrapper">
+<div id="searchbox">
+<form name="search_all" method="get" action="/search/searchresults.php">
+<div style="margin:0 2px 0 0; font-size:9px;"><a href="/search">Advanced Search</a></div>
+<div>
+<span style="margin-right:8px; font-size:9px;"><a href="/calendar">CALENDAR</a></span>
+<span style="margin-right:8px;font-size:9px;"><a href="/tickets">TICKETS</a></span>
+<span style="margin-right:12px; font-size:9px;"><a href="http://store.bampfa.berkeley.edu/" target="_new">STORE</a></span>
+
+<input type="text" name="SearchAll" size="15" class="form" style="font-size:9px;border:1px #AAAAAA;" value=""><!--<input type="submit" class= "themecolor1" style="font-size:9px;background-color:transparent; border:0;" name="search_all_submit" value="SEARCH"/>--><input type="image" src="/images/template/searchbutton.png" name="search_all_submit" style="border:0;" value="SEARCH">
+</div>
+</form>
+</div>
+</div>
+<!-- End of Search box -->
+
+<div><a href="/"><img src="/images/template/headerlogo.png" width="323" height="51" alt="BAM/PFA" title="BAM/PFA"></a></div>
+</div>
+<!-- End of Header -->
+
+<!-- Navigation -->
+<div id="navbar">
+<script type="text/javascript">drawMenus();</script>
+</div>
+
+<!-- End of Navigation -->
+<!-- Main -->
+<div id="sub_main">
+
+<!-- Side Navigation -->
+<div id="sub_sidenav">
+<div class="title">FILM PROGRAMS</div>
+<!-- Calendar -->
+ <table cellspacing="2" cellpadding="0" border="0" style="border: 1px solid #F0F0F0; background:#FFFFFF;">
+<tr height="12px">
+<td colspan="5"><div class="calheader"><a href="/calendar/month/02012014">February 2014</a></div></td>
+      <td><div class="calendar"><a href="/calendar/month/01012014">&lt;</a></div></td>
+      <td><div class="calendar"><a href="/calendar/month/03012014">&gt;</a></div></td>
+    </tr>
+<tr height="12px">
+<td width="18px"> <div class="calheader2">S</div>
+</td>
+      <td width="18px"> <div class="calheader2">M</div>
+</td>
+      <td width="18px"> <div class="calheader2">T</div>
+</td>
+      <td width="18px"> <div class="calheader2">W</div>
+</td>
+      <td width="18px"> <div class="calheader2">T</div>
+</td>
+      <td width="18px"> <div class="calheader2">F</div>
+</td>
+      <td width="18px"> <div class="calheader2">S</div>
+</td>
+    </tr>
+<tr height="12px">
+<td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><div class="
+caltoday
+"><a href="/calendar/day/02012014">1</a></div></td>
+</tr>
+<tr height="12px">
+<td><div class="
+calendar
+"><a href="/calendar/day/02022014">2</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02032014">3</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02042014">4</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02052014">5</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02062014">6</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02072014">7</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02082014">8</a></div></td>
+</tr>
+<tr height="12px">
+<td><div class="
+calendar
+"><a href="/calendar/day/02092014">9</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02102014">10</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02112014">11</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02122014">12</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02132014">13</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02142014">14</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02152014">15</a></div></td>
+</tr>
+<tr height="12px">
+<td><div class="
+calendar
+"><a href="/calendar/day/02162014">16</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02172014">17</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02182014">18</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02192014">19</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02202014">20</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02212014">21</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02222014">22</a></div></td>
+</tr>
+<tr height="12px">
+<td><div class="
+calendar
+"><a href="/calendar/day/02232014">23</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02242014">24</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02252014">25</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02262014">26</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02272014">27</a></div></td>
+      <td><div class="
+calendar
+"><a href="/calendar/day/02282014">28</a></div></td>
+
+    </tr>
+</table>
+<!-- End of Calendar --><br><table id="collapsible_menu" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td></td>
+<td><div class="sub_nav_txt"><a href="/filmseries">Current</a></div></td>
+</tr>
+<tr>
+<td></td>
+<td><div class="sub_nav_txt"><a href="/tickets">Advance Tickets</a></div></td>
+</tr>
+<tr>
+<td></td>
+<td><div class="sub_nav_txt"><a href="/filmseries/aboutpfa">About</a></div></td>
+</tr>
+<tr>
+<td></td>
+<td><div class="sub_nav_txt"><a href="/search/film">Search</a></div></td>
+</tr>
+<tr>
+<td></td>
+<td><div class="sub_nav_txt"><a href="/filmseries/artists_residence">Artists in Residence</a></div></td>
+</tr>
+<tr>
+<td></td>
+<td><div class="sub_nav_txt"><a href="/filmcollection">Film Collection</a></div></td>
+</tr>
+<tr>
+<td valign="top"><a href="javascript:switchMenu('library')"><img src="/images/template/altup.gif" class="navimg" id="libraryButton"></a></td>
+<td><div class="sub_nav_txt"><a href="/pfalibrary">PFA Library &amp; Film Study Center</a></div></td>
+</tr>
+<tr>
+<td></td>
+<td>
+<ul class="hideSwitch" id="library">
+<li><div class="sub_nav_txt"><a href="/pfalibrary/aboutlibrary">About the PFA Library Collection</a></div></li> 
+  <li><div class="sub_nav_txt"><a href="/pfalibrary/phone">Phone Reference Service</a></div></li>
+  <li><div class="sub_nav_txt"><a href="/pfalibrary/viewing">Viewing Films &amp; Videos</a></div></li>
+  <li><div class="sub_nav_txt"><a href="http://bampfa.berkeley.edu">Search PFA Library Books</a></div></li>
+  <li><div class="sub_nav_txt"><a href="http://cinefiles.bampfa.berkeley.edu/cinefiles/">Search Film-Related Documents (CineFiles)</a></div></li>
+  <li><div class="sub_nav_txt"><a href="/pfalibrary/cinefiles_outcomes/">Teaching with CineFiles</a></div></li>
+  <li><div class="sub_nav_txt"><a href="/copyright_project/">Copyright Resources Project</a></div></li> 
+  <li><div class="sub_nav_txt"><a href="/pfalibrary/libraryfaq">Frequently Asked Questions</a></div></li> 
+</ul>
+</td>
+</tr>
+</table>
+<script type="text/javascript">
+showmenu();
+</script><hr>
+<div class="sub_nav_txt">
+<span class="textgrey"><b>PFA Theater Location</b><br>
+2575 Bancroft Way<br>
+Between College and Telegraph</span>
+<br><a href="/visit/visitor">Box Office Hours</a><br><a href="/visit/directions">Directions</a> / <a href="/visit/parking">Parking</a>
+</div>
+<hr>
+<a href="/filmseries/"><h3>Current Film Series</h3></a>
+<div class="sub_nav_txt">
+<a href="/filmseries/american_comedy">Funny Ha-Ha: American Comedy, 1930–1959</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/ray">The Brilliance of Satyajit Ray</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/film50_2014">Film 50: History of Cinema</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/africanfilmfestival2014">African Film Festival 2014</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/docvoices_2014">Documentary Voices</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/Godard_expect">Jean-Luc Godard: Expect Everything from Cinema</a>
+</div>
+<hr>
+<a href="/filmseries/"><h3>Upcoming Film Series</h3></a>
+<div class="sub_nav_txt">
+<a href="/filmseries/mann">Against the Law: The Crime Films of Anthony Mann</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/screenagers_2014">Screenagers Film Festival</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/committed_buba">Committed Cinema: Tony Buba</a>
+</div>
+<div class="sub_nav_txt">
+<a href="/filmseries/shirdel">Afterimage: Kamran Shirdel</a>
+</div>
+</div>
+
+<!-- End of Side Navigation -->
+
+<!-- Main header title -->
+<div id="sub_maintext">
+<script type="text/javascript">document.write(print_titlebar("Film Programs", "feed://bampfa.berkeley.edu/rss/films.xml"));</script><!-- Begin Main content --><div class="sub_wrapper">
+<h2>The Brilliance of Satyajit Ray</h2>
+<p>January 17, 2014 - August 31, 2014</p>
+<!-- Image and Caption -->
+<div class="media">
+<img src="/images/film/ray/Ray_Ray_Devi_gs-001.jpg" width="220" alt="image"><br><div class="captiongrey"></div>
+</div>
+<!-- /Image and Caption -->
+<a href="http://ev7.evenue.net/cgi-bin/ncommerce3/SEGetEventList?groupCode=SRAY&amp;linkID=cal-pfa&amp;shopperContext=&amp;caller=&amp;appCode=" target="_blank"><img src="/images/template/buytickets.gif" align="left"></a><br><p><i>"Ray has invariably preferred the intimate story to the grand epic, and is the poet par excellence of the human-scale, life-sized comedy or tragedy of ordinary men and women, journeying, as we all journey, down little, but unforgettable roads."—Salman Rushdie<br></i><br>Before the “international art house circuit,” before “Third World Film,” before “slow cinema” and “rural realism,” there was Satyajit Ray, one of the greatest and most influential filmmakers of all time. More than a decade has passed since Ray was honored with a retrospective, and in that time cinematic trends have made his work even more necessary to see again. <br><br>Born in Calcutta in 1921 into a family of prominent Bengali intellectuals (Ray’s grandfather was a writer and publisher, while his father wrote children’s tales and satirical stories), Ray first worked in an advertising firm as a visual designer, creating covers for books and even film posters. Founding the Calcutta Film Society in 1947 fueled his desire to enter filmmaking, and in 1955 he debuted with <i>Pather Panchali</i>, part of his Apu trilogy. While this neorealist, rural-set trio of films launched Ray’s career (an infamous midnight screening at the Cannes Film Festival awakened the world to his talents), the great director seemed equally at home in a wide variety of genres and settings: period tales of urban elites, chamber pieces filled with music and song, documentaries on poets and artists, even children’s fables and detective stories. More than a filmmaker, he was also a composer, visual artist, intellectual, theorist, and even illustrator of children’s tales.<br><br>“Not to have seen the cinema of Ray means existing in a world without seeing the sun or the moon,” wrote Akira Kurosawa. Ray passed away in 1992, leaving behind a legacy of thirty-six films and countless short stories, sketches, illustrations, and even musical compositions. Our series, which continues through August, includes nearly all of his films. Discover—or rediscover—this legend of cinema.<br><i><br>Check back for the complete screening schedule.<br></i><br>—Jason Sanders, Film Notes Writer<br><br><i>About the preservation </i><b><br></b>The Academy Film Archive’s Satyajit Ray Preservation Project is an ongoing effort to preserve and restore Ray’s entire filmography. It began in 1992, after the producers of the Oscar telecast, who were gathering clips for the presentation of Ray’s Honorary Award, discovered that there were very few prints or video masters of Ray’s films in the United States, and that they were incomplete and in poor condition. The Academy decided to create a catalog of the surviving elements of all Ray’s films to assess whether any were in danger of being lost. The final report was chilling and prompted resolute action.<br><br>For its preservation efforts, the Academy has collaborated closely with the Satyajit Ray Society; a group of producers who worked with Ray; the National Archives of India; the Merchant and Ivory Foundation; the Film Foundation; and the Satyajit Ray Film and Study Center at the University of California, Santa Cruz. This teamwork has ensured that every element that still exists can be accessed to make the best restorations possible. To date, the Academy  Film Archive has preserved eighteen of Ray’s feature films and one short subject.</p>
+<p>
+Friday, January 17, 2014<br>
+7:30 p.m. <a href="/film/FN20604">Pather Panchali</a><br>
+Satyajit Ray (India, 1955). <i>35mm Restored Print!</i><i> Introduced by Josef Lindner.</i> Ravi Shankar provides the score for Ray’s debut film, a tale of a young boy in an impoverished Bengal village. The film won a special prize at Cannes: Best Human Document. (122 mins)<br><br>
+Saturday, January 18, 2014<br>
+7:30 p.m. <a href="/film/FN20605">Aparajito</a><br>
+Satyajit Ray (India, 1956). <i>35mm Restored Print!</i> <i>Introduced by Josef Lindner.</i> The second film in Satyajit Ray’s beloved Apu Trilogy follows Apu’s family as they travel to the holy city of Benares along the banks of the Ganges. “Graceful, insightful, and moving” (<i>SF Chronicle</i>)<i>. </i>“The characterization of Apu lies in the heart of modern India” (SFIFF). (106 mins)<br><br>
+Sunday, January 19, 2014<br>
+4:45 p.m. <a href="/film/FN20606">The World of Apu</a><br>
+Satyajit Ray (India, 1958). <i>35mm Restored Print!</i> <i>Introduced by Josef Lindner.</i> Part three of Satyajit Ray's Apu Trilogy finds Apu as an adult, and in love. "In essence the film is a love story so fresh and spontaneous that one feels Ray created it entirely out of his own spirit, as if it were the world's first love story" (Pauline Kael). (103 mins)<br><br>
+Thursday, January 23, 2014<br>
+7:00 p.m. <a href="/film/FN20607">The Bicycle Thief</a><br>
+Vittorio De Sica (Italy, 1948). De Sica’s masterpiece of a father and son searching the streets of Rome for their stolen bicycle is considered one of the greatest films ever made, and cited by Satyajit Ray as an inspiration. “An allegory at once timeless and topical” (<i>Village Voice</i>). (93 mins)<br><br>
+Saturday, January 25, 2014<br>
+6:30 p.m. <a href="/film/FN20608">The Music Room</a><br>
+Satyajit Ray (India, 1958). <i>35mm Restored Print!</i> A turn-of-the-century aristocrat whose funds and holdings are dwindling continues to spend money on lavish concerts in his music room, in Ray’s rueful, Chekhovian masterpiece, “one of the greatest films in the history of Indian cinema” (Kent Jones). (100 mins)<br><br>
+Sunday, January 26, 2014<br>
+3:00 p.m. <a href="/film/FN20609">Ray: Life and Work of Satyajit Ray</a><br>
+Goutam Ghose (India, 1999). Noted Bengali filmmaker and documentarian Ghose was handpicked by Satyajit Ray’s widow to create this moving eulogy and tribute to the great director, which acknowledges his influences and draws inspiration from Ray’s original red notebook of sketches, first drafts, and musings. (105 mins)<br><br>
+Sunday, January 26, 2014<br>
+5:10 p.m. <a href="/film/FN20610">The River</a><br>
+Jean Renoir (France, 1950). <i>IB Technicolor Print!</i> Based on a novel by the author of <i>Black Narcissus</i>, Renoir’s wise, warm Technicolor masterpiece follows several young girls coming of age on the River Ganges. A young Satyajit Ray served as a location scout. “The artist, medium, and location combine, as though effortlessly, to produce an experience of surpassing loveliness” (<i>NY Times</i>). (99 mins)<br><br>
+Sunday, February 2, 2014<br>
+4:45 p.m. <a href="/film/FN20611">Devi</a><br>
+Satyajit Ray (India, 1960). <i>35mm Restored Print!</i> <i>Introduced by Dilip Basu.</i> A teenage Sharmile Tagore delivers one of her most riveting performances in Ray’s tale of faith and obsession, set in rural Bengal circa 1860. A wealthy landowner offers his beautiful daughter-in-law as an incarnation of the goddess Kali. (93 mins)<br><br>
+Sunday, February 9, 2014<br>
+3:00 p.m. <a href="/film/FN20612">Three Daughters</a><br>
+Satyajit Ray (India, 1963). <i>35mm Restored Print!</i> In honor of the centenary of the writer Rabindranath Tagore’s birth, Ray made this feature based on three Tagore stories. (171 mins) <br><br>
+Saturday, February 15, 2014<br>
+5:45 p.m. <a href="/film/FN20613">The Big City</a><br>
+Satyajit Ray (India, 1963). <i>35mm Restored Print!</i> Ray sets his ironic and humorous eye on the plight of the Bengali middle class, caught amid the changing moralities of urban life. Focusing in particular on the role of women in this metamorphosis, Ray tells a story that is both minutely particular to Calcutta and universally recognizable. (135 mins)<br><br>
+Sunday, February 23, 2014<br>
+2:00 p.m. <a href="/film/FN20614">The Expedition</a><br>
+Satyajit Ray (India, 1962). <i>35mm Restored Print!</i> <i>Introduced by Dilip Basu.</i> The great Bollywood superstar Waheeda Rehman stars in one of Ray’s most atypical films, a commercially successful noir melodrama filled with taxi drivers, drug smugglers, and prostitutes that became the director’s most popular film in his native Bengal. (150 mins)<br><br>
+Thursday, February 27, 2014<br>
+7:00 p.m. <a href="/film/FN20615">Rabindranath Tagore</a><br>
+Satyajit Ray (India, 1961). Two essential Ray documentaries on his greatest influences: <i>Rabindranath Tagore</i>, on the Nobel Prize–winning poet and painter, and <i>Sukumar Ray</i>, on the director’s father, a writer and critic. (84 mins)<br><br>
+Thursday, March 6, 2014<br>
+7:00 p.m. <a href="/film/FN20616">Kanchenjungha</a><br>
+Satyajit Ray (India, 1962). Ray's first film in color is a tale of manners and mores played out amid a Himalayan landscape as dramatic as the conflicts on display. “Ray’s most creative and detailed look at contemporary India’s cross-cultures” (Albert Johnson). (102 mins)<br><br>
+Saturday, March 8, 2014<br>
+6:00 p.m. <a href="/film/FN20617">Charulata</a><br>
+Satyajit Ray (India, 1964). <i>Restored Print! Introduced by Dilip Basu.</i> Based on a Rabindranath Tagore novella, <i>Charulata</i> follows one woman’s romantic and intellectual yearning in late nineteenth-century India. Ray's personal favorite of his works. (122 mins)<br><br>
+Sunday, March 9, 2014<br>
+3:00 p.m. <a href="/film/FN20618">The Hero</a><br>
+Satyajit Ray (India, 1965). <i>Restored Print! </i>A sharp-witted, serious young journalist finds herself stuck on a train with a movie star in Ray’s surprising examination of “intellectual” and “popular” cultures. (122 mins)<br><br>
+Sunday, March 23, 2014<br>
+3:00 p.m. <a href="/film/FN20619">The Coward with The Holy Man</a><br>
+Satyajit Ray (India, 1965). <i>Restored Prints!</i> These two films were intended to screen as a double bill and show a side of Ray unknown to most: populist, funny, willing to try anything. The light-hearted <i>The Coward </i>focuses on a bizarre love triangle, while <i>The Holy Man</i> is a comic exposé of the folly of the superstitiously devout. (140 mins)<br><br>
+Saturday, March 29, 2014<br>
+6:30 p.m. <a href="/film/FN20620">Days and Nights in the Forest</a><br>
+Satyajit Ray (India, 1970). <i>Imported Print! </i>Ray’s most overtly Renoir-ish film, and probably his masterpiece. Four young men from Calcutta spend a few days in the country, and their youthful arrogance gets them into a series of disastrous and often hilarious adventures. "A major film by one of the great film artists, starring Soumitra Chatterjee and the incomparably graceful Sharmila Tagore" (Pauline Kael). (115 mins)<br><br>
+Sunday, March 30, 2014<br>
+5:15 p.m. <a href="/film/FN20621">The Adversary</a><br>
+Satyajit Ray (India, 1970). <i>Imported Print! </i>Created amid the growing social unrest and political violence of India (and the world) post-1969, <i>The Adversary</i> is Ray at his most openly political, yet also at his most compassionate. "Ray’s funniest, most piercing film" (Pauline Kael). (110 mins)<br><br>
+Sunday, April 6, 2014<br>
+3:00 p.m. <a href="/film/FN20622">The Adventures of Goopy and Bagha</a><br>
+Satyajit Ray (India, 1968). <i>Restored Print! </i>Ray weaves elements of folklore, classical and popular music, dance, and drama into this fairy tale in which two village boys set out on a host of uproarious adventures, and in the end are beautifully rewarded for their work for peace. (132 mins)<br><br>
+Saturday, April 12, 2014<br>
+6:15 p.m. <a href="/film/FN20623">Company Limited</a><br>
+Satyajit Ray (India, 1971). <i>Restored Print!</i> A shrewd satire on the American-styled business world of Calcutta."One of Ray's best films" (David Robinson, <i>London Times</i>). (112 mins)<br><br>
+Saturday, April 19, 2014<br>
+6:00 p.m. <a href="/film/FN20624">The Middleman</a><br>
+Satyajit Ray (India, 1975). <i>Restored Print!</i>  A black comedy shot in the early days of Indira Gandhi's "emergency rule," <i>The Middleman</i> reveals a Calcutta of rampant unemployment, declining basic services, and politically inspired violence. Won Ray the West Bengal Oscar equivalents for best film, direction, and screenplay. (134 mins)<br><br></p>
+<p class="credit">Presented in partnership with the Academy of Motion Picture Arts &amp; Sciences. Series curated by Senior Film Curator Susan Oxtoby. BAM/PFA wishes to thank: Michael Pogorzelski, Josef Lindner, May Haduong, Matt Severson, and Jane Glicksman at the Academy Film Archive; Dilip Basu, the Satyajit Ray Film and Study Center at the University of California, Santa Cruz; Julie Pearce and Waltraud Loges, BFI; Brian Belovarac, Janus Films; and Goutam Ghose.<br><br><img src="/images/film/ray/academy.jpg" width="125px"></p>
+</div>
+<!-- End of Main content -->
+</div>
+<!-- End of Main -->
+</div>
+<!-- Footer -->
+
+<div id="footer">
+
+<span class="textgrey">© UC Regents 2014 | <a href="/about/contact">Contact Us</a> | <a href="/about/sitemap">SiteMap</a> | <a href="/rss/">RSS</a> | 
+<!-- 
+<a href="javascript:void(0);"
+NAME="My Window Name" title=" My title here "
+onClick=window.open("/about/signup.html","Ratting","width=600,height=450,0,status=0,");>E-News</a>
+-->
+<a href="/signup">Sign Up</a>
+| <a href="/about/programguide">Program Guide</a>
+| <a href="/podcasts">Podcasts</a></span>
+
+<script type="text/javascript" src="http://bampfa.berkeley.edu/code/js/footerlogo.js">footerlogo();</script>
+  
+<!-- AddThis Button BEGIN -->
+<a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=bampfa"><img src="http://s7.addthis.com/static/btn/sm-share-en.gif" width="83" height="16" alt="Bookmark and Share" style="border:0"></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=bampfa"></script><!-- AddThis Button END -->
+</div>
+
+
+
+<!-- Google Analytics --!>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8226360-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+
+
+<!-- End of Footer -->
+</div>
+</body>
+</html>

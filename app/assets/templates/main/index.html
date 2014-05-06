@@ -1,52 +1,70 @@
- <div class="container">
-
-
-  <div class="wrapper">
-    <div class="calendar-nav">
-      
-    </div>
+  <div id="wrapper" oo-check-week-on-scroll>
 
     
-    <div ui-scrollfix class="day-selector">
-      <h1>Organizize</h1>
+    <div id="sidebar-wrapper">
 
-      <datepicker oo-refresh-datepicker refresh-on="{{selected.month}}" date-disabled="isDateDisabled(date, mode)" ng-model="selected.day"></datepicker>
+        <div class="calendar-nav" >
+          <datepicker oo-refresh-datepicker 
+          refresh-on="{{selected.month}}" 
+          date-disabled="isDateDisabled(date, mode)" 
+          ng-model="selected.day">  
+          </datepicker>
 
-<!--       <button ng-repeat="weekday in weekdays" 
-        ng-click="scrollTo(weekday.date)" class="col-md-1">
-        {{weekday.date | date:'MMM d'}}
-      </button>
-      <button ng-click="lastWeek()">One Week Back</button>
-      <button ng-click="nextWeek()">One Week Ahead</button>
- -->      <div>Currently on {{selected.day | date:'MMMM d'}}</div>
-    </div>
-
-    <div class="sidebar-titles">
-      <div class="sidebar-title-in-list" ng-repeat="event in week.events">
-        {{event.title}}
-      </div>
-    </div>
-
-    <div class="event-feed">
-
-      <div ng-repeat='week in weeks'>
-        <div class="day-container" ng-repeat="day in week.days">
-            <div id="{{day.date | date: 'd'}}" class="event-feed-date" >
-              // {{day.date | date:'EEEE, MMMM d'}} //
-            </div>
-          <div class="event-capsule" ng-repeat="event in day.events">
-            <div class="event-feed-title">
-              {{event.title}} at {{event.venue.name}}, {{event.time|date:'h:mm a'}}
-
-            </div>
-            <div class="event-feed-body"
-              ng-bind-html="event.description"></div>
-          </div>
         </div>
-      </div>
 
+
+
+
+          <div class="titles-nav" >
+            <div>Currently on {{selected.day | date:'MMMM d'}} and {{selected.week}}</div>
+            <div>on week {{selected.week}}</div>
+
+            <oo-weekly-event-titles></oo-weekly-event-titles>
+
+
+<!--             <div ng-repeat="week in weeks">
+              <ul class="sidebar-title-in-list" ng-repeat="day in week.days">
+              {{day.date | date:'MMMM d'}}
+                <li ng-repeat="event in day.events">
+                  <a du-smooth-scroll ng-href="#{{day.date | date: 'd'}}">
+                    {{event.title}}
+                  </a>
+                </li>
+              </ul>
+            </div> -->
+          </div>
+    </div>
+
+
+    <div id="page-content-wrapper">
+      <div class="content-header">
+<!--         <h1>Organizize</h1>
+ -->      </div>
+
+      <div class="page-content inset">
+
+          <div class="event-feed">
+            <div ng-repeat='week in weeks'>
+              <div class="week-container" id="{{week.page}}">
+                <div class="day-container" ng-repeat="day in week.days">
+                    <div id="{{day.date | date: 'd'}}" class="event-feed-date" >
+                      // {{day.date | date:'EEEE, MMMM d'}} //
+                    </div>
+                  <div class="event-capsule" ng-repeat="event in day.events">
+                    <div class="event-feed-title">
+                      {{event.title}} at {{event.venue.name}}, {{event.time|date:'h:mm a'}}
+
+                    </div>
+                    <div class="event-feed-body"
+                      ng-bind-html="event.description"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
     </div>
 
 
   </div>
-</div>

@@ -11,12 +11,16 @@
 // about supported directives.
 //
 //= require underscore/underscore
+//= require jquery
 //= require angular
 //= require angular-route
 //= require angular-resource
 //= require angular-sanitize
 //= require ui-templates
+//= require angular-scroll/angular-scroll
 //= require angular-ui-utils/ui-utils
+//= require angular-strap-2-0-0-rc-4/affix/affix
+//= require angular-strap-2-0-0-rc-4/helpers/dimensions
 //= require angular-bootstrap/position/position
 //= require angular-bootstrap/datepicker/datepicker
 //= require main

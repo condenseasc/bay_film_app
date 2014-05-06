@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "karma": "~0.10",
+    "karma-jasmine": "~0.2",
+    "phantom": "~0.5",
+    "protractor": "",
+    "grunt": "^0.4.4",
+    "grunt-html2js": "^0.2.4",
+    "underscore": "^1.6.0"
+  }
+}
