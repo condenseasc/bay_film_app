@@ -1,10 +1,10 @@
-  <div id="wrapper" oo-check-week-on-scroll>
+  <div id="wrapper" >
 
     
     <div id="sidebar-wrapper">
 
         <div class="calendar-nav" >
-          <datepicker oo-refresh-datepicker 
+          <datepicker oo-refresh-datepicker oo-check-week-on-scroll oo-highlight-selected-week
           refresh-on="{{selected.month}}" 
           date-disabled="isDateDisabled(date, mode)" 
           ng-model="selected.day">  
@@ -19,7 +19,7 @@
             <div>Currently on {{selected.day | date:'MMMM d'}} and {{selected.week}}</div>
             <div>on week {{selected.week}}</div>
 
-            <oo-weekly-event-titles></oo-weekly-event-titles>
+            <oo-event-titles-by-week selected-week-name="{{selected.week}}" loaded-weeks="weeks"></oo-event-titles-by-week>
 
 
 <!--             <div ng-repeat="week in weeks">
@@ -52,7 +52,7 @@
                     </div>
                   <div class="event-capsule" ng-repeat="event in day.events">
                     <div class="event-feed-title">
-                      {{event.title}} at {{event.venue.name}}, {{event.time|date:'h:mm a'}}
+                      {{event.title}} at {{event.venue.name}}, {{event.time|date:'MMMM d, h:mm a'}}
 
                     </div>
                     <div class="event-feed-body"

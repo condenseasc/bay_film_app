@@ -4,175 +4,129 @@
 var ooDirectives = angular.module('ooDirectives', []);
 
 ooDirectives
-.directive('ooEventsContainer', ['dateFilter', 'EventFeed', 
-  function(dateFilter, EventFeed) {
-  return {
-    restrict: 'E',
-    scope: true,
-    link: function(scope, element, attrs){
-      // console.log("parent");
-      // console.log(scope);
-      // console.log("selected_day: "+ scope.selected_day);
-      // console.log("after parent");
-      // element.text(dateFilter(scope.selected_day, 'MMM d h:mm a'));
-    },
-    // template: '<input type="text" ng-model="selected_day"><oo-events-day-titles day="{{selected_day}}"></oo-events-day-titles>'
-  };
-}])
 
-.directive('ooEventsDayButton', ['dateFilter', 'Weekdays', function(dateFilter, Weekdays){
-  return {
-    restrict: 'A',
-    scope: true,
-    link: function(scope, element, attrs){
-      //when it's pressed, tell directive to change the day
-      //when a day is broadcast, change the selected button
-      // // does that mean i need another controller?!
-      
-    }
-  };
-}])
+  .directive('ooRefreshDatepicker', [ function () {
+    return {
+      restrict: 'A',
+      require: 'datepicker',
+      link: {
+        post: function (scope, element, attrs, DatepickerCtrl) {
 
-.directive('ooEventsDayTitles', ['dateFilter', function(dateFilter){
-  return {
-    restrict: 'E',
-    scope: true,
-    // templateUrl: 'oo-events-day-titles.html'
-    template: '<div>{{selected_day | date:"MMM d h:mm a"}} as per this dir</div><div>from ooEventsDayTitles</div>',
-    link: function(scope, element, attrs){
-      // var day = ctrl.selected_day.date;
-      // day.setDate(10);
-      // console.log("selected_day value: " + dateFilter(scope.selected_day.date, "MMM d h:mm a")); 
+          scope.$watch(function () {
+            return DatepickerCtrl.currentCalendarDate.getMonth();
+          },
+            function () {
+              var year = DatepickerCtrl.currentCalendarDate.getFullYear();
+              var month = DatepickerCtrl.currentCalendarDate.getMonth();
+              scope.loadActiveDates(new Date(year, month));
+            });
 
-      // console.log("child");
-      // console.log(scope); 
-      // console.log(scope.day);
-      // console.log("after child");
+          attrs.$observe('refreshOn', function () {
+            DatepickerCtrl.refreshView();
+          });
+        }
+      }
+    };
+  }])
 
+  .directive('ooCheckWeekOnScroll', [ '$window', '$document', function ($window, $document) {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
+        var windowHeight, scrollTop, offset, dividingLine, weeks, weekHeight, scrolledWeek;
 
-      // $scope.$watch('selected_day', function(date){
-      //   updateDate(date);
-      // });
+        function findCurrentWeek() {
+          windowHeight = $(window).height();
+          scrollTop = $(window).scrollTop();
+          dividingLine = scrollTop + (windowHeight * 0.3);
 
-      // function updateDate(date){
-      //   attrs.day = date;
-      // }
-    }
-  };
-}])
+          weeks = angular.element(".week-container");
+          scrolledWeek = _.find(weeks, function (week) {
+            offset = $(week).offset().top;
+            weekHeight = $(week).height();
 
-// .directive('dayId', ['dateFilter', function(dateFilter){
-//   return {
-//     restrict: 'A',
-//     scope: true,
-//     // templateUrl: 'oo-events-day-titles.html'
-//     template: '<div>{{selected_day | date:"MMM d h:mm a"}} as per this dir</div><div>from ooEventsDayTitles</div>',
-//     link: function(scope, element, attrs){
+            return offset <= dividingLine && (offset + weekHeight) > dividingLine;
+          });
 
-//     }
-//   };
-// }]);
+          return angular.element(scrolledWeek).attr('id');
+        }
 
-.directive('ooRefreshDatepicker', [ function(){
-  return {
-    restrict: 'A',
-    require: 'datepicker',
-    link: {
-      post: function(scope, element, attrs, DatepickerCtrl){
-
-        scope.$watch( function() {
-          return DatepickerCtrl.currentCalendarDate.getMonth();
-        },
-        function(newValue, oldValue) {
-          var year = DatepickerCtrl.currentCalendarDate.getFullYear();
-          var month = DatepickerCtrl.currentCalendarDate.getMonth();
-          scope.loadActiveDates( new Date( year, month ) );
+        angular.element($document).on('scroll', function () {
+          var week = findCurrentWeek();
+          if (week !== scope.selected.week) {
+            scope.$apply(scope.selectWeek(week));
+          }
         });
+      }
+    };
+  }])
 
-        attrs.$observe('refreshOn', function() {
-          // console.log("inside directive refresh watch");
-          // console.log("refreshOn: "+attrs.refreshOn);
-          // console.log("ctrl inside directive refresh observe: ");
-          // console.log(DatepickerCtrl);
-          // console.log("datepicker refresher scope: ");
+  .directive('ooHighlightSelectedWeek', [ function () {
+    return {
+      restrict: 'A',
+      require: 'datepicker',
+      scope: false,
+      link: function (scope, element, attrs, DatepickerCtrl) {
+        // console.log("highlight dir scope");
+        // console.log(scope);
+
+        attrs.$observe('refreshOn', function () {
+          // console.log("highlight dir scope");
           // console.log(scope);
-          // console.log("attempting to get at scope through ctrl: ");
-          // console.log(DatepickerCtrl.currentCalendarDate);
-          DatepickerCtrl.refreshView();
-
-        });
-      }
-    }
-  };
-}])
-
-.directive('ooCheckWeekOnScroll', [ '$window', '$document', function($window, $document) {
-  return {
-    restrict: 'A',
-    link: function(scope, element, attrs) {
-      var windowHeight, scrollTop, offset, dividingLine, weeks, weekHeight, scrolledWeek, scrolledWeekPage;
-
-      function findCurrentWeek() {
-        windowHeight = $(window).height();
-        scrollTop = $(window).scrollTop();
-        dividingLine = scrollTop + (windowHeight * 0.3);
-         
-        weeks = angular.element(".week-container");
-        scrolledWeek = _.find(weeks, function(week) {
-          offset = $(week).offset().top;
-          weekHeight = $(week).height();
-
-          return offset <= dividingLine && (offset + weekHeight) > dividingLine;
         });
 
-        return angular.element(scrolledWeek).attr('id');  
+        // // cf datepicker.js ln 200-219
+        // function getISO8601WeekNumber(date) {
+        //   var checkDate = new Date(date);
+        //   checkDate.setDate(checkDate.getDate() + 4 - (checkDate.getDay() || 7)); // Thursday
+        //   var time = checkDate.getTime();
+        //   checkDate.setMonth(0); // Compare with Jan 1
+        //   checkDate.setDate(1);
+        //   return Math.floor(Math.round((time - checkDate) / 86400000) / 7) + 1;
+        // }
+
+        // attrs.$observe('refreshOn', function() {
+        //   scope.ooWeekNumbers = [];
+        //   var weekNumber = getISO8601WeekNumber( scope.rows[0][0].date ),
+        //       numWeeks = scope.rows.length;
+        //   while( scope.weekNumbers.push(weekNumber++) < numWeeks ) {}
+        // });
+
+
       }
+    };
+  }])
 
-      angular.element($document).on('scroll', function() {
-        var week = findCurrentWeek();
-        if (week !== scope.selected.week ){
-          scope.$apply(scope.selectWeek(week));
+  // Watches $scope.selected.week and $scope.weeks for changes
+  // Uses the selected week to copy the current week and send it to the template
+  // to be iterated over. So far no other processing of week data is in place,
+  // the template gets the whole bundle and pulls out titles, venues, dates, etc.
+  .directive('ooEventTitlesByWeek', [function () {
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl: 'template/ooEventTitlesByWeek.html',
+      scope: {
+        selectedWeekName: "@",
+        loadedWeeks: "=",
+      },
+      link: {
+        post: function (scope, element, attrs) {
+          var currentWeek;
+          attrs.$observe('selectedWeekName', function (newValue) {
+
+            if (scope.loadedWeeks) {
+              currentWeek = _.findWhere(scope.loadedWeeks, {page: newValue});
+              scope.currentWeek = currentWeek;
+            }
+          });
+
+          // A workaround. When selectWeek() is called, it takes a bit to load from the server.
+          // This re-checks against selected.week whenever the week array updates.
+          scope.$watchCollection('loadedWeeks', function () {
+            scope.currentWeek = _.findWhere(scope.loadedWeeks, {page: scope.selectedWeekName });
+          });
         }
-      });
-    }
-  };
-}])
-
-.directive('ooWeeklyEventTitles', [ function() {
-  return {  
-    restrict: 'E',
-    replace: true,
-    templateUrl: 'template/ooWeeklyEventTitles.html',
-    // scope: {
-    //   selectedWeek: '@',
-    //   weeks: '&'
-    // },
-    link: function(scope, element, attrs) {
-      var currentWeek;
-      scope.$watch('selected.week', function(newValue, oldValue) {
-        if (scope.weeks){
-          // _.map( _.findWhere( scope.weeks, {page: newValue} ),
-          //   function( week ) {
-          //     var title, time, city, venue, venueAbbreviation;
-          //   });
-          console.log('oldValue: '+oldValue+', newValue: '+newValue);
-          console.log('string?', typeof newValue);
-          console.log('scope.weeks', scope.weeks);
-  
-  
-          currentWeek = _.findWhere( scope.weeks, {page: newValue} );
-          console.log('currentWeek', currentWeek);
-          scope.currentWeek = currentWeek;
-          console.log(scope);
-          // _.map( currentWeek, function(week) {
-  
-          // });
-        }
-      });
-
-      scope.$watchCollection('weeks', function(newValue) {
-        scope.currentWeek = _.findWhere( scope.weeks, {page: scope.selected.week } );
-      });
-    }
-  };
-}]);
+      }
+    };
+  }]);

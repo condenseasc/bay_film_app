@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
-gem 'pg', '~> 0.16.0'
+gem 'rails', '4.1.0'
+gem 'pg', '~> 0.17.0'
 gem 'angularjs-rails', '~> 1.2.7'
 
 group :development, :test do
@@ -24,7 +24,7 @@ group :test do
 end
 
 gem 'bootstrap-sass', '~> 3.0.3.0'
-gem "sass-rails", "~> 4.0.1"
+gem "sass-rails", "~> 4.0.3"
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

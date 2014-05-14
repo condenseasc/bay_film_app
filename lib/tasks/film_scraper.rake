@@ -17,6 +17,7 @@ namespace :scrape do
     # Event Selectors
     EVENT_TITLE = "#sub_maintext span"
     EVENT_DATE = ".sub_wrapper div:nth-child(3)"
+    EVENT_DATE_NO_IMG = "#sub_maintext div+ div"
     EVENT_TIME = ".sub_wrapper tr:nth-child(1) td:nth-child(1)"
     EVENT_BLURB = ".sub_wrapper p"
 
@@ -66,9 +67,13 @@ namespace :scrape do
       doc = Nokogiri::HTML(open( event[:url] ))
       doc = fix_links(doc, event[:url])
 
-      date = doc.css( EVENT_DATE ).text
-      time = doc.css( EVENT_TIME ).text
       Time.zone = TIME_ZONE
+      time = doc.css( EVENT_TIME ).text
+      date = doc.css( EVENT_DATE ).text
+      if date.empty?
+        date = doc.css( EVENT_DATE_NO_IMG ).text
+      end
+
       event[:time] = Time.zone.parse("#{date}, #{time}")
       event[:title] = doc.css( EVENT_TITLE ).text
 
