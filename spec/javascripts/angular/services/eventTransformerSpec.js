@@ -1,7 +1,7 @@
 describe("Event API Transformer", function(){
   var transformer, response;
   beforeEach(module('ooApp'));
-  beforeEach(module('ooServices'));
+  beforeEach(module('ooCalendar'));
   beforeEach(inject(function(_eventApiTransformer_){
     transformer = _eventApiTransformer_;
 

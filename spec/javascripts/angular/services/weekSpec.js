@@ -2,7 +2,7 @@ describe('Week', function($injector){
   var Week, d, week, week_bounds;
 
   beforeEach(module('ooApp'));
-  beforeEach(module('ooServices'));
+  beforeEach(module('ooCalendar'));
 
   beforeEach(inject(function( _Week_ ){
     Week = _Week_;

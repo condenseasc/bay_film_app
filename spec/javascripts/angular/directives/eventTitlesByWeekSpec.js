@@ -1,11 +1,11 @@
+'use strict';
 /*global it, describe, inject, beforeEach, expect*/
 
 describe('ooSidebarEventTitlesByWeek', function () {
   var $compile, $controller, $rootScope, $scope, createController, weekOne, weekTwo;
 
   beforeEach(module('ooApp'));
-  beforeEach(module('ooServices'));
-  beforeEach(module('ooDirectives'));
+  beforeEach(module('ooCalendar'));
   beforeEach(inject(function (_$compile_, _$controller_, _$rootScope_, _$httpBackend_) {
     $compile = _$compile_;
     $controller = _$controller_;

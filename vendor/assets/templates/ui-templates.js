@@ -131,27 +131,11 @@ angular.module("template/main/index.html", []).run(["$templateCache", function($
     "          </datepicker>\n" +
     "\n" +
     "        </div>\n" +
-    "\n" +
-    "\n" +
-    "\n" +
-    "\n" +
     "          <div class=\"titles-nav\" >\n" +
-    "            <div>Currently on {{selected.day | date:'MMMM d'}} and {{selected.week}}</div>\n" +
+    "<!--             <div>Currently on {{selected.day | date:'MMMM d'}} and {{selected.week}}</div>\n" +
     "            <div>on week {{selected.week}}</div>\n" +
-    "\n" +
+    " -->\n" +
     "            <oo-event-titles-by-week selected-week-name=\"{{selected.week}}\" loaded-weeks=\"weeks\"></oo-event-titles-by-week>\n" +
-    "\n" +
-    "\n" +
-    "<!--             <div ng-repeat=\"week in weeks\">\n" +
-    "              <ul class=\"sidebar-title-in-list\" ng-repeat=\"day in week.days\">\n" +
-    "              {{day.date | date:'MMMM d'}}\n" +
-    "                <li ng-repeat=\"event in day.events\">\n" +
-    "                  <a du-smooth-scroll ng-href=\"#{{day.date | date: 'd'}}\">\n" +
-    "                    {{event.title}}\n" +
-    "                  </a>\n" +
-    "                </li>\n" +
-    "              </ul>\n" +
-    "            </div> -->\n" +
     "          </div>\n" +
     "    </div>\n" +
     "\n" +

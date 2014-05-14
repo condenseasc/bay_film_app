@@ -1,10 +1,9 @@
 'use strict';
 /* global angular, console */
-var ooControllers = angular.module('ooControllers', []);
 
-ooControllers.controller('CalendarCtrl',
-  ['$scope', '$q', '$location', '$timeout', '$anchorScroll', '$rootScope', '$window', '$document', 'Event', 'EventFeed', 'Week', 'Sort', 'Name',
-    function ($scope, $q, $location, $timeout, $anchorScroll, $rootScope, $window, $document, Event, EventFeed, Week, Sort, Name) {
+ooCalendar.controller('CalendarCtrl',
+  ['$scope', '$q', '$location', '$timeout', '$anchorScroll', '$rootScope', '$window', '$document', 'Event', 'EventFeed', 'Week', 'Name',
+    function ($scope, $q, $location, $timeout, $anchorScroll, $rootScope, $window, $document, Event, EventFeed, Week, Name) {
 
       // initialize everything
       $scope.weeks = [];
@@ -26,6 +25,8 @@ ooControllers.controller('CalendarCtrl',
 
       $scope.$watch('selected.day', function (newValue) {
         var dateJustSelected = new Date(newValue);
+
+        console.log("selected.day set to: ", newValue);
 
         if (!(isWeekLoaded(dateJustSelected))) {
           loadWeek(dateJustSelected);

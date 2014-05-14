@@ -1,7 +1,7 @@
 describe('Sort', function(){
   var Sort, data, compare;
 
-  beforeEach(module('ooServices'));
+  beforeEach(module('ooCalendar'));
   beforeEach(inject(function(_Sort_){
     Sort = _Sort_;
 

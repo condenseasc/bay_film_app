@@ -3,7 +3,7 @@ describe('CalendarCtrl', function(){
   createController, dt, staticResponse;
 
   beforeEach( module('ooApp') );
-  beforeEach( module('ooServices') );
+  beforeEach( module('ooCalendar') );
   beforeEach( inject(function(
     _$httpBackend_, _$rootScope_, _$controller_, _Week_, _Name_) {
     $httpBackend = _$httpBackend_;

@@ -1,22 +1,21 @@
-module.exports = function(config) {
-  config.set({
-    basePath: '../..',
+// module.exports = function(config) {
+//   config.set({
+//     basePath: '../..',
 
-    frameworks: ['jasmine'],
+//     frameworks: ['jasmine'],
 
-    autoWatch: true,
+//     autoWatch: true,
 
-    preprocessors: {
-      '**/*.coffee': 'coffee'
-    },
+//     preprocessors: {
+//       '**/*.coffee': 'coffee'
+//     },
 
-    files: [
-      'app/assets/javascripts/angular.js',
-      'app/assets/javascripts/angular-mocks.js',
-      'app/assets/javascripts/main.js.coffee',
-      'app/assets/javascripts/controllers/calendar.js.coffee',
-      'app/assets/javascripts/*',
-      'spec/javascripts/*_spec.js.coffee'
-    ]
-  });
-};
+//     files: [
+//       'app/assets/javascripts/angular.js',
+//       'app/assets/javascripts/angular-mocks.js',
+//       'app/assets/javascripts/controllers/calendar.js',
+//       'app/assets/javascripts/*',
+//       'spec/javascripts/*_spec.js'
+//     ]
+//   });
+// };

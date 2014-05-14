@@ -11,27 +11,11 @@
           </datepicker>
 
         </div>
-
-
-
-
           <div class="titles-nav" >
-            <div>Currently on {{selected.day | date:'MMMM d'}} and {{selected.week}}</div>
+<!--             <div>Currently on {{selected.day | date:'MMMM d'}} and {{selected.week}}</div>
             <div>on week {{selected.week}}</div>
-
+ -->
             <oo-event-titles-by-week selected-week-name="{{selected.week}}" loaded-weeks="weeks"></oo-event-titles-by-week>
-
-
-<!--             <div ng-repeat="week in weeks">
-              <ul class="sidebar-title-in-list" ng-repeat="day in week.days">
-              {{day.date | date:'MMMM d'}}
-                <li ng-repeat="event in day.events">
-                  <a du-smooth-scroll ng-href="#{{day.date | date: 'd'}}">
-                    {{event.title}}
-                  </a>
-                </li>
-              </ul>
-            </div> -->
           </div>
     </div>
 

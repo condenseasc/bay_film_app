@@ -2,7 +2,7 @@ describe('Name', function($injector){
   var Name, Week, d;
 
   beforeEach(module('ooApp'));
-  beforeEach(module('ooServices'));
+  beforeEach(module('ooCalendar'));
 
   beforeEach(inject(function(_Name_, _Week_){
     Name = _Name_;
