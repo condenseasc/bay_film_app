@@ -1,8 +1,7 @@
 class Event < ActiveRecord::Base
   # attr_accessible :title, :time, :description
   belongs_to :venue
-  belongs_to :series
-  belongs_to :day
+  has_and_belongs_to_many :series
 
   validates :title, presence: true
   validates :time, presence: true
@@ -37,11 +36,11 @@ class Event < ActiveRecord::Base
     last_day = parse_date(last).end_of_day
 
     Event.unscoped
-      .select("date(time)")
-      .distinct
+      .select("time")
+      .distinct("date(time)")
       .where("time >= :start_time AND time <= :end_time",
       start_time: first_day, end_time: last_day)
-      .order("date(time) ASC")
+      .order("time ASC")
   end
   
   def self.get_week(sunday)

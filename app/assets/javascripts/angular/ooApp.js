@@ -8,7 +8,11 @@ var ooApp = angular.module('ooApp', [
 ooApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
     when('/', {
-      templateUrl: '../assets/main/index.html',
+      templateUrl: '../assets/calendar/index.html',
       controller: 'CalendarCtrl'
     });
 }]);
+
+ooApp.constant('angularMomentConfig', {
+  timezone: 'America/Los_Angeles'
+});

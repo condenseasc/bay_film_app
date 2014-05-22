@@ -11,6 +11,8 @@
 // about supported directives.
 //
 //= require underscore/underscore
+//= require moment
+//= require moment-timezone
 //= require jquery
 //= require angular
 //= require angular-route
@@ -18,6 +20,7 @@
 //= require angular-sanitize
 //= require ui-templates
 //= require angular-scroll/angular-scroll
+//= require angular-smooth-scroll-master/angular-smooth-scroll-1.6.0
 //= require angular-ui-utils/ui-utils
 //= require angular-strap-2-0-0-rc-4/affix/affix
 //= require angular-strap-2-0-0-rc-4/helpers/dimensions

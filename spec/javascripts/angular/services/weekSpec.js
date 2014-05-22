@@ -169,7 +169,7 @@ describe('Week', function($injector){
     });
   });
 
-  describe('datesAreEqual()', function() {
+  describe('isSameDay()', function() {
     var d1, d2, d3;
 
     beforeEach(function() {
@@ -179,11 +179,11 @@ describe('Week', function($injector){
     });
 
     it('returns true if date matches regardless of other info', function() {
-      expect( Week.datesAreEqual(d1,d2) ).toBe(true);
+      expect( Week.isSameDay(d1,d2) ).toBe(true);
     });
 
     it('does not give false positives', function() {
-      expect( Week.datesAreEqual(d2, d3) ).toBe(false);
+      expect( Week.isSameDay(d2, d3) ).toBe(false);
     });
   });
 
@@ -208,9 +208,9 @@ describe('Week', function($injector){
       var parsed2 = Week.parseDateISO8601(s2);
       var parsed3 = Week.parseDateISO8601(s3);
 
-      expect(Week.datesAreEqual(parsed1, d1)).toBe(true);
-      expect(Week.datesAreEqual(parsed2, d2)).toBe(true);
-      expect(Week.datesAreEqual(parsed3, d3)).toBe(true);
+      expect(Week.isSameDay(parsed1, d1)).toBe(true);
+      expect(Week.isSameDay(parsed2, d2)).toBe(true);
+      expect(Week.isSameDay(parsed3, d3)).toBe(true);
     });
 
   });

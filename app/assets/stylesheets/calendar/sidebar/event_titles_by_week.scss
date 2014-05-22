@@ -1,0 +1,49 @@
+
+.event-titles-list {
+
+ li {
+    text-indent: -10px;
+    padding-left: 20px;
+    padding-right: 5px;
+    line-height: 1.3;
+    font-size: 14px;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  .list-event-time {
+    color: $gray-light;
+  }
+
+  .list-venue-name {
+    
+  }
+
+  .list-date-label {
+    // padding-left: 10px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    line-height: 15px;
+    width: 100%;
+
+    // align center
+    display: block;
+    // width: 300px;
+    // position: relative;
+    // margin-left: auto;
+    // margin-right: auto;
+
+    background-color: $gray-lighter;
+
+    .date-label-text {
+      color: $gray-light;
+      display: block;
+      // padding: 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

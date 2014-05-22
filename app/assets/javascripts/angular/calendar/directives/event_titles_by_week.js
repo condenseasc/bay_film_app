@@ -9,10 +9,11 @@ ooCalendar.directive('ooEventTitlesByWeek', [function () {
   return {
     restrict: 'E',
     replace: true,
-    templateUrl: 'template/ooEventTitlesByWeek.html',
+    templateUrl: 'template/calendar/directives/event_titles_by_week.html',
     scope: {
       selectedWeekName: "@",
       loadedWeeks: "=",
+      navTo: "&"
     },
     link: {
       post: function (scope, element, attrs) {
@@ -27,10 +28,10 @@ ooCalendar.directive('ooEventTitlesByWeek', [function () {
 
         // A workaround. When selectWeek() is called, it takes a bit to load from the server.
         // This re-checks against selected.week whenever the week array updates.
+        // At the moment this doesn't work because I disabled automatically calling selectWeek
+        // on calling selectDay in favor of a general solution to loading the new position (scroll or w/e).
         scope.$watchCollection('loadedWeeks', function () {
           console.log("inside watchCollection");
-          // console.log(scope);
-          // console.log(attrs);
           scope.currentWeek = _.findWhere(scope.loadedWeeks, { page: attrs.selectedWeekName });
         });
       }

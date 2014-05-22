@@ -1,4 +1,74 @@
-angular.module('ui-templates', ['template/datepicker/datepicker.html', 'template/datepicker/day.html', 'template/datepicker/dayOriginal.html', 'template/datepicker/month.html', 'template/datepicker/popup.html', 'template/datepicker/year.html', 'template/main/index.html', 'template/ooEventTitlesByWeek.html']);
+angular.module('ui-templates', ['template/calendar/directives/event_feed.html', 'template/calendar/directives/event_titles_by_week.html', 'template/calendar/index.html', 'template/datepicker/datepicker.html', 'template/datepicker/day.html', 'template/datepicker/dayOriginal.html', 'template/datepicker/month.html', 'template/datepicker/popup.html', 'template/datepicker/year.html']);
+
+angular.module("template/calendar/directives/event_feed.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/calendar/directives/event_feed.html",
+    "<div class=\"week-container\" ng-repeat='week in weeks' id=\"week-{{week.page}}\">\n" +
+    "  <div smooth-scroll scroll-if=\"{{selected.day.getDate() === day.date.getDate()}}\" easing=\"easeOutQuart\" class=\"day-container\" ng-repeat=\"day in week.days\" id=\"day-{{day.date | date: 'd'}}\">\n" +
+    "      <div class=\"event-feed-date\" >\n" +
+    "        <div class=\"date-label-text\">{{day.date | date:'EEEE MMMM d' | uppercase}}</div>\n" +
+    "      </div>\n" +
+    "    <div class=\"event-container\" ng-repeat=\"event in day.events\" id=\"event-{{event.id}}\">\n" +
+    "      <div class=\"event-title\">{{event.title}}</div>\n" +
+    "      <div>\n" +
+    "        <span class=\"event-venue\">{{event.venue.name}}</span>\n" +
+    "        <span class=\"event-time\"> at {{event.time| ooSmallTime}}</span>\n" +
+    "      </div>\n" +
+    "      <div class=\"event-series\">In {{event.series[0].title}}</div>\n" +
+    "      <div class=\"show-credits\">{{event.show_credits}}</div>\n" +
+    "      <div class=\"show-notes\" ng-bind-html=\"event.show_notes\"></div>\n" +
+    "      <div class=\"event-body\" ng-bind-html=\"event.description\"></div>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "</div>\n" +
+    "");
+}]);
+
+angular.module("template/calendar/directives/event_titles_by_week.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/calendar/directives/event_titles_by_week.html",
+    "<div class=\"event-titles-list\">\n" +
+    "  <ul ng-repeat=\"day in currentWeek.days\">\n" +
+    "    <div class=\"list-date-label\">\n" +
+    "      <a class=\"date-label-text\" href ng-click=\"navTo({id:'day-' + day.date.getDate()})\">\n" +
+    "        {{ day.date | date:'EEEE MMMM d' | uppercase }}</a>\n" +
+    "    </div>\n" +
+    "    <li ng-repeat=\"event in day.events\">\n" +
+    "      <a class=\"event-container\" href scroll-to=\"{{'event-' + event.id}}\">\n" +
+    "        <span class=\"list-event-time\">{{event.time | ooSmallTime }}</span>\n" +
+    "        <span class=\"list-event-title\">{{event.title}} </span>\n" +
+    "        <span class=\"list-venue-name\">{{event.venue.abbreviation}} </span>\n" +
+    "      </a>\n" +
+    "    </li>\n" +
+    "  </ul>\n" +
+    "</div>");
+}]);
+
+angular.module("template/calendar/index.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/calendar/index.html",
+    "<div id=\"wrapper\" >\n" +
+    "  <div id=\"sidebar-wrapper\">\n" +
+    "    <div class=\"calendar-nav\" >\n" +
+    "      <datepicker oo-refresh-datepicker oo-check-week-on-scroll oo-highlight-selected-week\n" +
+    "      refresh-on=\"{{selected.month}}\" \n" +
+    "      date-disabled=\"isDateDisabled(date, mode)\" \n" +
+    "      ng-model=\"selected.day\">  \n" +
+    "      </datepicker>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"titles-nav\" >\n" +
+    "      <oo-event-titles-by-week selected-week-name=\"{{selected.week}}\" loaded-weeks=\"weeks\" nav-to=\"scrollTo(id)\">\n" +
+    "    </oo-event-titles-by-week>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div id=\"page-content-wrapper\">\n" +
+    "    <div class=\"content-header\"></div>\n" +
+    "\n" +
+    "    <div class=\"page-content\">\n" +
+    "      <oo-event-feed class=\"event-feed\" weeks=\"weeks\" selected=\"selected\"></oo-event-feed>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "</div>");
+}]);
 
 angular.module("template/datepicker/datepicker.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/datepicker/datepicker.html",
@@ -114,75 +184,4 @@ angular.module("template/datepicker/year.html", []).run(["$templateCache", funct
     "  </tbody>\n" +
     "</table>\n" +
     "");
-}]);
-
-angular.module("template/main/index.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/main/index.html",
-    "<div id=\"wrapper\" >\n" +
-    "\n" +
-    "    \n" +
-    "    <div id=\"sidebar-wrapper\">\n" +
-    "\n" +
-    "        <div class=\"calendar-nav\" >\n" +
-    "          <datepicker oo-refresh-datepicker oo-check-week-on-scroll oo-highlight-selected-week\n" +
-    "          refresh-on=\"{{selected.month}}\" \n" +
-    "          date-disabled=\"isDateDisabled(date, mode)\" \n" +
-    "          ng-model=\"selected.day\">  \n" +
-    "          </datepicker>\n" +
-    "\n" +
-    "        </div>\n" +
-    "          <div class=\"titles-nav\" >\n" +
-    "<!--             <div>Currently on {{selected.day | date:'MMMM d'}} and {{selected.week}}</div>\n" +
-    "            <div>on week {{selected.week}}</div>\n" +
-    " -->\n" +
-    "            <oo-event-titles-by-week selected-week-name=\"{{selected.week}}\" loaded-weeks=\"weeks\"></oo-event-titles-by-week>\n" +
-    "          </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "\n" +
-    "    <div id=\"page-content-wrapper\">\n" +
-    "      <div class=\"content-header\">\n" +
-    "<!--         <h1>Organizize</h1>\n" +
-    " -->      </div>\n" +
-    "\n" +
-    "      <div class=\"page-content inset\">\n" +
-    "\n" +
-    "          <div class=\"event-feed\">\n" +
-    "            <div ng-repeat='week in weeks'>\n" +
-    "              <div class=\"week-container\" id=\"{{week.page}}\">\n" +
-    "                <div class=\"day-container\" ng-repeat=\"day in week.days\">\n" +
-    "                    <div id=\"{{day.date | date: 'd'}}\" class=\"event-feed-date\" >\n" +
-    "                      // {{day.date | date:'EEEE, MMMM d'}} //\n" +
-    "                    </div>\n" +
-    "                  <div class=\"event-capsule\" ng-repeat=\"event in day.events\">\n" +
-    "                    <div class=\"event-feed-title\">\n" +
-    "                      {{event.title}} at {{event.venue.name}}, {{event.time|date:'MMMM d, h:mm a'}}\n" +
-    "\n" +
-    "                    </div>\n" +
-    "                    <div class=\"event-feed-body\"\n" +
-    "                      ng-bind-html=\"event.description\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "\n" +
-    "\n" +
-    "  </div>");
-}]);
-
-angular.module("template/ooEventTitlesByWeek.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("template/ooEventTitlesByWeek.html",
-    "<div class=\"event-titles-list\">\n" +
-    "  <ul ng-repeat=\"day in currentWeek.days\">\n" +
-    "    <span class=\"list-date-label\">{{ day.date | date:'EEEE, MMMM dd' }}</span>\n" +
-    "    <li ng-repeat=\"event in day.events\">\n" +
-    "      <span class=\"list-event-title\">{{event.title}} </span>\n" +
-    "      <span class=\"list-venue-name\">{{event.venue.name}} </span>\n" +
-    "    </li>\n" +
-    "  </ul>\n" +
-    "</div>");
 }]);

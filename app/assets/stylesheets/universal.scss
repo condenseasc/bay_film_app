@@ -1,0 +1,23 @@
+
+
+// universal
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+.btn {
+  border-radius: 0;
+}
+// default: uses $grid-gutter-width
+

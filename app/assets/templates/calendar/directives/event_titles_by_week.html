@@ -1,0 +1,15 @@
+<div class="event-titles-list">
+  <ul ng-repeat="day in currentWeek.days">
+    <div class="list-date-label">
+      <a class="date-label-text" href ng-click="navTo({id:'day-' + day.date.getDate()})">
+        {{ day.date | date:'EEEE MMMM d' | uppercase }}</a>
+    </div>
+    <li ng-repeat="event in day.events">
+      <a class="event-container" href scroll-to="{{'event-' + event.id}}">
+        <span class="list-event-time">{{event.time | ooSmallTime }}</span>
+        <span class="list-event-title">{{event.title}} </span>
+        <span class="list-venue-name">{{event.venue.abbreviation}} </span>
+      </a>
+    </li>
+  </ul>
+</div>

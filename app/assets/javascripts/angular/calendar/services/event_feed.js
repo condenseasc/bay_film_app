@@ -37,10 +37,11 @@ ooCalendar.factory('EventFeed', ['$q', 'Event', 'Week', 'Name', 'eventApiTransfo
         .$promise.then( function(datesResource) {
         
           var dates = [];
-
           for (var i = 0, length = datesResource.length; i < length; i++) {
-            dates[i] = Week.parseDateISO8601(datesResource[i].date);
+            dates[i] = new Date(datesResource[i].time);
           }
+
+          console.log(dates);
           
           return dates;
         });

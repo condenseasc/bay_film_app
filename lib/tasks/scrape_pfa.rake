@@ -20,6 +20,7 @@ namespace :scrape do
     EVENT_DATE_NO_IMG = "#sub_maintext div+ div"
     EVENT_TIME = ".sub_wrapper tr:nth-child(1) td:nth-child(1)"
     EVENT_BLURB = ".sub_wrapper p"
+    EVENT_SHOW_CREDITS = ".sub_wrapper tr:nth-child(1) td:nth-child(2)" #minus the title
 
     # We'll construct arrays of hashes and then put them all in the db later
     series_objects = []
@@ -73,38 +74,54 @@ namespace :scrape do
       if date.empty?
         date = doc.css( EVENT_DATE_NO_IMG ).text
       end
-
       event[:time] = Time.zone.parse("#{date}, #{time}")
-      event[:title] = doc.css( EVENT_TITLE ).text
+
+      title = doc.css( EVENT_TITLE ).text
+      event[:show_credits] = doc.css( EVENT_SHOW_CREDITS ).text.sub(title, "").strip
+      event[:title] = title
 
       # PFA makes a lot of invalid HTML
       # If I don't check for divs inside the description <p> tag,
       # I get an empty string back.
+      # (This always happens when there's an ldheader)
+      description = ""
       wrapper = doc.css( ".sub_wrapper" ).inner_html
       if /ldheader/.match(wrapper)
-        partitioned = wrapper.partition(/<div.+class=.*"ldheader">.*<\/div>/m)
-
-        # I don't have anywhere to put this yet
-        ldheader = partitioned[1]
-
-        # open that <p></p> back up manually
-        # partitioned[0].slice! '</p>'
-        event[:description] = '<p>'+partitioned[2]+'</p>'
+        description = wrapper.partition(/<div.+class=.*"ldheader">.*<\/div>/m)[2]
+        event[:show_notes] = doc.css(".ldheader").inner_html
       else
-        event[:description] = doc.css( EVENT_BLURB ).inner_html
+        description = doc.css( EVENT_BLURB ).inner_html
+        # partitioned string should be free of <p> tags
+        # so this helps the formatting below
+        description = description.gsub "<p>", ""
+        description = description.gsub "</p>", ""
       end
+
+      # format description with <p> tags instead of <br>
+      formatted_description = ""
+      d = description.split "<br>"
+      d.reject! { |string| string.strip.empty? }
+      d.each { |s| formatted_description.concat "<p>"+s+"</p>" }
+
+      event[:description] = formatted_description
     end
 
     # create events
     event_objects.each do |event|
       v = Venue.find_or_create_by(name: "Pacific Film Archive")
       s = Series.find(event[:series])
-      v.events.create!( 
+      e = v.events.create!( 
         title: event[:title], 
         time: event[:time], 
         description: event[:description],
-        series: s)
+        show_notes: event[:show_notes],
+        show_credits: event[:show_credits])
+
+      # create series association
+      e.series << s
     end
+
+    Venue.find_by(name: "Pacific Film Archive").update_attributes(abbreviation: "PFA")
   end
 
   # Task Methods

@@ -153,9 +153,9 @@ ooCalendar.factory('Week', function(){
       return bounds;
     },
 
-    datesAreEqual: function(d1, d2){
+    isSameDay: function(d1, d2){
       if (!(d1 instanceof Date && d2 instanceof Date)){
-        console.log("invalid Date input for Week.datesAreEqual, d1 and d2: "+d1+" "+d2);
+        console.log("invalid Date input for Week.isSameDay, d1 and d2: "+d1+" "+d2);
       }
 
       var value = d1.getDate() === d2.getDate() && 

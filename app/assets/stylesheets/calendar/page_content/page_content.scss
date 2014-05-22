@@ -1,0 +1,13 @@
+
+#page-content-wrapper {
+  @include make-row();
+  width: 100%;
+}
+
+.page-content {
+  @include make-md-column(9);
+}
+
+.inset {
+  padding: 20px;
+}

@@ -14,7 +14,7 @@ ooCalendar.controller('CalendarCtrl',
       $scope.activeDates = [];
       $scope.activeDatesIndex = [];
 
-      $scope.isDateDisabled = isDateDisabled;
+      var weeksLoaded = false;
 
       // load current week
       var d = new Date();
@@ -25,21 +25,38 @@ ooCalendar.controller('CalendarCtrl',
 
       $scope.$watch('selected.day', function (newValue) {
         var dateJustSelected = new Date(newValue);
+        var containingWeek = Name.page(dateJustSelected);
 
         console.log("selected.day set to: ", newValue);
 
         if (!(isWeekLoaded(dateJustSelected))) {
           loadWeek(dateJustSelected);
         }
-        // selectWeek(Name.page(dateJustSelected));
 
         if (!(isMonthLoaded(dateJustSelected))) {
           $scope.loadActiveDates(dateJustSelected);
         }
 
-        // var dayId = dt.getDate();
-        $scope.scrollTo(dateJustSelected);
-        // $location.hash(day);
+        if (containingWeek !== $scope.selected.week) {
+          selectWeek(containingWeek);
+        }
+
+        // Recursive timeout to check if week is done loading
+        // before scrolling to its id.
+        // Not totally clean, on actual load it shifts the whole
+        // column, then the scroll is triggered, kinda spastic looking.
+
+        // if (weeksLoaded) { 
+        //   $scope.scrollTo(dayIdFromDate(dateJustSelected));
+        // } else {
+        //   $timeout(function scrollToWeekOnLoad() {
+        //     if (weeksLoaded) {
+        //       $scope.scrollTo(dayIdFromDate(dateJustSelected));
+        //     } else {
+        //       $timeout(function () { scrollToWeekOnLoad(); }, 500);
+        //     }
+        //   }, 500);
+        // }
       });
 
       function selectDay(date) {
@@ -60,19 +77,20 @@ ooCalendar.controller('CalendarCtrl',
 
 
       // for use with Angular-UI-Bootstrap Datepicker
-      function isDateDisabled(date, mode) {
+      $scope.isDateDisabled = function (date, mode) {
         // checks to see if this date is in the active dates array
         // if active, returns false for not-disabled, else, returns true for disabled
         if (mode === 'day') {
           var value = $scope.activeDates.some(function (element) {
-            return Week.datesAreEqual(element, date);
+            // // moment.js comparison was noticably slower than js. odd. too bad.
+            return Week.isSameDay(element, date);
           });
 
           return !value;
         }
         if (mode === 'month') { return false; }
         if (mode === 'year') { return false; }
-      }
+      };
 
       function isMonthLoaded(date) {
         if ($scope.activeDates === undefined || $scope.activeDates.length === 0) { return false; }
@@ -83,12 +101,22 @@ ooCalendar.controller('CalendarCtrl',
         return dt.getMonth() === date.getMonth() && dt.getFullYear() === date.getFullYear();
       }
 
+      function dayIdFromDate(date) {
+        var dt = new Date(date);
+        var dayId = "day-" + dt.getDate();
+        return dayId;
+      }
+
+      function weekIdFromDate(date) {
+        var dt = new Date(date);
+        var weekId = "week-" + Name.page(dt);
+        return weekId;
+      }
 
       $scope.scrollTo = function (id) {
-        var dt = new Date(id);
-        var dayId = dt.getDate();
+        console.log("scrollTo() called with ", id);
         var old = $location.hash();
-        $location.hash(dayId);
+        $location.hash(id);
         $anchorScroll();
         //reset to old to keep any additional routing logic from kicking in
         $location.hash(old);
@@ -142,6 +170,8 @@ ooCalendar.controller('CalendarCtrl',
       // handles the async flow between EventFeed and asyncWeek, finally
       // passing the sorted events to the view logic in collatePages
       function loadWeek(d) {
+        weeksLoaded = false;
+
         EventFeed.getWeekContaining(d).$promise.then(function (event_data) {
           var days = makeDays(event_data);
           var week = {
@@ -183,6 +213,8 @@ ooCalendar.controller('CalendarCtrl',
           $scope.weeks = [];
           $scope.weeks.push(week);
         }
+        console.log("setting weeksLoaded to true");
+        weeksLoaded = true;
       }
 
       $scope.nextWeek = function () {
