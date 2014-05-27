@@ -16,3 +16,4 @@
 /tmp
 /node_modules
 /config/database.yml
+/public/system/events/**
