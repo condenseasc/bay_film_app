@@ -5,13 +5,15 @@
 // currently tuned to 0.25 * window height from the top, so a quarter of the way down.
 // whichever week wins, gets selected using its page attribute, format yyyymmdd.
 // it leaves selected.day well enough alone.
-ooCalendar.directive('ooCheckWeekOnScroll', [ '$window', '$document', function ($window, $document) {
+ooCalendar.directive('ooCalendarView', [ '$window', '$document', function ($window, $document) {
   return {
-    restrict: 'A',
+    restrict: 'E',
+    controller: 'CalendarViewCtrl',
+    require: 'ooCalendarView',
     link: {
       // post because it relies on interpolated {{id's}} for scrolling
       // just the minor annoyance of 'no method x on "undefined"' otherwise
-      post: function (scope, element, attrs) {
+      post: function (scope, element, attrs, CalendarViewCtrl) {
         var heightRatio = angular.isDefined(attrs.heightRatio) ? attrs.heightRatio : 0.25;
 
         function findVisible(referenceHeight, css) {
@@ -31,15 +33,20 @@ ooCalendar.directive('ooCheckWeekOnScroll', [ '$window', '$document', function (
           scrollTop = $(window).scrollTop();
           dividingLine = scrollTop + (windowHeight * heightRatio);
 
-
           weekId = findVisible(dividingLine, ".week-container");
-          dayId = findVisible(dividingLine, "#" + weekId + " .day-container");
-          eventId = findVisible(dividingLine, "#" + dayId + " .event-container");
 
-          // vistigial - excise after transition to visible and selected as separate variables.
-          weekName = weekId.slice(5);
-          if (weekName !== scope.selected.week) {
-            scope.$apply(scope.selectWeek(weekName));
+          if (CalendarViewCtrl.getVisibleWeek !== weekId) {
+            CalendarViewCtrl.updateVisibleWeek(weekId);
+            dayId = findVisible(dividingLine, "#" + weekId + " .day-container");
+
+            if (CalendarViewCtrl.getVisibleDay !== dayId) {
+              CalendarViewCtrl.updateVisibleDay(dayId);
+              eventId = findVisible(dividingLine, "#" + dayId + " .event-container");
+
+              if (CalendarViewCtrl.getVisibleEvent !== eventId) {
+                CalendarViewCtrl.updateVisibleEvent(eventId);
+              }
+            }
           }
         });
       }

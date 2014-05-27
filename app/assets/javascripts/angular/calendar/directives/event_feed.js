@@ -5,12 +5,13 @@ ooCalendar.directive('ooEventFeed', [ 'smoothScroll', function (smoothScroll) {
   return {
     restrict: 'E',
     replace: true,
+    require: '^ooCalendarView',
     scope: {
       weeks: '=',
       selectedDay: '='
     },
     templateUrl: 'template/calendar/directives/event_feed.html',
-    link: function (scope, element, attrs) {
+    link: function (scope, element, attrs, CalendarViewCtrl) {
       var options = {
         // duration: 700,
         easing: 'easeOutQuad',
