@@ -2,6 +2,10 @@ class Event < ActiveRecord::Base
   # attr_accessible :title, :time, :description
   belongs_to :venue
   has_and_belongs_to_many :series
+  has_attached_file :still, styles: { feed_medium: "300" }
+
+  validates_attachment :still, 
+    content_type: { content_type: ["image/jpeg", "image/png", "image/gif"] }
 
   validates :title, presence: true
   validates :time, presence: true

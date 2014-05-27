@@ -17,7 +17,8 @@ namespace :scrape do
     # events on series page
     EVENT_INNER = ".event-inner-inner"
     # event selectors, inside event-inner
-    EVENT_IMAGE = "views-field-field-event-image-fid img"
+    EVENT_IMAGE = ".views-field-field-event-image-fid img"
+    EVENT_THUMB = ".imagecache-listing_mini_default"
     EVENT_TITLE = ".event-title span"
     EVENT_TIME = ".views-field-field-event-date-value"
     EVENT_LOC = ".views-field-field-event-venue-nid"
@@ -133,7 +134,8 @@ namespace :scrape do
           location_notes: event.css(EVENT_LOC).inner_html,
           show_credits: show_credits,
           show_notes: show_notes,
-          admission: event.css(EVENT_ADMISSION).inner_html
+          admission: event.css(EVENT_ADMISSION).inner_html,
+          still: event.css(EVENT_THUMB).attr("src").inner_html
         }
         
         events_arr[i] = e
@@ -154,7 +156,8 @@ namespace :scrape do
         location_notes: event[:location_notes],
         show_credits: event[:show_credits],
         show_notes: event[:show_notes],
-        admission: event[:admission])
+        admission: event[:admission],
+        still: event[:still])
 
       # create association
       e.series << s
@@ -162,4 +165,7 @@ namespace :scrape do
 
     Venue.find_by(name: "Yerba Buena Center for the Arts").update_attributes(abbreviation: "YBCA")
   end
+  # def find_first_differing( string_array )
+
+  # end
 end

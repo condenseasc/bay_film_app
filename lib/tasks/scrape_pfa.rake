@@ -21,6 +21,7 @@ namespace :scrape do
     EVENT_TIME = ".sub_wrapper tr:nth-child(1) td:nth-child(1)"
     EVENT_BLURB = ".sub_wrapper p"
     EVENT_SHOW_CREDITS = ".sub_wrapper tr:nth-child(1) td:nth-child(2)" #minus the title
+    EVENT_IMG = ".media img"
 
     # We'll construct arrays of hashes and then put them all in the db later
     series_objects = []
@@ -104,6 +105,13 @@ namespace :scrape do
       d.each { |s| formatted_description.concat "<p>"+s+"</p>" }
 
       event[:description] = formatted_description
+      puts event[:title]
+
+      still = doc.css(EVENT_IMG)
+      still.length == 0 ? event[:still] = nil : event[:still] = still.attr("src").inner_html
+
+            puts event[:still]
+
     end
 
     # create events
@@ -115,7 +123,8 @@ namespace :scrape do
         time: event[:time], 
         description: event[:description],
         show_notes: event[:show_notes],
-        show_credits: event[:show_credits])
+        show_credits: event[:show_credits],
+        still: event[:still])
 
       # create series association
       e.series << s

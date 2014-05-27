@@ -1,9 +1,19 @@
 
-.event-titles-list {
+.week-list {
+
+  margin: 10px;
+  width: 280px;
+  background-color: rgb(253,252,244);
+  background-image: none;
+  box-shadow: 0 3px 3px 0 rgba(0,0,0,0.15);
+
+  .day-list {
+    padding: 10px 0;
+  }
 
  li {
     text-indent: -10px;
-    padding-left: 20px;
+    padding-left: 15px;
     padding-right: 5px;
     line-height: 1.3;
     font-size: 14px;
@@ -28,6 +38,7 @@
     letter-spacing: 2px;
     line-height: 15px;
     width: 100%;
+    // padding: 10px 0 3px 0;
 
     // align center
     display: block;
@@ -36,7 +47,7 @@
     // margin-left: auto;
     // margin-right: auto;
 
-    background-color: $gray-lighter;
+    // background-color: $gray-lighter;
 
     .date-label-text {
       color: $gray-light;

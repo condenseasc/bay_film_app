@@ -29,6 +29,8 @@ module BayFilmApp
     config.assets.paths << Rails.root.join('vendor', 'assets', 'bower_components')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'templates')
 
+    # config.paperclip_defaults = {}
+
   end
 end
 

@@ -8,6 +8,7 @@ angular.module("template/calendar/directives/event_feed.html", []).run(["$templa
     "        <div class=\"date-label-text\">{{day.date | date:'EEEE MMMM d' | uppercase}}</div>\n" +
     "      </div>\n" +
     "    <div class=\"event-container\" ng-repeat=\"event in day.events\" id=\"event-{{event.id}}\">\n" +
+    "      <img class=\"event-still\" ng-src=\"{{event.still_url_medium}}\">\n" +
     "      <div class=\"event-title\">{{event.title}}</div>\n" +
     "      <div>\n" +
     "        <span class=\"event-venue\">{{event.venue.name}}</span>\n" +
@@ -25,10 +26,10 @@ angular.module("template/calendar/directives/event_feed.html", []).run(["$templa
 
 angular.module("template/calendar/directives/event_titles_by_week.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/calendar/directives/event_titles_by_week.html",
-    "<div class=\"event-titles-list\">\n" +
-    "  <ul ng-repeat=\"day in currentWeek.days\">\n" +
+    "<div ng-repeat=\"week in loadedWeeks\" class=\"week-list\" id=\"list-weeek-{{week.page}}\">\n" +
+    "  <ul class=\"day-list\" ng-repeat=\"day in week.days\">\n" +
     "    <div class=\"list-date-label\">\n" +
-    "      <a class=\"date-label-text\" href ng-click=\"navTo({id:'day-' + day.date.getDate()})\">\n" +
+    "      <a class=\"date-label-text\" href scroll-to=\"{{'day' + day.date.getDate()}}\">\n" +
     "        {{ day.date | date:'EEEE MMMM d' | uppercase }}</a>\n" +
     "    </div>\n" +
     "    <li ng-repeat=\"event in day.events\">\n" +
@@ -64,7 +65,7 @@ angular.module("template/calendar/index.html", []).run(["$templateCache", functi
     "    <div class=\"content-header\"></div>\n" +
     "\n" +
     "    <div class=\"page-content\">\n" +
-    "      <oo-event-feed class=\"event-feed\" weeks=\"weeks\" selected=\"selected\"></oo-event-feed>\n" +
+    "      <oo-event-feed class=\"event-feed\" weeks=\"weeks\" selected-day=\"selected.day\"></oo-event-feed>\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>");

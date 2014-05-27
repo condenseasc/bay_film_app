@@ -2,7 +2,7 @@
 /*global it, describe, inject, beforeEach, expect*/
 
 describe('ooSidebarEventTitlesByWeek', function () {
-  var $compile, $controller, $rootScope, $scope, createController, weekOne, weekTwo;
+  var $compile, $controller, $rootScope, $scope, $httpBackend, createController, weekOne, weekTwo;
 
   beforeEach(module('ooApp'));
   beforeEach(module('ooCalendar'));
@@ -82,10 +82,10 @@ describe('ooSidebarEventTitlesByWeek', function () {
 
     $httpBackend.when('GET').respond(function(method, url, data, headers) {
       var response = [];
-      return response;
       if (url.match(/20140817/)){
         response[0] = 200;
         response[1] = weekOne;
+        console.log("response gets made");
       }
       else if ( url.match(/20140824/)){
         response[0] = 200;
@@ -95,6 +95,7 @@ describe('ooSidebarEventTitlesByWeek', function () {
         response[0] = 200;
         return response;
       }
+      console.log("response: ", response);
       return response;
     });
 
@@ -112,7 +113,8 @@ describe('ooSidebarEventTitlesByWeek', function () {
     beforeEach(function () {
       CalendarCtrl = createController();
       $httpBackend.flush();
-      element = $compile("<oo-sidebar-event-titles-by-week></oo-sidebar-event-titles-by-week>")($scope);
+      element = $compile('<oo-event-titles-by-week loaded-weeks="weeks" selected-week-name="{{selected.week}}" nav-to="scrollTo(id)"></oo-event-titles-by-week>')($scope);
+
       $scope.$digest();
     });
 
@@ -120,10 +122,10 @@ describe('ooSidebarEventTitlesByWeek', function () {
       $scope.selectDay(new Date(2014, 7, 19));
       $httpBackend.flush();
 
-      console.log(element);
-      console.log($scope);
+      console.log(element.html());
+      console.log(element.scope());
 
-      expect(element.css(".sidebar-event-title").html()).toEqual("Arsenal");
+      expect(element.css(".list-event-title").html()).toEqual("Arsenal");
     });
   });
 

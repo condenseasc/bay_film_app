@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520055251) do
+ActiveRecord::Schema.define(version: 20140527011613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,11 @@ ActiveRecord::Schema.define(version: 20140520055251) do
     t.string   "show_credits"
     t.string   "admission"
     t.string   "location_notes"
+    t.string   "still_file_name"
+    t.string   "still_content_type"
+    t.integer  "still_file_size"
+    t.datetime "still_updated_at"
+    t.string   "still_fingerprint"
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id", using: :btree

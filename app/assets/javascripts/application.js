@@ -11,8 +11,6 @@
 // about supported directives.
 //
 //= require underscore/underscore
-//= require moment
-//= require moment-timezone
 //= require jquery
 //= require angular
 //= require angular-route

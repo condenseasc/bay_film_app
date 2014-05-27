@@ -5,7 +5,7 @@
 // Uses the selected week to copy the current week and send it to the template
 // to be iterated over. So far no other processing of week data is in place,
 // the template gets the whole bundle and pulls out titles, venues, dates, etc.
-ooCalendar.directive('ooEventTitlesByWeek', [function () {
+ooCalendar.directive('ooEventTitlesByWeek', ['$timeout', function ($timeout) {
   return {
     restrict: 'E',
     replace: true,
@@ -16,6 +16,13 @@ ooCalendar.directive('ooEventTitlesByWeek', [function () {
       navTo: "&"
     },
     link: {
+      // so instead, have it repeat over all weeks objects, but
+      // focus on the relevant week, the one currently 'on view'
+      // the week directive should scroll automatically to the beginning of next week
+      // when visible week changes. Otherwise it can have a simpler and separate mechanism,
+      // if any, to keep the visible date in view in the sidebar
+      // Maybe one that, when you scroll past to a movie not on the list
+      // it catches up, scrolling to that day
       post: function (scope, element, attrs) {
         var currentWeek;
         attrs.$observe('selectedWeekName', function (newValue) {
