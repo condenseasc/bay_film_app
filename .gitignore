@@ -15,5 +15,5 @@
 /log/*.log
 /tmp
 /node_modules
-# /config/database.yml
+/config/database.yml
 /public/system/events/**/*
