@@ -126,15 +126,15 @@ namespace :scrape do
         end
 
         e = {
-          title: event.css(EVENT_TITLE).text,
+          title: event.css(EVENT_TITLE).text.strip,
           description: description,
           time: time,
           series_id: series[:id],
           url: series[:url] + EVENT_URL_SUFFIX,
           location_notes: event.css(EVENT_LOC).inner_html,
-          show_credits: show_credits,
-          show_notes: show_notes,
-          admission: event.css(EVENT_ADMISSION).inner_html,
+          show_credits: show_credits.strip,
+          show_notes: show_notes.strip,
+          admission: event.css(EVENT_ADMISSION).inner_html.strip,
           still: event.css(EVENT_THUMB).attr("src").inner_html
         }
         

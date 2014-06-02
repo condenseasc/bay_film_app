@@ -1,5 +1,5 @@
 'use strict';
-/* global angular, console */
+/* global angular, console, ooCalendar*/
 
 ooCalendar.controller('CalendarCtrl',
   ['$scope', '$q', '$location', '$timeout', '$anchorScroll', '$rootScope', '$window', '$document', 'Event', 'EventFeed', 'Week', 'Name',

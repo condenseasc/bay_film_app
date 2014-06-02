@@ -1,5 +1,5 @@
 'use strict';
-/*global ooCalendar, window*/
+/*global ooCalendar, window, angular, _, $*/
 
 // every time we scroll, this directive checks the week-container visible in the event-feed,
 // currently tuned to 0.25 * window height from the top, so a quarter of the way down.

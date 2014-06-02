@@ -18,7 +18,8 @@ end
 group :test do
 	gem 'selenium-webdriver', '~> 2.0'
 	gem 'capybara', '~> 2.1.0'
-	gem 'factory_girl_rails', '~> 4.2.1'
+	gem 'factory_girl_rails'
+	gem 'factory_girl_json'
 	gem 'database_cleaner', github: 'bmabey/database_cleaner'
 	gem 'libnotify', '~> 0.8.0'
 	gem 'jasmine'

@@ -5,7 +5,8 @@
 }
 
 .page-content {
-  @include make-md-column(9);
+  @include make-md-column(11);
+  @include make-lg-column(9);
 }
 
 .inset {

@@ -1,6 +1,7 @@
 
 .event-feed {
   border-style: none;
+  // background-image: none;
   // border-color: Navy;
 }
 
@@ -8,20 +9,40 @@
   border-style: none;
 }
 
+.week-container {
+  background-image: $noise-image-02;
+  margin-bottom: 20px;
+  padding-top: 10px;
+}
+
 .event-feed-date {
+  position: relative;
   background-color: yellow;
   display: block;
-  width: 100%;
+  // width: 100%;
+  margin: 0 -8px;
   font-size: 12px;
   text-align: center;
   letter-spacing: 2px;
   line-height: 30px;
-  margin: 0;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .15);
+  z-index: 9999;
 
   // .date-label-text {
   //   width: 
   //   text-align: justify;
   // }
+}
+
+.event-feed-date::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: $gray-light $gray-light transparent transparent;
+  border-style: solid;
+  border-width: 4px 4px;
+  left: 0;
 }
 
 .event-container {
@@ -31,18 +52,65 @@
   // border-color: OrangeRed;
 }
 
-.event-title {
-  background-color: rgba(255,102,102,.6);
+.event-top-line {
+  margin-left: -10px;
+
+  .event-title {
+    position: relative;
+    background-color: $title-banner-color;
+    padding: 2px 5px 2px 10px;
+    height: 20px;
+    display: inline;
+    width: auto;
+  }
+
+  .event-title::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px;
+    border-color: $title-banner-color $credits-banner-color $credits-banner-color $title-banner-color;
+    right: -20px;
+    top: 0;
+  }
+
+  .show-credits {
+    position: relative;
+    background-color: $credits-banner-color;
+    display: inline;
+    margin-left: 20px;
+    padding: 2px 5px;
+    height: 20px;
+    width: auto;
+  }
+  .show-credits::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px;
+    border-color: $credits-banner-color transparent transparent $credits-banner-color;
+    right: -20px;
+    top: 0;
+  }
 }
 
 .event-still {
   float: right;
+  max-width: 100%;
+  padding: 0 0 0 10px;
+}
+
+.event-body {
+  padding: 0 10px 0 0;
+  text-align: justify;
 }
 
 .show-notes {
   color: red;
 }
 
-.show-credits {
-  color: blue;
-}
+

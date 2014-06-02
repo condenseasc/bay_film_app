@@ -1,20 +1,24 @@
 
 .week-list {
 
-  margin: 10px;
-  width: 280px;
-  background-color: rgb(253,252,244);
-  background-image: none;
-  box-shadow: 0 3px 3px 0 rgba(0,0,0,0.15);
+  margin: $sidebar-gutter $sidebar-gutter+10px $sidebar-gutter $sidebar-gutter;
+  width: $sidebar-width - (10px + 2 * $sidebar-gutter);
+  // background-color: $sidebar-color;
+  // background-color: rgb(255, 255, 255);
+  // background-color: rgb(255, 255, 255);
+  // background-image: $noise-image-02;
+  background-color: rgba(240, 240, 240, .3);
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .15);
 
   .day-list {
-    padding: 10px 0;
+    padding: 10px;
   }
 
  li {
+    display: inline-block;
     text-indent: -10px;
-    padding-left: 15px;
-    padding-right: 5px;
+    padding-left: 10px;
+    // padding: 0 30px 0 10px;
     line-height: 1.3;
     font-size: 14px;
   }
@@ -25,11 +29,21 @@
   }
 
   .list-event-time {
+    display: inline-block;
     color: $gray-light;
   }
 
+  .list-event-title {
+    width: 100%;
+  }
+
   .list-venue-name {
-    
+    // display: inline-block;
+    font-size: 10px;
+    padding: 0 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: $gray-lighter;
   }
 
   .list-date-label {

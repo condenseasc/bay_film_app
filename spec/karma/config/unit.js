@@ -17,9 +17,9 @@ module.exports = function(config) {
       APPLICATION_SPEC,
       'http://code.angularjs.org/1.2.7/angular-mocks.js',
       'app/assets/javascripts/angular/*.js',
-      'app/assets/javascripts/jasmine_examples/*.js',
       'spec/javascripts/helpers/**/*[hH]elper.js',
-      'spec/javascripts/**/*[sS]pec.{coffee,js}'
+      'spec/javascripts/**/*[sS]pec.{coffee,js}',
+      'app/assets/templates/**/*.html'
     ],
 
     // list of files to exclude
@@ -43,7 +43,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
@@ -70,9 +70,26 @@ module.exports = function(config) {
     singleRun: false,
 
     // Preprocessors
-    // preprocessors: {
-    //     '/**/*.coffee':'coffee'
-    // }
+    preprocessors: {
+        '**/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+      // strip this from the file path
+      stripPrefix: 'app/assets/templates/',
+      // prepend this to the
+      prependPrefix: 'template/',
+
+      // // or define a custom transform function
+      // cacheIdFromPath: function(filepath) {
+      //   return cacheId;
+      // },
+
+      // setting this option will create only a single module that contains templates
+      // from all the files, so you can load them all with module('foo')
+      moduleName: 'karma-templates'
+    }
+
 
   });
 };

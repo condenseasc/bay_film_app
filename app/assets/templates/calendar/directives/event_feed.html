@@ -5,13 +5,15 @@
       </div>
     <div class="event-container" ng-repeat="event in day.events" id="event-{{event.id}}">
       <img class="event-still" ng-src="{{event.still_url_medium}}">
-      <div class="event-title">{{event.title}}</div>
-      <div>
-        <span class="event-venue">{{event.venue.name}}</span>
-        <span class="event-time"> at {{event.time| ooSmallTime}}</span>
+      <div class="event-top-line">
+        <div class="event-title">{{event.title}}</div
+        ><div class="show-credits">{{event.show_credits}}</div>
       </div>
-      <div class="event-series">In {{event.series[0].title}}</div>
-      <div class="show-credits">{{event.show_credits}}</div>
+      <div>
+        <span class="event-time">{{event.time| ooSmallTime}}</span>
+        <span class="event-venue"> at {{event.venue.name}}</span>
+      </div>
+      <div class="event-series">In: {{event.series[0].title}}</div>
       <div class="show-notes" ng-bind-html="event.show_notes"></div>
       <div class="event-body" ng-bind-html="event.description"></div>
     </div>

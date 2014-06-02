@@ -9,13 +9,15 @@ angular.module("template/calendar/directives/event_feed.html", []).run(["$templa
     "      </div>\n" +
     "    <div class=\"event-container\" ng-repeat=\"event in day.events\" id=\"event-{{event.id}}\">\n" +
     "      <img class=\"event-still\" ng-src=\"{{event.still_url_medium}}\">\n" +
-    "      <div class=\"event-title\">{{event.title}}</div>\n" +
-    "      <div>\n" +
-    "        <span class=\"event-venue\">{{event.venue.name}}</span>\n" +
-    "        <span class=\"event-time\"> at {{event.time| ooSmallTime}}</span>\n" +
+    "      <div class=\"event-top-line\">\n" +
+    "        <div class=\"event-title\">{{event.title}}</div\n" +
+    "        ><div class=\"show-credits\">{{event.show_credits}}</div>\n" +
     "      </div>\n" +
-    "      <div class=\"event-series\">In {{event.series[0].title}}</div>\n" +
-    "      <div class=\"show-credits\">{{event.show_credits}}</div>\n" +
+    "      <div>\n" +
+    "        <span class=\"event-time\">{{event.time| ooSmallTime}}</span>\n" +
+    "        <span class=\"event-venue\"> at {{event.venue.name}}</span>\n" +
+    "      </div>\n" +
+    "      <div class=\"event-series\">In: {{event.series[0].title}}</div>\n" +
     "      <div class=\"show-notes\" ng-bind-html=\"event.show_notes\"></div>\n" +
     "      <div class=\"event-body\" ng-bind-html=\"event.description\"></div>\n" +
     "    </div>\n" +

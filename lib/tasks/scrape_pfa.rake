@@ -35,7 +35,7 @@ namespace :scrape do
     series_urls.each_with_index do | series_url, i |
       doc = Nokogiri::HTML(open( series_url ))
       doc = fix_links(doc, series_url)
-      title = doc.css( SERIES_TITLE ).text
+      title = doc.css( SERIES_TITLE ).text.strip
       descr = doc.css( SERIES_DESCRIPTION )
 
       descr = descr.inner_html
@@ -79,7 +79,7 @@ namespace :scrape do
 
       title = doc.css( EVENT_TITLE ).text
       event[:show_credits] = doc.css( EVENT_SHOW_CREDITS ).text.sub(title, "").strip
-      event[:title] = title
+      event[:title] = title.strip
 
       # PFA makes a lot of invalid HTML
       # If I don't check for divs inside the description <p> tag,
@@ -89,7 +89,7 @@ namespace :scrape do
       wrapper = doc.css( ".sub_wrapper" ).inner_html
       if /ldheader/.match(wrapper)
         description = wrapper.partition(/<div.+class=.*"ldheader">.*<\/div>/m)[2]
-        event[:show_notes] = doc.css(".ldheader").inner_html
+        event[:show_notes] = doc.css(".ldheader").inner_html.strip
       else
         description = doc.css( EVENT_BLURB ).inner_html
         # partitioned string should be free of <p> tags
@@ -110,13 +110,13 @@ namespace :scrape do
       still = doc.css(EVENT_IMG)
       still.length == 0 ? event[:still] = nil : event[:still] = still.attr("src").inner_html
 
-            puts event[:still]
+            # puts event[:still]
 
     end
 
     # create events
     event_objects.each do |event|
-      v = Venue.find_or_create_by(name: "Pacific Film Archive")
+      v = Venue.find_or_create_by(name: "Pacific Film Archive Theater")
       s = Series.find(event[:series])
       e = v.events.create!( 
         title: event[:title], 
@@ -130,7 +130,7 @@ namespace :scrape do
       e.series << s
     end
 
-    Venue.find_by(name: "Pacific Film Archive").update_attributes(abbreviation: "PFA")
+    Venue.find_by(name: "Pacific Film Archive Theater").update_attributes(abbreviation: "PFA")
   end
 
   # Task Methods
