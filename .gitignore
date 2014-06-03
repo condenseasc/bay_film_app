@@ -14,7 +14,14 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Use node and bower
 /node_modules
 /vendor/assets/bower_components
+
+# Secrets, passwords; I'm keeping /config/initializers/secret_token.rb
 /config/database.yml
+.secret
+
+# Ignore paperclip event image directory
 /public/system/events/**/*

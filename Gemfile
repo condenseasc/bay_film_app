@@ -23,6 +23,8 @@ group :test do
 	gem 'database_cleaner', github: 'bmabey/database_cleaner'
 	gem 'libnotify', '~> 0.8.0'
 	gem 'jasmine'
+	gem 'faker', '~> 1.2.0'
+
 end
 
 gem 'bootstrap-sass', '~> 3.0.3.0'
@@ -35,7 +37,6 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'active_model_serializers'
 
-gem 'faker', '~> 1.2.0'
 gem 'nokogiri', '~> 1.6.1'
 gem 'mechanize', '~> 2.6.0'
 gem 'bower-rails'
@@ -50,10 +51,10 @@ end
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
-# gem 'capistrano', group: :development
+gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
