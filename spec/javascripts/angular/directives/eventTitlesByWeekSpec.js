@@ -22,6 +22,8 @@ describe('ooSidebarEventTitlesByWeek', function () {
     weekOne = [{"id":105,"time":"2014-08-17T19:00:00.000-05:00","title":"Arsenal","description":"","venue_id":1,"series_id":10,"venue":{"id":1,"name":"Pacific Film Archive","abbreviation":"PFA","city":null},"series":{"id":10,"title":"Over the Top and into the Wire: WWI on Film","description":""}}];
     weekTwo = [{"id":69,"time":"2014-08-17T21:00:00.000-05:00","title":"Sansho the Bailiff","description":"","venue_id":1,"series_id":5,"venue":{"id":1,"name":"Pacific Film Archive","abbreviation":"PFA","city":null},"series":{"id":5,"title":"Kenji Mizoguchi: A Cinema of Totality","description":""}}];
 
+    // var week_1 = JSON.parse(["days":["date":""]])
+
       // '[{
       //   "id": 105,
       //   "time": "2014-08-17T19:00:00.000-05:00",

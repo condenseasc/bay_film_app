@@ -17,4 +17,12 @@ FactoryGirl.define do
     sequence(:title) { |n| "Films from Territory #{n}" }
     description "Lorem ipsum"
   end
+
+  # class WeekSerializer
+  #   def initialize
+  #   end
+
+  #   def to_json
+  #   end
+  # end
 end
