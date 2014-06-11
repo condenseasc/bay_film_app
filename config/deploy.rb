@@ -53,10 +53,10 @@ namespace :deploy do
     end
   end
 
-  desc 'Setup configs'
-  task :setup_config do
-    on roles(:app),
-  end
+  # desc 'Setup configs'
+  # task :setup_config do
+  #   on roles(:app),
+  # end
 
   after :publishing, :restart
 
