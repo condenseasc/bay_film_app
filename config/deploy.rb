@@ -2,13 +2,13 @@
 lock '3.2.1'
 
 set :application, 'bay-projection'
-set :repo_url, 'git@github.com:sethdn/bay-projection.git'
+set :repo_url, "git@github.com:sethdn/#{fetch(:application)}.git"
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/var/www/bay-projection'
+set :deploy_to, "/var/www/#{fetch(:application)}"
 # set :deploy_to, "/var/www/bay-projection"
 
 
@@ -53,10 +53,14 @@ namespace :deploy do
     end
   end
 
-  # desc 'Setup configs'
-  # task :setup_config do
-  #   on roles(:app),
+# I ended up just doing it manually and keeping the conf in etc/nginx/sites-available
+  # desc 'Link Nginx'
+  # task :nginx do
+  #   on roles(:app) do
+  #     execute :ln, '-nfs', "#{current_path}/config/nginx.conf", "/etc/nginx/sites-enabled/#{fetch(:application)}"
+  #   end
   # end
+  # after :finished, :nginx 
 
   after :publishing, :restart
 
