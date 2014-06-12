@@ -9,6 +9,8 @@ task :check_write_permissions do
   end
 end
 
+# I haven't figured out how to check permission to execute ln
+# which is all deployer has sudo NOPASSWD access to
 desc "Check deployer sudo access"
 task :check_deployer_sudo do
   on roles(:all) do |host|
@@ -23,8 +25,5 @@ task :check_deployer_sudo do
     else
       error "/etc/init.d/unicorn_#{fetch(:application)} is not writable on #{host}"
     end
-
-
-
   end
 end
