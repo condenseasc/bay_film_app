@@ -96,6 +96,14 @@ namespace :deploy do
   end
   after "deploy:finished", "deploy:setup_config"
 
+  task :setup_unicorn_directories do
+    on roles(:app) do
+      execute "mkdir #{deploy_to}/current/tmp/pids"
+      execute "mkdir #{deploy_to}/current/unicorn"
+    end
+  end
+  after "deploy:finished", "deploy:setup_unicorn_directories"
+
   task :symlink_config do
     on roles(:app) do
       execute "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
