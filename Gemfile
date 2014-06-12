@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+
+group :production, :development, :test do
+  gem 'pg', '~> 0.17.0'
+end
+
 gem 'rails', '4.1.0'
-gem 'pg', '~> 0.17.0'
 gem 'angularjs-rails', '~> 1.2.7'
 gem 'paperclip', '~> 4.1.1'
 
