@@ -43,34 +43,69 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
 
 
+# namespace :deploy do
+
+#   desc 'Restart application'
+#   task :restart do
+#     on roles(:app), in: :sequence, wait: 5 do
+#       # Your restart mechanism here, for example:
+#       # execute :touch, release_path.join('tmp/restart.txt')
+#     end
+#   end
+
+# # I ended up just doing it manually and keeping the conf in etc/nginx/sites-available
+#   # desc 'Link Nginx'
+#   # task :nginx do
+#   #   on roles(:app) do
+#   #     execute :ln, '-nfs', "#{current_path}/config/nginx.conf", "/etc/nginx/sites-enabled/#{fetch(:application)}"
+#   #   end
+#   # end
+#   # after :finished, :nginx 
+
+#   after :publishing, :restart
+
+#   after :restart, :clear_cache do
+#     on roles(:web), in: :groups, limit: 3, wait: 10 do
+#       # Here we can do anything such as:
+#       # within release_path do
+#       #   execute :rake, 'cache:clear'
+#       # end
+#     end
+#   end
+# end
+
+
 namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+  %w[start stop restart].each do |command|
+    desc "#{command} unicorn server"
+    task command, roles: :app, except: {no_release: true} do
+      execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
     end
   end
 
-# I ended up just doing it manually and keeping the conf in etc/nginx/sites-available
-  # desc 'Link Nginx'
-  # task :nginx do
-  #   on roles(:app) do
-  #     execute :ln, '-nfs', "#{current_path}/config/nginx.conf", "/etc/nginx/sites-enabled/#{fetch(:application)}"
-  #   end
-  # end
-  # after :finished, :nginx 
+  task :setup_config, roles: :app do
+    execute :sudo, "ln -nfs #{current_path}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
+    execute :sudo, "ln -nfs #{current_path}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
+    # run "mkdir -p #{shared_path}/config"
+    # put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
+    puts "Now edit the config files in #{shared_path}."
+  end
+  after "deploy:setup", "deploy:setup_config"
 
-  after :publishing, :restart
+  task :symlink_config, roles: :app do
+    execute "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  end
+  after "deploy:finalize_update", "deploy:symlink_config"
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  desc "Make sure local git is in sync with remote."
+  task :check_revision, roles: :web do
+    unless `git rev-parse HEAD` == `git rev-parse origin/master`
+      puts "WARNING: HEAD is not the same as origin/master"
+      puts "Run `git push` to sync changes."
+      exit
     end
   end
-
+  before "deploy", "deploy:check_revision"
 end
+
+
