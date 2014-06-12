@@ -79,7 +79,7 @@ namespace :deploy do
   %w[start stop restart].each do |command|
     desc "#{command} unicorn server"
     task command do
-      on roles(:app), except: {no_release: true}
+      on roles(:app), except: {no_release: true} do
         execute "/etc/init.d/unicorn_#{fetch(:application)} #{command}"
       end
     end
@@ -97,7 +97,7 @@ namespace :deploy do
   after "deploy:setup", "deploy:setup_config"
 
   task :symlink_config do
-    on roles(:app)
+    on roles(:app) do
       execute "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
   end
