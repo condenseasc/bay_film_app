@@ -94,14 +94,14 @@ namespace :deploy do
       puts "Now edit the config files in #{shared_path}."
     end
   end
-  after "deploy:setup", "deploy:setup_config"
+  after "deploy:finished", "deploy:setup_config"
 
   task :symlink_config do
     on roles(:app) do
       execute "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     end
   end
-  after "deploy:finalize_update", "deploy:symlink_config"
+  after "deploy:finished", "deploy:symlink_config"
 
   desc "Make sure local git is in sync with remote."
   task :check_revision do
