@@ -27,3 +27,10 @@ task :check_deployer_sudo do
     end
   end
 end
+
+desc "Check ENV"
+task :check_env do
+  on roles(:all) do 
+    info "Environment: #{fetch(:application)}"
+  end
+end
