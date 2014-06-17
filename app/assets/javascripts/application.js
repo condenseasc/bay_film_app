@@ -21,5 +21,4 @@
 //= require angular-ui-utils/ui-utils
 //= require angular-bootstrap/position/position
 //= require angular-bootstrap/datepicker/datepicker
-//= require main
 //= require_tree .
