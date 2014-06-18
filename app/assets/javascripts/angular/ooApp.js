@@ -8,7 +8,7 @@ var ooApp = angular.module('ooApp', [
 ooApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
     when('/', {
-      templateUrl: "<%= asset_path('calendar/index.html') %>",
+      templateUrl: '../assets/calendar/index.html',
       controller: 'CalendarCtrl'
     });
 }]);

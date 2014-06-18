@@ -2,10 +2,6 @@
   "name": "bay_film",
   "dependencies": {
     "underscore": "^1.6.0",
-    "angular-scroll": "*",
-    "angular-ui-utils": "*",
-    "moment": "^2.6.0",
-    "moment-timezone": "^0.0.6",
-    "angular-moment": "*"
+    "angular-ui-utils": "*"
   }
 }

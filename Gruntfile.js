@@ -5,7 +5,7 @@ module.exports = function(grunt){
     html2js: {
       options: {
         base: '.',
-        module: 'ui-templates',
+        module: 'angular-templates',
         rename: function (modulePath) {
           var moduleName = modulePath.replace('app/assets/templates/', '').replace('.html', '');
           return 'template' + '/' + moduleName + '.html';
@@ -13,7 +13,7 @@ module.exports = function(grunt){
       },
       main: {
         src: ['app/assets/templates/**/*.html'],
-        dest: 'vendor/assets/templates/ui-templates.js'
+        dest: 'lib/assets/templates/angular-templates.js'
       }
     },
 
