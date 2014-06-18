@@ -1,8 +1,10 @@
 desc "install and run grunt html2js task"
 task :install_and_run_grunt do 
   on roles :all do
+    execute "cd #{current_path}"
   	execute "npm install #{current_path}/package.json --production"
   	execute "grunt --gruntfile #{current_path}/Gruntfile.js html2js"
+    execute "cd ~/"
   end
 end
 after "deploy:updated", :install_and_run_grunt
