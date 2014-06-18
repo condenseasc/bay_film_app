@@ -1,0 +1,24 @@
+<div id="wrapper" >
+  <div id="sidebar-wrapper">
+    <div class="calendar-nav" >
+      <datepicker oo-refresh-datepicker oo-check-week-on-scroll oo-highlight-selected-week
+      refresh-on="{{selected.month}}" 
+      date-disabled="isDateDisabled(date, mode)" 
+      ng-model="selected.day">  
+      </datepicker>
+    </div>
+
+    <div class="titles-nav" >
+      <oo-event-titles-by-week selected-week-name="{{selected.week}}" loaded-weeks="weeks" nav-to="scrollTo(id)">
+    </oo-event-titles-by-week>
+    </div>
+  </div>
+
+  <div id="page-content-wrapper">
+    <div class="content-header"></div>
+
+    <div class="page-content">
+      <oo-event-feed class="event-feed" weeks="weeks" selected-day="selected.day"></oo-event-feed>
+    </div>
+  </div>
+</div>
