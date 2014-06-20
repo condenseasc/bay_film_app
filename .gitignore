@@ -27,3 +27,4 @@
 
 # html2js templates
 /app/assets/templates/html2js
+/app/assets/javascripts/angular/js_templates/*

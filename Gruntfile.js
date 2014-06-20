@@ -17,11 +17,11 @@ module.exports = function(grunt){
       },
       calendar: {
         src: ['app/assets/templates/calendar/**/*.html'],
-        dest: 'app/assets/templates/html2js/calendar-templates.js'
+        dest: 'app/assets/javascripts/angular/js_templates/calendar-templates.js'
       },
       datepicker: {
         src: ['app/assets/templates/datepicker/*.html'],
-        dest: 'app/assets/templates/html2js/datepicker-templates.js'
+        dest: 'app/assets/javascripts/angular/js_templates/datepicker-templates.js'
       }
     },
 
