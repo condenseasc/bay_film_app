@@ -36,11 +36,12 @@ oldsig () {
   test -s $old_pid && kill -$1 `cat $old_pid`
 }
 
+
+
 case $action in
 start)
   sig 0 && echo >&2 "Already running" && exit 0
-  $CMD
-  ;;
+  su -c "$CMD" - deployer  ;;
 stop)
   sig QUIT && exit 0
   echo >&2 "Not running"
@@ -52,7 +53,7 @@ force-stop)
 restart|reload)
   sig HUP && echo reloaded OK && exit 0
   echo >&2 "Couldn't reload, starting '$CMD' instead"
-  $CMD
+  su -c "$CMD" - deployer
   ;;
 upgrade)
   if sig USR2 && sleep 2 && sig 0 && oldsig QUIT
@@ -72,7 +73,7 @@ upgrade)
     exit 0
   fi
   echo >&2 "Couldn't upgrade, starting '$CMD' instead"
-  $CMD
+  su -c "$CMD" - deployer
   ;;
 reopen-logs)
   sig USR1

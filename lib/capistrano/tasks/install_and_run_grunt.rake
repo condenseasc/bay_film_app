@@ -1,19 +1,16 @@
 desc "install and run grunt html2js task"
-task :install_and_run_grunt do 
+task :grunt_html2js do 
   on roles :all do
-    execute "cd #{current_path} && npm install #{current_path}/package.json --production"
   	execute "cd #{current_path} && grunt --gruntfile #{current_path}/Gruntfile.js html2js"
   end
 end
-after "deploy:updated", :install_and_run_grunt
+after "deploy:updated", :grunt_html2js
 
 
-task :echo_variables do
+task :print_variables do
 	on roles :all do
     info "current_path_or_release is set to: #{current_path_or_release}"
     info "current_path is set to: #{current_path}"
     info "deploy_to is set to: #{fetch(:deploy_to)}"
   end
 end
-
-
