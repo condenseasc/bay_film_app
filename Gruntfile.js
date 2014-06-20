@@ -5,15 +5,23 @@ module.exports = function(grunt){
     html2js: {
       options: {
         base: '.',
-        module: 'angular-templates',
+        module: function(modulePath, gruntTask) {
+          console.log("modulePath -----> ", modulePath);
+          console.log("gruntTask ------>", gruntTask);
+          return "oo-" + gruntTask + "-templates";
+        },
         rename: function (modulePath) {
           var moduleName = modulePath.replace('app/assets/templates/', '').replace('.html', '');
           return 'template' + '/' + moduleName + '.html';
         }
       },
-      main: {
-        src: ['app/assets/templates/**/*.html'],
-        dest: 'app/assets/templates/angular-templates.js'
+      calendar: {
+        src: ['app/assets/templates/calendar/**/*.html'],
+        dest: 'app/assets/templates/html2js/calendar-templates.js'
+      },
+      datepicker: {
+        src: ['app/assets/templates/datepicker/*.html'],
+        dest: 'app/assets/templates/html2js/datepicker-templates.js'
       }
     },
 
