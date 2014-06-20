@@ -7,6 +7,6 @@ var ooCalendar = angular.module('ooCalendar', [
   'ui.bootstrap.position',
   'ui.bootstrap.datepicker',
   'ui.utils',
-  'ui-templates',
+  'angular-templates',
   'smoothScroll']);
 

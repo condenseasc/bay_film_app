@@ -13,7 +13,7 @@ module.exports = function(grunt){
       },
       main: {
         src: ['app/assets/templates/**/*.html'],
-        dest: 'lib/assets/templates/angular-templates.js'
+        dest: 'app/assets/templates/angular-templates.js'
       }
     },
 
