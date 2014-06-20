@@ -16,7 +16,8 @@
 //= require angular-route
 //= require angular-resource
 //= require angular-sanitize
-//= require angular-templates
+//= require calendar-templates
+//= require datepicker-templates
 //= require angular-smooth-scroll-master/angular-smooth-scroll-1.6.0
 //= require angular-ui-utils/ui-utils
 //= require angular-bootstrap/position/position
