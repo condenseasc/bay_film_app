@@ -4,7 +4,7 @@ task :grunt_html2js do
   	execute "cd #{release_path} && grunt --gruntfile #{release_path}/Gruntfile.js html2js"
   end
 end
-after "deploy:updated", :grunt_html2js
+before "deploy:updated", :grunt_html2js
 
 
 task :print_variables do
