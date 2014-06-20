@@ -24,3 +24,6 @@
 
 # Ignore paperclip event image directory
 /public/system/events/**/*
+
+# html2js templates
+/app/assets/templates/angular-templates.js
