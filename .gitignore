@@ -15,7 +15,7 @@
 /log/*.log
 /tmp
 
-# Use node and bower
+# Use bower
 /vendor/assets/bower_components
 
 # Secrets, passwords; I'm keeping /config/initializers/secret_token.rb

@@ -2,13 +2,14 @@
 /* global angular */
 var ooApp = angular.module('ooApp', [
   'ooCalendar',
+  'oo.calendar.templates',
   'ngRoute']);
 
 
 ooApp.config(['$routeProvider', function ($routeProvider) {
   $routeProvider.
     when('/', {
-      templateUrl: '../assets/calendar/index.html',
+      templateUrl: 'template/calendar/index.html',
       controller: 'CalendarCtrl'
     });
 }]);
