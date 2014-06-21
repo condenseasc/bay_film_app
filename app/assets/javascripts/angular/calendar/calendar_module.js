@@ -10,4 +10,3 @@ var ooCalendar = angular.module('ooCalendar', [
   'oo.calendar.templates',
   'oo.datepicker.templates',
   'smoothScroll']);
-
