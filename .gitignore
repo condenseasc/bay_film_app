@@ -23,8 +23,8 @@
 .secret
 
 # Ignore paperclip event image directory
-/public/system/events/**/*
+/public/system/events
 
 # html2js templates
 /app/assets/templates/html2js
-/app/assets/javascripts/angular/js_templates/*
+/app/assets/javascripts/angular/js_templates
