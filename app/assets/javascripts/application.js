@@ -16,8 +16,8 @@
 //= require angular-route
 //= require angular-resource
 //= require angular-sanitize
-//= require templates/html2js/calendar-templates
-//= require templates/html2js/datepicker-templates
+//= require html2js/calendar-templates
+//= require html2js/datepicker-templates
 //= require angular-smooth-scroll-master/angular-smooth-scroll-1.6.0
 //= require angular-ui-utils/ui-utils
 //= require angular-bootstrap/position/position
