@@ -102,7 +102,7 @@ namespace :scrape do
         # Check for credits + notes
         elsif matches = /(By.+?)<br>(.+)/m.match(show_chunk)
           show_credits = matches[1]
-          show_notes = matches[2].strip
+          show_notes = matches[2]
         # just the credits
         elsif matches = /(By.+)/.match(show_chunk)
           show_credits = matches[1]
@@ -114,7 +114,10 @@ namespace :scrape do
         description = event.css(EVENT_DESCR).inner_html.strip
 
         [show_notes, show_credits].each do |s|
-          description.sub!(s, "") if s
+          if s
+            description.sub!(s, "")
+            s.strip
+          end
         end
 
         description = remove_empty_tags(description)
@@ -125,6 +128,9 @@ namespace :scrape do
           description = matches[1] + matches[2].to_s
         end
 
+        puts event.css(EVENT_TITLE).text.strip
+        puts show_notes
+
         e = {
           title: event.css(EVENT_TITLE).text.strip,
           description: description,
@@ -132,8 +138,8 @@ namespace :scrape do
           series_id: series[:id],
           url: series[:url] + EVENT_URL_SUFFIX,
           location_notes: event.css(EVENT_LOC).inner_html,
-          show_credits: show_credits.strip,
-          show_notes: show_notes.strip,
+          show_credits: show_credits,
+          show_notes: show_notes,
           admission: event.css(EVENT_ADMISSION).inner_html.strip,
           still: event.css(EVENT_THUMB).attr("src").inner_html
         }
