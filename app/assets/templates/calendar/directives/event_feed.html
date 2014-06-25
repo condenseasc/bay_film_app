@@ -3,7 +3,7 @@
       <div class="event-feed-date" >
         <div class="date-label-text">{{day.date | date:'EEEE MMMM d' | uppercase}}</div>
       </div>
-    <div class="event-container group" ng-repeat="event in day.events" id="event-{{event.id}}">
+    <div class="event-container group is-this-working" ng-repeat="event in day.events" id="event-{{event.id}}">
       <img class="event-still" ng-src="{{event.still_url_medium}}">
       <div class="event-top-line">
         <div class="event-title">{{event.title}}</div
