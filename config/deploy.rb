@@ -98,7 +98,8 @@ namespace :deploy do
 
   task :setup_unicorn_directories do
     on roles(:app) do
-      execute "mkdir #{deploy_to}/current/tmp/pids"
+      # already done for me
+      # execute "mkdir #{deploy_to}/current/tmp/pids"
       execute "mkdir #{deploy_to}/current/unicorn"
     end
   end
