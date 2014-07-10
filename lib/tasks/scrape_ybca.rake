@@ -4,6 +4,8 @@ require 'uri'
 namespace :scrape do
   desc "scrape ybca with nokogiri"
   task ybca: :environment do
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
     YBCA_URL = "http://www.ybca.org/upcoming/filmvideo"
     SERIES = ".views-field-field-event-object-nid a"
 
@@ -135,7 +137,7 @@ namespace :scrape do
           title: event.css(EVENT_TITLE).text.strip,
           description: description,
           time: time,
-          series_id: series[:id],
+          series_id: [series[:id]], #for now it needs this, some issue with the many-to-many or the name
           url: series[:url] + EVENT_URL_SUFFIX,
           location_notes: event.css(EVENT_LOC).inner_html,
           show_credits: show_credits,
@@ -154,8 +156,9 @@ namespace :scrape do
     event_objects.each do |event|
       v = Venue.find_or_create_by(name: "Yerba Buena Center for the Arts")
       s = Series.find(event[:series_id])
-      e = Event.create!(
+      e = Event.new(
         venue: v,
+        series: s, # didn't work; wants a series, not an array here
         title: event[:title],
         description: event[:description],
         time: event[:time],
@@ -164,14 +167,13 @@ namespace :scrape do
         show_notes: event[:show_notes],
         admission: event[:admission],
         still: event[:still])
+      # e.series << [s]
 
-      # create association
-      e.series << s
+      # write a method on the class specifically for scrapers, where I pass in e.g. "YBCA", or maybe the venue object
+
+      Event.save_scraped_record(e, :series)
     end
 
     Venue.find_by(name: "Yerba Buena Center for the Arts").update_attributes(abbreviation: "YBCA")
   end
-  # def find_first_differing( string_array )
-
-  # end
 end
