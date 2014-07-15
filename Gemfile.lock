@@ -99,6 +99,7 @@ GEM
       i18n (~> 0.5)
     ffi (1.9.3)
     formatador (0.2.4)
+    growl (1.0.3)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -128,8 +129,6 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     kgio (2.9.2)
-    libnotify (0.8.2)
-      ffi (>= 1.0.11)
     listen (2.7.4)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
@@ -168,6 +167,7 @@ GEM
       mime-types
     pg (0.17.1)
     phantomjs (1.9.7.0)
+    phashion (1.1.1)
     polyglot (0.3.4)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -291,16 +291,17 @@ DEPENDENCIES
   factory_girl_json
   factory_girl_rails
   faker (~> 1.2.0)
+  growl
   guard-rspec (~> 3.0.2)
   guard-spork (~> 1.5.1)
   jasmine
   jbuilder (~> 1.2)
   jquery-rails
-  libnotify (~> 0.8.0)
   mechanize (~> 2.6.0)
   nokogiri (~> 1.6.1)
   paperclip (~> 4.1.1)
   pg (~> 0.17.0)
+  phashion
   rails (= 4.1.0)
   rspec-rails (~> 2.14.0)
   sass-rails (~> 4.0.3)

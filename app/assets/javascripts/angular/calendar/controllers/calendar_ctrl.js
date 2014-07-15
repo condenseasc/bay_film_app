@@ -46,7 +46,7 @@ ooCalendar.controller('CalendarCtrl',
         // Not totally clean, on actual load it shifts the whole
         // column, then the scroll is triggered, kinda spastic looking.
 
-        // if (weeksLoaded) { 
+        // if (weeksLoaded) {
         //   $scope.scrollTo(dayIdFromDate(dateJustSelected));
         // } else {
         //   $timeout(function scrollToWeekOnLoad() {

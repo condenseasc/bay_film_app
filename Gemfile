@@ -25,7 +25,8 @@ group :test do
 	gem 'factory_girl_rails'
 	gem 'factory_girl_json'
 	gem 'database_cleaner', github: 'bmabey/database_cleaner'
-	gem 'libnotify', '~> 0.8.0'
+  gem 'libnotify' if /linux/ =~ RUBY_PLATFORM
+  gem 'growl' if /darwin/ =~ RUBY_PLATFORM
 	gem 'jasmine'
 	gem 'faker', '~> 1.2.0'
 
@@ -40,6 +41,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'active_model_serializers'
+gem 'phashion'
 
 gem 'nokogiri', '~> 1.6.1'
 gem 'mechanize', '~> 2.6.0'

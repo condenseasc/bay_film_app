@@ -1,3 +1,5 @@
+require 'image_comparison'
+
 class Event < ActiveRecord::Base
   # attr_accessible :title, :time, :description
   belongs_to :venue
@@ -14,6 +16,7 @@ class Event < ActiveRecord::Base
   validates :title, uniqueness: {scope: [:time, :venue],
     message: "title already exists at this screening time and venue"}
 
+# what was this for?
   validates :description, 
   on: :update,
   uniqueness: {scope: [:title]}
@@ -52,6 +55,23 @@ class Event < ActiveRecord::Base
       start_time: first_day, end_time: last_day
   end
 
+  def self.get_week(sunday)
+    self.get_range(sunday, 7)
+  end
+
+  # takes a time object
+  def self.get_day(time)
+    Event.where "time >= :start_time AND time <= :end_time",
+      start_time: time.beginning_of_day, end_time: time.end_of_day
+  end
+
+  # def get_range(first, days)
+  #   first_day = first.beginning_of_day
+  #   last_day = first_day.advance(days: days - 1).end_of_day
+  #   Event.where "time >= :start_time AND time <= :end_time",
+  #     start_time: first_day, end_time: last_day
+  # end  
+
   def self.get_active_dates(first, last)
     first_day = parse_date(first).beginning_of_day
     last_day = parse_date(last).end_of_day
@@ -62,10 +82,6 @@ class Event < ActiveRecord::Base
       .where("time >= :start_time AND time <= :end_time",
       start_time: first_day, end_time: last_day)
       .order("time ASC")
-  end
-  
-  def self.get_week(sunday)
-    self.get_range(sunday, 7)
   end
 
   # parses the frontends requests, which come in the form
@@ -87,52 +103,18 @@ class Event < ActiveRecord::Base
     updated_attr_hash
   end
 
-# first method --> see if they have different associations
-# to_a doesn't work on a single record
-# AH ISSSUUUUEEEE!!!! I pass in plain records from Series.find from the scraper
-# as the new_relation, which gives me a
-# persisted_relation --> event.send(series) --> Series::ActiveRecord_Associations_CollectionProxy
-# new_relation --> Series.find(x) ---> Series
-# THE LATTER because I haven't been able to do 
+  # Takes relations (not records) and returns the difference as an array of records
   def self.association_difference(persisted_relation, new_relation)
     new_relation.to_a.delete_if do |n|
       persisted_relation.any? { |p| p.id == n.id }
     end
   end
 
-  def self.association_hash_difference(persisted_record, new_record, model_hash)
-
-  end
-
-  # def self.association_difference(existing, revised, association)
-  #   existing_collection = existing.send(association).map { |a| a.id }
-  #   revision_collection = revision.send(association).map { |a| a.id }
-
-  #   revision_collection.delete_if do |r|
-  #     existing_collection.any? { |e| e === r }
-  #   end
-  # end
-
-  # def self.association_difference(persisted_relation, new_relation)
-  #   persisted_collection = persisted_relation.map(&:id)
-  #   new_collection = new_relation.map(&:id)
-
-  #   new_collection.delete_if do |r|
-  #     persisted_collection.any? { |e| e === r }
-  #   end
-  # end
-
   def self.save_scraped_record(record, *associations)
     e = record
     log_note = (e.venue.abbreviation || e.venue.name).upcase
     if e.valid?
       Event.save!(e)
-      # Two reasons for associations being added separately.
-      # first, associations with join tables don't show up as attributes, so my filter ignores them
-      # second, Series breaks activerecord because it looks like it's plural
-      # (!) or somehow because it's many-to-many...
-      # Either way it wants an array of series, breaks looking for "each"
-
       logger.tagged("SCRAPER", "#{log_note}", "SAVE_NEW") {
         logger.info "Saved new event with id: #{e.id}"
       }
@@ -155,12 +137,10 @@ class Event < ActiveRecord::Base
 
       # Get a hash of attributes and a hash of :association => [records]
       attr_difference = Event.attribute_difference(persisted_event, e)
-
       associations_hash = {}
       associations.each do |name|
         associations_hash[name] = Event.association_difference(persisted_event.send(name), e.send(name))
         associations_hash.delete(name) if associations_hash[name].empty?
-          # e.send(name + "=", [])
       end
 
       # Update only if there's a difference. Note: this test prunes the associations hash

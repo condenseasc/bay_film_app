@@ -1,3 +1,4 @@
+/*global ooCalendar, console*/
 'use strict';
 
 ooCalendar.factory('Name', [ 'Week', function(Week){

@@ -42,6 +42,7 @@ Time::DATE_FORMATS[:with_month] = lambda { |time| time.strftime("%B #{time.day.o
 
 # Time::DATE_FORMATS[:no_minutes] = lambda { |time| time.strftime("%B at %-l#{a = (time.min == 0) ? "" : "%M"}%P" )}
 Time::DATE_FORMATS[:with_year] = "%Y %b %d %-l:%M%P"
+Time::DATE_FORMATS[:day_id] = "%Y%m%d"
 
 
 # :long_ordinal => lambda { |time| time.strftime("%B #{time.day.ordinalize}, %Y %H:%M") }
