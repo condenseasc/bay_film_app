@@ -1,25 +1,26 @@
 class Day
 
   def initialize(time)
-    @id = day_id(time)
-    @event_array = Event.get_day(time).to_a
+    @id = Day.day_id(time)
+    @date = Day.day_id_to_time(id)
+    @events = Event.get_day(time).to_a
   end
 
-  attr_reader :id, :event_array
+  attr_reader :id, :date, :events
 
-  def day_id(time)
+  def self.find(day_id)
+    Day.new(Day.day_id_to_time(day_id))
+  end
+
+  def self.day_id(time)
     time.to_formatted_s(:day_id)
   end
 
-  # def read_attribute_for_serialization(key)
-  #   self[key]
-  # end
-  
-  # def attributes
-  #   {'id' => nil, 'events' => nil}
-  # end
+  def self.day_id_to_time(day_id)
+    t = Time.strptime(day_id, '%Y%m%d')
+    Time.zone.local(t.year, t.month, t.day)
+  end
 
 
   alias :read_attribute_for_serialization :send
-
 end

@@ -123,11 +123,17 @@ namespace :scrape do
         time: event[:time], 
         description: event[:description],
         show_notes: event[:show_notes],
-        show_credits: event[:show_credits],
-        still: event[:still])
+        show_credits: event[:show_credits])
+        # still: event[:still])
 
       # create series association
-      e.series << s
+      # e.series << s
+
+      persisted_e = Event.save_scraped_record(e, :series)
+
+      image = LocalResource.local_resource_from_url(event[:still]).file
+      persisted_e.save_still_if_new_or_larger(image)
+
     end
 
     Venue.find_by(name: "Pacific Film Archive Theater").update_attributes(abbreviation: "PFA")

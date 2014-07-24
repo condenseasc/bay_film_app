@@ -7,7 +7,7 @@ module.exports = function(grunt){
         base: '.',
         module: function(modulePath, gruntTask) {
           console.log("modulePath -----> ", modulePath);
-          console.log("gruntTask ------>", gruntTask);
+          console.log("gruntTask ------> ", gruntTask);
           return "oo." + gruntTask + ".templates";
         },
         rename: function (modulePath) {

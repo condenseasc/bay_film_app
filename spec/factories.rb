@@ -6,8 +6,8 @@ FactoryGirl.define do
     venue
   end
 
-  factory :day do
-  end
+  # factory :day do
+  # end
 
   factory :venue do
     sequence(:name) { |n| "Cineplex #{n}" }

@@ -1,9 +1,7 @@
 class DaySerializer < ActiveModel::Serializer
-  attributes :id, :events
+  attributes :id, :date, :events
 
   def events
-    ActiveModel::ArraySerializer.new(object.event_array, each_serializer: EventSerializer)
+    ActiveModel::ArraySerializer.new(object.events, each_serializer: EventSerializer)
   end
-
-
 end

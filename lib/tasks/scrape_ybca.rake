@@ -1,10 +1,10 @@
 require 'open-uri'
 require 'uri'
+require 'local_resource'
 
 namespace :scrape do
   desc "scrape ybca with nokogiri"
   task ybca: :environment do
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
 
     YBCA_URL = "http://www.ybca.org/upcoming/filmvideo"
     SERIES = ".views-field-field-event-object-nid a"
@@ -165,13 +165,12 @@ namespace :scrape do
         location_notes: event[:location_notes],
         show_credits: event[:show_credits],
         show_notes: event[:show_notes],
-        admission: event[:admission],
-        still: event[:still])
-      # e.series << [s]
+        admission: event[:admission])
+        # still: event[:still])
 
-      # write a method on the class specifically for scrapers, where I pass in e.g. "YBCA", or maybe the venue object
-
-      Event.save_scraped_record(e, :series)
+      persisted_e = Event.save_scraped_record(e, :series)
+      image = LocalResource.local_resource_from_url(event[:still]).file
+      persisted_e.save_still_if_new_or_larger(image)
     end
 
     Venue.find_by(name: "Yerba Buena Center for the Arts").update_attributes(abbreviation: "YBCA")

@@ -110,18 +110,46 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def save_still_if_new_or_larger(image)
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+    e = self
+    log_note = (e.venue.abbreviation || e.venue.name).upcase
+
+    if !e
+      return nil
+    elsif !e.still? || !(ImageComparison.duplicate_image?(e.still.path, image.path) && 
+      (e.still.size >= image.size))
+    
+      e.still = image
+      e.save
+
+      logger.tagged("SCRAPER", "#{log_note}", "STILL", "SAVE_NEW") {
+        logger.info "#{e.title}, #{e.id}"
+      }
+      e
+    else
+      logger.tagged("SCRAPER", "#{log_note}", "STILL", "DO_NOTHING") {
+        logger.info "#{e.title}, #{e.id}"
+      }
+      nil
+    end
+  end
+
   def self.save_scraped_record(record, *associations)
+    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
     e = record
     log_note = (e.venue.abbreviation || e.venue.name).upcase
     if e.valid?
-      Event.save!(e)
+      e.save!
       logger.tagged("SCRAPER", "#{log_note}", "SAVE_NEW") {
         logger.info "Saved new event with id: #{e.id}"
       }
+      return e
     elsif e.errors.size === 1 &&
       e.errors[:title][0] === "title already exists at this screening time and venue"
       logger.tagged("SCRAPER", "#{log_note}", "EVENT_EXISTS") {
-        logger.info "Event exists -> #{e.title}, #{e.time.strftime("%m/%d/%Y %H:%M")}, #{e.venue.abbreviation || e.venue.name}"
+        logger.info "Event exists -> #{e.id} #{e.title}, #{e.time.strftime("%m/%d/%Y %H:%M")}, #{e.venue.abbreviation || e.venue.name}"
       }
       # Paranoid? Checking if something screwy led to duplicate persisted records.
       # Maybe split this into a different rake task with teeth to check and delete them?
@@ -146,21 +174,23 @@ class Event < ActiveRecord::Base
       # Update only if there's a difference. Note: this test prunes the associations hash
       if attr_difference.empty? && associations.empty?
         logger.tagged("SCRAPER", "#{log_note}", "IDENTICAL") {
-          logger.info "Record contents identical. No updates to make."
+          logger.info "Record contents identical to #{e.id}. No updates to make."
         }
+        return persisted_event
       else
         logger.tagged("SCRAPER", "#{log_note}", "UPDATE_RECORD") {
-          logger.info "Update event -> #{attr_difference}; #{associations_hash.each { |a| 
+          logger.info "Update event #{e.id} -> #{attr_difference}; #{associations_hash.each { |a| 
           print a.size + " new " + a.key + "; "}} #{associations_hash}"
         }
 
-        persisted_event.update!(attr_difference)
         associations_hash.each { |key, value| persisted_event.send(key) << value }
+        if persisted_event.update!(attr_difference) then persisted_event else false end
       end
     else
       logger.tagged("SCRAPER", "#{log_note}", "INVALID") {
         logger.info "Nothing written, validation errors for #{e.title}: #{e.errors.messages}"
       }
+      return nil
     end
   end
 

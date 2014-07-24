@@ -18,12 +18,8 @@ describe Day do
   end
 
   describe 'day generated from events' do
-    it 'returns a hash with date in YYYYMMDD as id' do
-      # expect(day.id).to be()
-    end
-
     it 'returns a hash with an array of events' do
-      expect(day.event_array.is_a? Array).to be(true)
+      expect(day.events.is_a? Array).to be(true)
     end
 
     describe 'serialized' do

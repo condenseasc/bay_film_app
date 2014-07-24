@@ -6,6 +6,6 @@ class Api::DaysController < ApplicationController
 
   def show
     @day = Day.find(params[:id])
-    respond_with @day
+    render json: @day, serializer: DaySerializer
   end
 end
