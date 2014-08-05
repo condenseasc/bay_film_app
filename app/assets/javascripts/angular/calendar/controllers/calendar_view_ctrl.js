@@ -1,28 +1,26 @@
-'use strict';
-/*global ooCalendar*/
+// 'use strict';
+// /*global ooCalendar, console*/
 
-ooCalendar.constant('scrollConfig', {
-  // 'easeInQuad'
-  // 'easeOutQuad'
-  // 'easeInOutQuad'
-  // 'easeInCubic'
-  // 'easeOutCubic'
-  // 'easeInOutCubic'
-  // 'easeInQuart'
-  // 'easeOutQuart'
-  // 'easeInOutQuart'
-  // 'easeInQuint'
-  // 'easeOutQuint'
-  // 'easeInOutQuint'
-  easing: 'easeOutQuart',
-  duration: 800,
-  offset: 0
-});
+// ooCalendar.constant('scrollConfig', {
+//   // 'easeInQuad'
+//   // 'easeOutQuad'
+//   // 'easeInOutQuad'
+//   // 'easeInCubic'
+//   // 'easeOutCubic'
+//   // 'easeInOutCubic'
+//   // 'easeInQuart'
+//   // 'easeOutQuart'
+//   // 'easeInOutQuart'
+//   // 'easeInQuint'
+//   // 'easeOutQuint'
+//   // 'easeInOutQuint'
+//   easing: 'easeOutQuart',
+//   duration: 800,
+//   offset: 0
+// });
 
-ooCalendar.controller('CalendarViewCtrl', ['$scope', 'scrollConfig',
-  function ($scope, scrollConfig) {
-    $scope.visible = {};
-    $scope.picked = {};
+ooCalendar.controller('CalendarViewCtrl', ['$scope', 'CalendarViewSpy',
+  function ($scope, CalendarViewSpy) {
 
   // Configuration attributes
   // angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle',
@@ -31,39 +29,39 @@ ooCalendar.controller('CalendarViewCtrl', ['$scope', 'scrollConfig',
   // });
 
     this.pickWeek = function (weekId) {
-      $scope.picked.week = weekId;
+      CalendarViewSpy.pickWeek(weekId);
     };
 
     this.pickDay = function (dayId) {
-      $scope.picked.day = dayId;
+      CalendarViewSpy.pickDay(dayId);
     };
 
     this.pickEvent = function (eventId) {
-      $scope.picked.event = eventId;
+      CalendarViewSpy.pickEvent(eventId);
     };
 
-    this.updateVisibleWeek = function (weekId) {
-      $scope.visible.week = weekId;
-    };
+    // this.updateVisibleWeek = function (weekId) {
+    //   $scope.visible.week = weekId;
+    // };
 
-    this.updateVisibleDay = function (dayId) {
-      $scope.visible.day = dayId;
-    };
+    // this.updateVisibleDay = function (dayId) {
+    //   $scope.visible.day = dayId;
+    // };
 
-    this.updateVisibleEvent = function (eventId) {
-      $scope.visible.event = eventId;
-    };
+    // this.updateVisibleEvent = function (eventId) {
+    //   $scope.visible.event = eventId;
+    // };
 
-    this.getVisibleWeek = function () {
-      return $scope.visible.week;
-    };
+    // this.getVisibleWeek = function () {
+    //   return $scope.visible.week;
+    // };
 
-    this.getVisibleDay = function () {
-      return $scope.visible.day;
-    };
+    // this.getVisibleDay = function () {
+    //   return $scope.visible.day;
+    // };
 
-    this.getVisibleEvent = function () {
-      return $scope.visible.event;
-    };
+    // this.getVisibleEvent = function () {
+    //   return $scope.visible.event;
+    // };
 
   }]);

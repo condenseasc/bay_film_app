@@ -1,7 +1,7 @@
-<div id="wrapper" >
+<div id="wrapper" ng-controller="CalendarViewCtrl as view" oo-calendar-view-spy-checker oo-calendar-view-pick-handler>
   <div id="sidebar-wrapper">
     <div class="calendar-nav" >
-      <datepicker oo-refresh-datepicker oo-check-week-on-scroll oo-highlight-selected-week
+      <datepicker oo-refresh-datepicker oo-highlight-selected-week
       refresh-on="{{selected.month}}" 
       date-disabled="isDateDisabled(date, mode)" 
       ng-model="selected.day">  
@@ -9,8 +9,23 @@
     </div>
 
     <div class="titles-nav" >
-      <oo-event-titles-by-week selected-week-name="{{selected.week}}" loaded-weeks="weeks" nav-to="scrollTo(id)">
-    </oo-event-titles-by-week>
+<!--       <oo-event-titles-by-week selected-week-name="{{selected.week}}" visible="visible" loaded-weeks="weeks" nav-to="scrollTo(id)">
+    </oo-event-titles-by-week> -->
+      <div ng-repeat="week in weeks" class="week-list" id="list-weeek-{{week.page}}">
+        <ul class="day-list" ng-repeat="day in week.days">
+          <div class="list-date-label">
+            <a ng-click="view.pickDay('day-' + day.date.getDate())" class="date-label-text" href scroll-to="{{'day-' + day.date.getDate()}}">
+              {{ day.date | date:'EEEE MMMM d' | uppercase }}</a>
+          </div>
+          <li ng-repeat="event in day.events">
+            <a ng-click="view.pickEvent('event-' + event.id)" class="list-event-container" id="list-event-{{event.id}}" href>
+              <span class="list-event-time">{{event.time | ooSmallTime }}</span>
+              <span class="list-event-title">{{event.title}} </span>
+              <span class="list-venue-name">{{event.venue.abbreviation}} </span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -18,7 +33,29 @@
     <div class="content-header"></div>
 
     <div class="page-content">
-      <oo-event-feed class="event-feed" weeks="weeks" selected-day="selected.day"></oo-event-feed>
+      <!-- <oo-event-feed class="event-feed" weeks="weeks" selected-day="selected.day"></oo-event-feed> -->
+
+      <div class="week-container" ng-repeat='week in weeks' id="week-{{week.page}}">
+        <div class="day-container" ng-repeat="day in week.days" id="day-{{day.date | date: 'd'}}">
+            <div class="event-feed-date" >
+              <div class="date-label-text">{{day.date | date:'EEEE MMMM d' | uppercase}}</div>
+            </div>
+          <div class="event-container group is-this-working" ng-repeat="event in day.events" id="event-{{event.id}}">
+            <img class="event-still" ng-src="{{event.still_url_medium}}">
+            <div class="event-top-line">
+              <div class="event-title">{{event.title}}</div
+              ><div class="show-credits">{{event.show_credits}}</div>
+            </div>
+            <div>
+              <span class="event-time">{{event.time| ooSmallTime}}</span>
+              <span class="event-venue"> at {{event.venue.name}}</span>
+            </div>
+            <div class="event-series">In: {{event.series[0].title}}</div>
+            <div class="show-notes" ng-bind-html="event.show_notes"></div>
+            <div class="event-body" ng-bind-html="event.description"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

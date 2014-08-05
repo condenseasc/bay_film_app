@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
   validates :venue, presence: true
 
   validates :title, uniqueness: {scope: [:time, :venue],
-    message: "title already exists at this screening time and venue"}
+    message: "already exists at this screening time and venue"}
 
 # what was this for?
   validates :description, 
@@ -120,7 +120,7 @@ class Event < ActiveRecord::Base
     elsif !e.still? || !(ImageComparison.duplicate_image?(e.still.path, image.path) && 
       (e.still.size >= image.size))
     
-      e.still = image
+      e.still = image.file
       e.save
 
       logger.tagged("SCRAPER", "#{log_note}", "STILL", "SAVE_NEW") {

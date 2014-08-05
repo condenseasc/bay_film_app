@@ -1,4 +1,4 @@
-<table>
+<table ng-controller="CalendarViewCtrl as view">
   <thead>
     <tr>
       <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="move(-1)"><i class="glyphicon glyphicon-chevron-left"></i></button></th>
@@ -12,7 +12,7 @@
   <tbody>
     <tr ng-repeat="row in rows track by $index" class="week-row" id="week-{{ weekNumbers[$index] }}">
       <td ng-repeat="dt in row track by dt.date" class="text-center">
-        <button type="button" style="width:100%;" class="btn btn-default btn-sm" ng-class="{'btn-info': dt.selected}" ng-click="select(dt.date)" ng-disabled="dt.disabled"><span ng-class="{'text-muted': dt.secondary, 'text-info': dt.current}">{{dt.label}}</span></button>
+        <button type="button" style="width:100%;" class="btn btn-default btn-sm" ng-class="{'btn-info': dt.selected}" ng-click="select(dt.date); view.pickDay('day-' + dt.date.getDate())" ng-disabled="dt.disabled"><span ng-class="{'text-muted': dt.secondary, 'text-info': dt.current}">{{dt.label}}</span></button>
       </td>
     </tr>
   </tbody>

@@ -118,12 +118,16 @@ namespace :scrape do
     event_objects.each do |event|
       v = Venue.find_or_create_by(name: "Pacific Film Archive Theater")
       s = Series.find(event[:series])
-      e = v.events.create!( 
+      e = Event.new(
+        venue: v,
+        # series: [s], 
         title: event[:title], 
         time: event[:time], 
         description: event[:description],
         show_notes: event[:show_notes],
         show_credits: event[:show_credits])
+
+      e.series << s unless s
         # still: event[:still])
 
       # create series association
@@ -131,8 +135,12 @@ namespace :scrape do
 
       persisted_e = Event.save_scraped_record(e, :series)
 
-      image = LocalResource.local_resource_from_url(event[:still]).file
-      persisted_e.save_still_if_new_or_larger(image)
+      # puts 'saved or updated scraped record - >' + persisted_e.id.to_s + ' ' + persisted_e.title
+
+      if persisted_e
+        image = LocalResource.local_resource_from_url(event[:still]).file
+        persisted_e.save_still_if_new_or_larger(image)
+      end
 
     end
 

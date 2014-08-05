@@ -5,7 +5,7 @@
         {{ day.date | date:'EEEE MMMM d' | uppercase }}</a>
     </div>
     <li ng-repeat="event in day.events">
-      <a class="event-container" href scroll-to="{{'event-' + event.id}}">
+      <a class="list-event-container" id="list-event-{{event.id}}" href scroll-to="{{'event-' + event.id}}">
         <span class="list-event-time">{{event.time | ooSmallTime }}</span>
         <span class="list-event-title">{{event.title}} </span>
         <span class="list-venue-name">{{event.venue.abbreviation}} </span>

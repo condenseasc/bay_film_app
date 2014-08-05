@@ -6,8 +6,10 @@ namespace :scrape do
   desc "scrape ybca with nokogiri"
   task ybca: :environment do
 
-    YBCA_URL = "http://www.ybca.org/upcoming/filmvideo"
+    YBCA_URL = "http://www.ybca.org/upcoming/film-and-video"
+
     SERIES = ".views-field-field-event-object-nid a"
+    SERIES = ".views-field-field-key-program-cluster a" # new
 
     # series page
     # or ARTIST_BIO = ".field-field-object-artist-bio p" for all the description paragraphs, especially if .odd gives me too much styling
@@ -42,6 +44,16 @@ namespace :scrape do
       else
         return subbed
       end
+    end
+
+    last_page = ""
+    uri = URI.parse(last_page)
+
+    number_of_pages = CGI.parse(uri.query)['page'].pop.to_i
+    uris = []
+
+    (1..number_of_pages).each do |n|
+      uris.push(URI::HTTP.build(host: uri.host, path: uri.path, query: {page: n}.to_param))
     end
 
     series_objects = []
@@ -158,7 +170,7 @@ namespace :scrape do
       s = Series.find(event[:series_id])
       e = Event.new(
         venue: v,
-        series: s, # didn't work; wants a series, not an array here
+        series: [s], # didn't work; wants a series, not an array here
         title: event[:title],
         description: event[:description],
         time: event[:time],
