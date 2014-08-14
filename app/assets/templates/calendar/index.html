@@ -1,4 +1,4 @@
-<div id="wrapper" ng-controller="CalendarViewCtrl as view" oo-calendar-view-spy-checker oo-calendar-view-pick-handler>
+<div id="wrapper" ng-controller="CalendarViewCtrl as view" oo-calendar-view-spy-checker oo-calendar-pick-handler>
   <div id="sidebar-wrapper">
     <div class="calendar-nav" >
       <datepicker oo-refresh-datepicker oo-highlight-selected-week
@@ -35,12 +35,12 @@
     <div class="page-content">
       <!-- <oo-event-feed class="event-feed" weeks="weeks" selected-day="selected.day"></oo-event-feed> -->
 
-      <div class="week-container" ng-repeat='week in weeks' id="week-{{week.page}}">
-        <div class="day-container" ng-repeat="day in week.days" id="day-{{day.date | date: 'd'}}">
+      <div class="week-container" ng-repeat='week in weeks' id="week-{{week.page}}" ng-init="outerIndex=$index; outerLast=$last">
+        <div class="day-container" ng-repeat="day in week.days" id="day-{{day.date | date: 'd'}}" ng-init="middleIndex=$index; middleLast=$last" oo-middle-load-watcher>
             <div class="event-feed-date" >
               <div class="date-label-text">{{day.date | date:'EEEE MMMM d' | uppercase}}</div>
             </div>
-          <div class="event-container group is-this-working" ng-repeat="event in day.events" id="event-{{event.id}}">
+          <div class="event-container group is-this-working" ng-repeat="event in day.events" id="event-{{event.id}}" ng-init="innerIndex=$index; innerLast=$last" oo-inner-load-watcher>
             <img class="event-still" ng-src="{{event.still_url_medium}}">
             <div class="event-top-line">
               <div class="event-title">{{event.title}}</div

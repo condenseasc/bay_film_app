@@ -5,7 +5,7 @@
 // Uses the selected week to copy the current week and send it to the template
 // to be iterated over. So far no other processing of week data is in place,
 // the template gets the whole bundle and pulls out titles, venues, dates, etc.
-ooCalendar.directive('ooEventTitlesByWeek', ['$timeout', 'CalendarViewSpy', function ($timeout, CalendarViewSpy) {
+ooCalendar.directive('ooEventTitlesByWeek', ['$timeout', function ($timeout) {
   return {
     restrict: 'E',
     templateUrl: 'template/calendar/directives/event_titles_by_week.html',

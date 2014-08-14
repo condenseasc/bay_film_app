@@ -27,7 +27,7 @@ ooCalendar.controller('CalendarCtrl',
         var dateJustSelected = new Date(newValue);
         var containingWeek = Name.page(dateJustSelected);
 
-        console.log("selected.day set to: ", newValue);
+        // console.log("selected.day set to: ", newValue);
 
         if (!(isWeekLoaded(dateJustSelected))) {
           loadWeek(dateJustSelected);
@@ -65,7 +65,7 @@ ooCalendar.controller('CalendarCtrl',
 
       function selectWeek(page) {
         $scope.selected.week = page;
-        console.log("selectWeek() called with ", page);
+        // console.log("selectWeek() called with ", page);
       }
 
       $scope.loadActiveDates = function (date) {
@@ -75,6 +75,22 @@ ooCalendar.controller('CalendarCtrl',
         });
       };
 
+      // $scope.isDateLoaded = function(date) {
+      //   var dateWeek = Name.page(date);
+      //   var weekNames = [];
+      //   $scope.weeks.forEach(function(week) {
+      //     weekNames.push(week.page);
+      //   });
+
+      //   return _.contains(weekNames, dateWeek);
+      // };
+
+      // $scope.dateAvailable = function(date) {
+      //   return $q(function(resolve, reject) {
+
+      //   });
+      // };
+
 
       // for use with Angular-UI-Bootstrap Datepicker
       $scope.isDateDisabled = function (date, mode) {
@@ -82,7 +98,6 @@ ooCalendar.controller('CalendarCtrl',
         // if active, returns false for not-disabled, else, returns true for disabled
         if (mode === 'day') {
           var value = $scope.activeDates.some(function (element) {
-            // // moment.js comparison was noticably slower than js. odd. too bad.
             return Week.isSameDay(element, date);
           });
 
@@ -114,7 +129,7 @@ ooCalendar.controller('CalendarCtrl',
       }
 
       $scope.scrollTo = function (id) {
-        console.log("scrollTo() called with ", id);
+        // console.log("scrollTo() called with ", id);
         var old = $location.hash();
         $location.hash(id);
         $anchorScroll();
@@ -213,7 +228,7 @@ ooCalendar.controller('CalendarCtrl',
           $scope.weeks = [];
           $scope.weeks.push(week);
         }
-        console.log("setting weeksLoaded to true");
+        // console.log("setting weeksLoaded to true");
         weeksLoaded = true;
       }
 

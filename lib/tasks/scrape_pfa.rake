@@ -1,5 +1,7 @@
 require 'open-uri'
 require 'uri'
+require 'cgi'
+
 
 namespace :scrape do
   desc "scrape pfa with nokogiri"
@@ -108,9 +110,12 @@ namespace :scrape do
       puts event[:title]
 
       still = doc.css(EVENT_IMG)
-      still.length == 0 ? event[:still] = nil : event[:still] = still.attr("src").inner_html
-
-            # puts event[:still]
+      # still.length == 0 ? event[:still] = nil : event[:still] = CGI.unescapeHTML( still.attr("src").inner_html )
+      if still.length == 0 
+        event[:still] = nil
+      else 
+        event[:still] = CGI.unescapeHTML( still.attr("src").inner_html )
+      end
 
     end
 
@@ -137,7 +142,8 @@ namespace :scrape do
 
       # puts 'saved or updated scraped record - >' + persisted_e.id.to_s + ' ' + persisted_e.title
 
-      if persisted_e
+      if persisted_e && event[:still]
+        puts event[:still]
         image = LocalResource.local_resource_from_url(event[:still]).file
         persisted_e.save_still_if_new_or_larger(image)
       end
@@ -147,40 +153,4 @@ namespace :scrape do
     Venue.find_by(name: "Pacific Film Archive Theater").update_attributes(abbreviation: "PFA")
   end
 
-  # Task Methods
-  def to_absolute_url( page_url, href )
-    if (URI(href).relative?)
-     URI.join( page_url, href ).to_s
-    else
-     href
-    end
-  end
-
-  # converts all links in a document to absolute links
-  def fix_links( noko_doc, page_url )
-    noko_doc.traverse {|node| fix_node_link(node, page_url) }
-    return noko_doc
-  end
-
-  def fix_node_link( node, page_url )
-    if node.name === 'a' && node.attr('href')
-      fixed = to_absolute_url(page_url, URI.encode(node.attr('href')))
-      node.set_attribute('href', fixed)
-    elsif node.name === 'img' && node.attr('src')
-      fixed = to_absolute_url(page_url, URI.encode(node.attr('src')))
-      node.set_attribute('src', fixed)
-    end
-  end
-
-  def find_links( page_url, css )
-    doc = Nokogiri::HTML(open( page_url ))
-    # doc = fix_links(doc, page_url)
-    nodes = doc.css( css )
-    nodes.map { |node| to_absolute_url( page_url, node['href'] )}
-  end
-
-  def urls_must_contain( arr, str )
-    regex = Regexp::new(str)
-    arr.delete_if { |l| l !~ regex }
-  end
 end

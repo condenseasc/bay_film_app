@@ -13,8 +13,12 @@ class Event < ActiveRecord::Base
   validates :time, presence: true
   validates :venue, presence: true
 
-  validates :title, uniqueness: {scope: [:time, :venue],
-    message: "already exists at this screening time and venue"}
+  # validates :title, uniqueness: {scope: [:time, :venue_id],
+  #   message: "already exists at this screening time and venue"}
+
+  validates_uniqueness_of :title, scope: [:time, :venue_id],
+    message: "already exists at this screening time and venue"
+
 
 # what was this for?
   validates :description, 
@@ -120,7 +124,7 @@ class Event < ActiveRecord::Base
     elsif !e.still? || !(ImageComparison.duplicate_image?(e.still.path, image.path) && 
       (e.still.size >= image.size))
     
-      e.still = image.file
+      e.still = image.open
       e.save
 
       logger.tagged("SCRAPER", "#{log_note}", "STILL", "SAVE_NEW") {
@@ -147,7 +151,7 @@ class Event < ActiveRecord::Base
       }
       return e
     elsif e.errors.size === 1 &&
-      e.errors[:title][0] === "title already exists at this screening time and venue"
+      e.errors[:title][0] === "already exists at this screening time and venue"
       logger.tagged("SCRAPER", "#{log_note}", "EVENT_EXISTS") {
         logger.info "Event exists -> #{e.id} #{e.title}, #{e.time.strftime("%m/%d/%Y %H:%M")}, #{e.venue.abbreviation || e.venue.name}"
       }
@@ -172,9 +176,9 @@ class Event < ActiveRecord::Base
       end
 
       # Update only if there's a difference. Note: this test prunes the associations hash
-      if attr_difference.empty? && associations.empty?
+      if attr_difference.empty? && associations_hash.empty?
         logger.tagged("SCRAPER", "#{log_note}", "IDENTICAL") {
-          logger.info "Record contents identical to #{e.id}. No updates to make."
+          logger.info "Record contents identical to #{persisted_event.id}. No updates to make."
         }
         return persisted_event
       else

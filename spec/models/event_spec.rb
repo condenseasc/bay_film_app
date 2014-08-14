@@ -39,6 +39,7 @@ describe Event do
   describe "scraper methods" do
     describe "self.save_scraped_record" do 
       it "saves new records" do
+        expect(event.new_record?).to be(true)
         Event.save_scraped_record(event, :series)
         expect(event.new_record?).to be(false)
       end

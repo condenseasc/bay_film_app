@@ -19,8 +19,8 @@
 //   offset: 0
 // });
 
-ooCalendar.controller('CalendarViewCtrl', ['$scope', 'CalendarViewSpy',
-  function ($scope, CalendarViewSpy) {
+ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked',
+  function ($scope, Picked) {
 
   // Configuration attributes
   // angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle',
@@ -29,39 +29,14 @@ ooCalendar.controller('CalendarViewCtrl', ['$scope', 'CalendarViewSpy',
   // });
 
     this.pickWeek = function (weekId) {
-      CalendarViewSpy.pickWeek(weekId);
+      Picked.pickWeek(weekId);
     };
 
     this.pickDay = function (dayId) {
-      CalendarViewSpy.pickDay(dayId);
+      Picked.pickDay(dayId);
     };
 
     this.pickEvent = function (eventId) {
-      CalendarViewSpy.pickEvent(eventId);
+      Picked.pickEvent(eventId);
     };
-
-    // this.updateVisibleWeek = function (weekId) {
-    //   $scope.visible.week = weekId;
-    // };
-
-    // this.updateVisibleDay = function (dayId) {
-    //   $scope.visible.day = dayId;
-    // };
-
-    // this.updateVisibleEvent = function (eventId) {
-    //   $scope.visible.event = eventId;
-    // };
-
-    // this.getVisibleWeek = function () {
-    //   return $scope.visible.week;
-    // };
-
-    // this.getVisibleDay = function () {
-    //   return $scope.visible.day;
-    // };
-
-    // this.getVisibleEvent = function () {
-    //   return $scope.visible.event;
-    // };
-
   }]);

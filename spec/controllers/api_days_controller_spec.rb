@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Api::DaysController do
+  render_views
+
   let(:venue) { FactoryGirl.create(:venue) }
   let(:event) { FactoryGirl.create(:event, venue: venue, time: Time.now) }
   let(:second_event) { FactoryGirl.create(:event, venue: venue, time: Time.now.advance(days: 1)) }
