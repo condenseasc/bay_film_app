@@ -11,8 +11,8 @@ gem 'angularjs-rails', '~> 1.2.7'
 gem 'paperclip', '~> 4.1.1'
 
 group :development, :test do
-	gem 'rspec-rails', '~> 2.14.0'
-	gem 'guard-rspec', '~> 3.0.2'
+  gem 'rspec-rails', '~> 3.0.2'
+	gem 'guard-rspec', '~> 4.3.1'
 	gem 'guard-spork', '~> 1.5.1'
 	gem 'spork-rails', '~> 4.0.0'
 	gem 'childprocess', '~>0.3.9'
@@ -21,7 +21,7 @@ end
 
 group :test do
 	gem 'selenium-webdriver', '~> 2.0'
-	gem 'capybara', '~> 2.1.0'
+	gem 'capybara', '~> 2.4.1'
 	gem 'factory_girl_rails'
 	gem 'factory_girl_json'
 	gem 'database_cleaner', github: 'bmabey/database_cleaner'

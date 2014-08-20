@@ -1,55 +1,107 @@
-require 'scrape'
+require 'scrapers/scrape'
+require 'scrapers/scrape_logger'
 
 class VenueScraper
   include Scrape
 
   PACIFIC_TIME_ZONE = 'Pacific Time (US & Canada)'
 
-  @child_scrapers = []
-
-  def initialize
-    @child_scrapers = []
-  end
-
   class << self
-    attr_reader :child_scrapers
+    attr_reader :child_scrapers, :logger
 
     def inherited(subclass)
       child_scrapers << subclass
+      # subclass.instance_variable_set("@child_scrapers", @child_scrapers)
     end
   end
+
+  @child_scrapers = []
+  @logger = ActiveSupport::TaggedLogging.new(Logger.new('log/scrape.log')).extend(ScrapeLogger)
 
   def urls(selector)
     find_urls doc, selector
   end
 
-  # an important assumption -> series before events
+  # The Machinery
+  def open_pages
+    make_series
+    make_events
+  end
+
+  # an important assumption > series before events
   def scrape
     scrape_series
     scrape_events
+    # self
   end
 
-  def save_records
-    save_series
-    save_events
+  def create_records
+    create_series
+    create_events
   end
 
+  def create_series
+    series.each do |s|
+      s.create_record
+    end
+  end
+
+  def create_events
+    events.each do |e|
+      e.create_record
+    end
+  end
+
+
+  # def build_records
+  #   build_series_records
+  #   build_events_records
+  #   self
+  # end
+
+  # def save_records
+  #   save_series_records
+  #   save_events_records
+  #   self
+  # end
+
+  # Series
   def scrape_series
-    @series.each do |s|
-      s.scrape_title
-      s.scrape_description
+    series.each do |s|
+      s.scrape
     end
   end
 
+
+  # def build_series_records
+  #   @series.map! do |s|
+  #     s.build_record
+  #   end
+  # end
+
+  # def save_series_records
+  #   @series.each do |s|
+  #     s.save_record
+  #   end
+  # end
+
+
+  # Events
   def scrape_events
-    @events.each do |e|
-      e.scrape_title
-      e.scrape_description
-      e.scrape_show_notes
-      e.scrape_show_credits
-      e.scrape_admission
-      e.scrape_location_notes
-      e.scrape_still
+    events.each do |e|
+      e.scrape
     end
   end
+
+  # def build_events_records
+  #   @events.map! do |e|
+  #     e.build_record
+  #   end
+  # end
+
+  # def save_events_records
+  #   @events.each do |e|
+  #     e.save_record
+  #   end
+  # end
 end

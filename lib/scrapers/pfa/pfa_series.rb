@@ -1,7 +1,7 @@
 class PfaSeries < ScrapedSeries
   def initialize(url)
     super
-    @venue = Venue.find_by(name: 'Pacific Film Archive Theater')
+    @venue = PfaScraper.venue
   end
 
   def scrape_title
@@ -15,6 +15,6 @@ class PfaSeries < ScrapedSeries
   def make_events_from_series
     event_urls = urls(PfaScraper::SERIES_EVENT_LINK_SELECTOR).uniq
     event_urls.delete_if { |url| url !~ %r'/film/' }
-    event_urls.map { |url| PfaEvent.new(url, self) }
+    event_urls.map { |url| puts url; PfaEvent.new(url, self)}
   end
 end

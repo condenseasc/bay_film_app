@@ -2,9 +2,11 @@ require 'exceptions'
 
 class Series < ActiveRecord::Base
   has_and_belongs_to_many :events, before_add: :check_for_duplicate_association
-  belongs_to :owner, class_name: "Venue", foreign_key: :venue_id
+  # belongs_to :owner, class_name: "Venue", foreign_key: :venue_id
+  belongs_to :venue
 
   validates :title, presence: true
+  validates :url, uniqueness: { scope: [:title] }
 
   def check_for_duplicate_association(event)
     self.events.each do |e|

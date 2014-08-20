@@ -2,6 +2,7 @@ class PfaEvent < ScrapedEvent
   def initialize(url, series)
     super(url)
     @series = series
+    @venue = PfaScraper.venue
   end
 
   def scrape_title
@@ -37,6 +38,11 @@ class PfaEvent < ScrapedEvent
     if d.empty? then d = doc.css( PfaScraper::EVENT_DATE_NO_IMG ).text end
     @time = Time.zone.parse("#{d}, #{t}")
   end
+
+  def series
+    [Series.find_by(url: @series.url)]
+  end
+
 
   # def scrape_time
   # end

@@ -8,34 +8,6 @@ describe Api::DaysController do
   let(:second_event) { FactoryGirl.create(:event, venue: venue, time: Time.now.advance(days: 1)) }
   let(:series) { FactoryGirl.create(:series) }
 
-  describe "GET 'index'" do
-    it "returns http success" do
-      get 'index', format: :json
-      expect(response).to be_success
-    end
-
-    it "does not render a template" do
-      get 'index', format: :json
-      expect(response).not_to render_template :index
-    end
-
-    it "populates a Json array with events" do
-      # populate db
-      FactoryGirl.create(:event, venue: venue, time: Time.now)
-      FactoryGirl.create(:event, venue: venue, time: Time.now.advance(days: 1))
-
-      get 'index', format: :json
-      # Response holds a JSON document with two objects
-      expect(JSON.parse(response.body).length).to eq(2)
-    end
-
-    # it "assigns @days" do
-    #   e = event
-    #   get 'index', format: :json
-    #   expect(assigns(:days)).to eq([])
-    # end
-  end
-
   describe "GET 'show'" do
     it "returns http success" do
       get 'show', id: Day.day_id(event.time), format: :json

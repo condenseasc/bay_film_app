@@ -35,7 +35,7 @@ describe Venue do
     end
 
     it "should have the right events in the right order" do
-      venue.events.upcoming.should == [near_future_event, distant_future_event]
+      expect(venue.events.upcoming).to eq([near_future_event, distant_future_event])
     end
   end
 end
