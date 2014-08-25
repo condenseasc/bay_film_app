@@ -2,9 +2,8 @@
   <div id="sidebar-wrapper">
     <div class="calendar-nav" >
       <datepicker oo-refresh-datepicker oo-highlight-selected-week
-      refresh-on="{{selected.month}}" 
       date-disabled="isDateDisabled(date, mode)" 
-      ng-model="selected.day">  
+      ng-model="picked.day">  
       </datepicker>
     </div>
 
@@ -14,7 +13,7 @@
       <div ng-repeat="week in weeks" class="week-list" id="list-weeek-{{week.page}}">
         <ul class="day-list" ng-repeat="day in week.days">
           <div class="list-date-label">
-            <a ng-click="view.pickDay('day-' + day.date.getDate())" class="date-label-text" href scroll-to="{{'day-' + day.date.getDate()}}">
+            <a ng-click="view.pickDay(day.date)" class="date-label-text" href scroll-to="{{'day-' + day.date.getDate()}}">
               {{ day.date | date:'EEEE MMMM d' | uppercase }}</a>
           </div>
           <li ng-repeat="event in day.events">

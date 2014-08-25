@@ -1,38 +1,34 @@
 ooCalendar.factory('Picked', [ function () {
-  var week, day, event;
+  var month, week, day, event;
   var lastPick;
   return {
-    data: {
-      week: week,
-      day: day,
-      event: event
+    // get month() {
+    //   return month;
+    // },
+    // set month(monthId) {
+    //   month = lastPick = monthId;
+    // },
+    month: month,
+    get week() {
+      return week;
     },
-    setLastPick: function (id) {
-      lastPick = id;
+    set week(weekId) {
+      week = lastPick = weekId;
     },
-    getLastPick: function() {
+    get day() {
+      return day;
+    },
+    set day(dayId) {
+      day = lastPick = dayId;
+    },
+    get event() {
+      return event;
+    },
+    set event(eventId) {
+      event = lastPick = eventId;
+    },
+    get lastPick() {
       return lastPick;
-    },
-    getWeek: function() {
-      return this.data.week;
-    },
-    getDay: function() {
-      return this.data.day;
-    },
-    getEvent: function() {
-      return this.data.event;
-    },
-    pickWeek: function (weekId) {
-      this.data.week = weekId;
-      this.setLastPick(weekId);
-    },
-    pickDay: function (dayId) {
-      this.data.day = dayId;
-      this.setLastPick(dayId);
-    },
-    pickEvent: function (eventId) {
-      this.data.event = eventId;
-      this.setLastPick(eventId);
     }
   };
 }]);

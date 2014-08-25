@@ -14,7 +14,7 @@ ooCalendar.directive('ooCalendarPickHandler', ['Picked', 'Visible',
       // make a qeue to hold whichever thing was last picked. Only obvious way to respect the most recent selection
 
       scope.$on('$allEventsLoaded', function(){
-        var lastPick = Picked.getLastPick();
+        var lastPick = Picked.lastPick;
         if (lastPick) {
          console.log('Events Loaded, scroll to:', lastPick);
         }

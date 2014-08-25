@@ -28,15 +28,25 @@ ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked',
   //   self[key] = angular.isDefined($attrs[key]) ? (index < 8 ? $interpolate($attrs[key])($scope.$parent) : $scope.$parent.$eval($attrs[key])) : datepickerConfig[key];
   // });
 
+    $scope.picked = Picked;
+
     this.pickWeek = function (weekId) {
-      Picked.pickWeek(weekId);
+      Picked.week = weekId;
+      // Picked.pickWeek(weekId);
     };
 
     this.pickDay = function (dayId) {
-      Picked.pickDay(dayId);
+      Picked.day = dayId;
+      // Picked.pickDay(dayId);
     };
 
     this.pickEvent = function (eventId) {
-      Picked.pickEvent(eventId);
+      Picked.event = eventId;
+      // Picked.pickEvent(eventId);
+    };
+
+    this.getPickedDay = function () {
+      return Picked.day;
+      // return Picked.getDay();
     };
   }]);

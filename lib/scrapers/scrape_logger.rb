@@ -1,4 +1,4 @@
-module ScrapeLogger 
+module ScrapeLogger
   include ActiveSupport::TaggedLogging
 
   # @logger = ActiveSupport::TaggedLogging.new(Logger.new('scrape.log'))

@@ -2,44 +2,42 @@
 /* global angular, console, ooCalendar*/
 
 ooCalendar.controller('CalendarCtrl',
-  ['$scope', '$q', '$location', '$timeout', '$anchorScroll', '$rootScope', '$window', '$document', 'Event', 'EventFeed', 'Week', 'Name',
-    function ($scope, $q, $location, $timeout, $anchorScroll, $rootScope, $window, $document, Event, EventFeed, Week, Name) {
+  ['$scope', '$q', '$location', '$timeout', '$rootScope', 'Event', 'EventFeed', 'Week', 'Name', 'Picked',
+    function ($scope, $q, $location, $timeout, $rootScope, Event, EventFeed, Week, Name, Picked) {
+
 
       // initialize everything
       $scope.weeks = [];
-      $scope.selected = {};
-      $scope.selectDay = selectDay; // only for testing. probably a better solution
-      $scope.selectWeek = selectWeek;
-      $scope.isWeekLoaded = isWeekLoaded; // ditto
+      $scope.isWeekLoaded = isWeekLoaded; // just for testing.
       $scope.activeDates = [];
       $scope.activeDatesIndex = [];
+      $scope.picked = Picked;
 
       var weeksLoaded = false;
 
       // load current week
       var d = new Date();
-      selectDay(d);
-      // angular.element($document).on('scroll', function () {
-      //   console.log("Week on $scope: " + $scope.selected.week);
-      // });
+      // var weekCollater = makeWeekManager(d, 3);
+      Picked.day = d;
 
-      $scope.$watch('selected.day', function (newValue) {
-        var dateJustSelected = new Date(newValue);
-        var containingWeek = Name.page(dateJustSelected);
+      $scope.$watch('picked.day', function (newDay) {
+        var date = new Date(newDay);
+        if (!isWeekLoaded(  date )) { loadWeek(date); }
+        if (!isMonthLoaded( date )) { $scope.loadActiveDates(date); }
+        // var week = Name.page(date);
+        // if (week !== $scope.picked.week) {
+        //   Picked.week = week;
+        // }
+      });
 
-        // console.log("selected.day set to: ", newValue);
-
-        if (!(isWeekLoaded(dateJustSelected))) {
-          loadWeek(dateJustSelected);
-        }
-
-        if (!(isMonthLoaded(dateJustSelected))) {
-          $scope.loadActiveDates(dateJustSelected);
-        }
-
-        if (containingWeek !== $scope.selected.week) {
-          selectWeek(containingWeek);
-        }
+      function isWeekLoaded(date) {
+        var loaded = $scope.weeks.some(function (element, index, array) {
+          var page_name = Name.page(date);
+          return element.page === page_name;
+        });
+        return loaded;
+      }
+      // Id.week()
 
         // Recursive timeout to check if week is done loading
         // before scrolling to its id.
@@ -57,39 +55,15 @@ ooCalendar.controller('CalendarCtrl',
         //     }
         //   }, 500);
         // }
-      });
+      // });
 
-      function selectDay(date) {
-        $scope.selected.day = date;
-      }
-
-      function selectWeek(page) {
-        $scope.selected.week = page;
-        // console.log("selectWeek() called with ", page);
-      }
 
       $scope.loadActiveDates = function (date) {
         EventFeed.activeDatesPromise(date).then(function (datesArray) {
           $scope.activeDates = datesArray;
-          $scope.selected.month = date.toDateString();
+          $scope.picked.month = date.toDateString();
         });
       };
-
-      // $scope.isDateLoaded = function(date) {
-      //   var dateWeek = Name.page(date);
-      //   var weekNames = [];
-      //   $scope.weeks.forEach(function(week) {
-      //     weekNames.push(week.page);
-      //   });
-
-      //   return _.contains(weekNames, dateWeek);
-      // };
-
-      // $scope.dateAvailable = function(date) {
-      //   return $q(function(resolve, reject) {
-
-      //   });
-      // };
 
 
       // for use with Angular-UI-Bootstrap Datepicker
@@ -128,29 +102,6 @@ ooCalendar.controller('CalendarCtrl',
         return weekId;
       }
 
-      $scope.scrollTo = function (id) {
-        // console.log("scrollTo() called with ", id);
-        var old = $location.hash();
-        $location.hash(id);
-        $anchorScroll();
-        //reset to old to keep any additional routing logic from kicking in
-        $location.hash(old);
-      };
-
-      function isWeekLoaded(date) {
-        var loaded = $scope.weeks.some(function (element, index, array) {
-          var page_name = Name.page(date);
-          return element.page === page_name;
-        });
-        return loaded;
-      }
-
-      // // Gives a promise to return date-sorted Event data
-      // function asyncWeek(event_data){
-      //   var deferred = $q.defer();
-      //   deferred.resolve(makeDays(event_data));
-      //   return deferred.promise;
-      // }
 
       // the algorithm used to resolve asyncWeek, sorting Event resource
       // data into date-sorted days
@@ -196,7 +147,38 @@ ooCalendar.controller('CalendarCtrl',
 
           collatePages(week, 3);
         });
-      }
+      // }
+
+      // // initialize with date, since we always start with the present...
+      // // when might this fail?
+      // function makeWeekManager (max_weeks, date) {
+      //   var week_ids = [];
+      //   var adjacent_ids = [];
+
+      //   function setAdjacentIds (weekId) {
+      //     // to date
+      //     // to next sunday
+      //     // to previous
+      //   }
+
+
+
+      //   return function (week) {
+      //     exceeds_max = ($scope.weeks.length >= max-1) ? true : false;
+      //     // if ($scope.weeks.length >= max-1) {exceeds_max = true} else 
+      //     switch (week.id) {
+      //       case week_ids[0]:
+      //         $scope.weeks.unshift(week);
+      //         if (exceeds_max) { $scope.weeks.pop(); }
+      //         break;
+      //       case week_ids[1]:
+      //         $scope.weeks.push(week);
+      //         if (exceeds_max) { $scope.weeks.shift(); }
+      //         break;
+      //     }
+      //     setAdjacentIds()
+      //   }
+      // }
 
 
       // 
