@@ -8,7 +8,7 @@ end
 
 gem 'rails', '4.1.0'
 gem 'angularjs-rails', '~> 1.2.7'
-gem 'paperclip', '~> 4.1.1'
+gem 'paperclip', '~> 4.2.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.2'

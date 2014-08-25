@@ -30,38 +30,29 @@ class ScrapedSeries
       s.venue = venue
       s.url = url
     end
-
-    # create!(
-
-    #   title: s.title,
-    #   description: s.description,
-    #   venue: s.venue,
-    #   url: s.url
-    # end
   end
 
   def create_record
     s = Series.new do |s|
-      puts "SELFFFFF #{self}"
-      puts title
-      s.title = title
+      s.title       = title
       s.description = description
-      s.venue = venue
-      s.url = url
+      s.venue       = venue
+      s.url         = url
     end
 
-    if s.valid?
-      s.save!
-    else
-      logger.invalid_record(s)
-      false
-    end
+    s.send(:save_record)
+    # if s.valid?
+    #   s.save!
+    # else
+    #   logger.invalid_record(s)
+    #   false
+    # end
   end
-
 
   def save_record
     if valid?
       save!
+    # elsif 
     else
       logger.invalid_record(self)
       false

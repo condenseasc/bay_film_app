@@ -2,12 +2,9 @@ require 'image_comparison'
 
 class Event < ActiveRecord::Base
   # attr_accessible :title, :time, :description
-  belongs_to :venue
+  belongs_to :venue, inverse_of: :events
+  has_many :stills, inverse_of: :event
   has_and_belongs_to_many :series
-  has_attached_file :still, styles: { feed_medium: "300" }
-
-  validates_attachment :still, 
-    content_type: { content_type: ["image/jpeg", "image/png", "image/gif"] }
 
   validates :title, presence: true
   validates :time, presence: true
@@ -20,7 +17,7 @@ class Event < ActiveRecord::Base
     message: "already exists at this screening time and venue"
 
 
-# what was this for?
+# validates that there aren't multiple entries with the same description/title combo... slow?
   validates :description, 
   on: :update,
   uniqueness: {scope: [:title]}
@@ -111,31 +108,6 @@ class Event < ActiveRecord::Base
   def self.association_difference(persisted_relation, new_relation)
     new_relation.to_a.delete_if do |n|
       persisted_relation.any? { |p| p.id == n.id }
-    end
-  end
-
-  def save_still_if_new_or_larger(image)
-    logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
-    e = self
-    log_note = (e.venue.abbreviation || e.venue.name).upcase
-
-    if !e
-      return nil
-    elsif !e.still? || !(ImageComparison.duplicate_image?(e.still.path, image.path) && 
-      (e.still.size >= image.size))
-    
-      e.still = image.open
-      e.save
-
-      logger.tagged("SCRAPER", "#{log_note}", "STILL", "SAVE_NEW") {
-        logger.info "#{e.title}, #{e.id}"
-      }
-      e
-    else
-      logger.tagged("SCRAPER", "#{log_note}", "STILL", "DO_NOTHING") {
-        logger.info "#{e.title}, #{e.id}"
-      }
-      nil
     end
   end
 end

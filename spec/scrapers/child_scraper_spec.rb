@@ -6,13 +6,11 @@ class ChildScraper < VenueScraper
     @series = []
     @events = []
   end
-
 end
 
 describe ChildScraper do
   let(:scraper) { ChildScraper.new }
   # let(:scraper) { instance_double 'ChildScraper' }
-
 
   describe 'instance methods' do
     it 'include scrape_#{attribute names}' do

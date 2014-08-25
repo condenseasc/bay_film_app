@@ -39,9 +39,54 @@ class PfaEvent < ScrapedEvent
     @time = Time.zone.parse("#{d}, #{t}")
   end
 
+  def scrape_stills
+    s = doc.css( PfaScraper::EVENT_IMG )
+    stills_array = []
+    if s.length > 0
+      s.map do |img|
+        # note that #attr acts different at node/element level vs nodeset
+        url = CGI.unescapeHTML( img.attr('src').strip )
+        alt = img.attr('alt').strip
+
+        still_info = OpenStruct.new(url: url, alt: alt)
+        stills_array.push still_info
+      end
+    end
+    @stills = stills_array
+  end
+
+  def stills
+    if stills.first.class == Still
+      @stills
+    else
+      @stills = @stills.map do |s|
+        Still.create do |still|
+          still.alt   = s.alt
+          still.image = LocalResource.local_resource_from_url(s.url).file
+        end
+      end
+    end
+  end
+
   def series
     [Series.find_by(url: @series.url)]
   end
+
+  # still = doc.css(EVENT_IMG)
+  # # still.length == 0 ? event[:still] = nil : event[:still] = CGI.unescapeHTML( still.attr("src").inner_html )
+  # if still.length == 0 
+  #   event[:still] = nil
+  # else 
+  #   event[:still] = CGI.unescapeHTML( still.attr("src").inner_html )
+  # end
+
+  # if persisted_e && event[:still]
+  #   puts event[:still]
+  #   image = LocalResource.local_resource_from_url(event[:still]).file
+  #   persisted_e.save_still_if_new_or_larger(image)
+  # end
+
+  #   image = LocalResource.local_resource_from_url('http://www.bampfa.berkeley.edu/images/film/rudeawakening/comedy_Ramis_Groundhog-Day_002.jpg').file
 
 
   # def scrape_time

@@ -155,7 +155,7 @@ GEM
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     ntlm-http (0.1.1)
-    paperclip (4.1.1)
+    paperclip (4.2.0)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
@@ -298,7 +298,7 @@ DEPENDENCIES
   jquery-rails
   mechanize (~> 2.6.0)
   nokogiri (~> 1.6.1)
-  paperclip (~> 4.1.1)
+  paperclip (~> 4.2.0)
   pg (~> 0.17.0)
   phashion
   rails (= 4.1.0)

@@ -21,6 +21,9 @@ class PfaScraper < VenueScraper
     attr_reader :venue, :logger
   end
 
+
+  # Ideally, I'd have buckets of events tied to series, so
+  # It's just not
   @venue = Venue.find_by(name: 'Pacific Film Archive Theater')
 
   # ScrapeLogger.new(PfaScraper.venue.abbreviation || PfaScraper.venue.name)
@@ -64,11 +67,14 @@ class PfaScraper < VenueScraper
   end
 end
 
-# load 'lib/scrapers/scrape_logger.rb'
-# load 'lib/scrapers/base_classes/venue_scraper.rb'
-# load 'lib/scrapers/pfa/pfa_scraper.rb'
-# load 'lib/scrapers/base_classes/scraped_series.rb'
-# load 'lib/scrapers/base_classes/scraped_event.rb'
-# load 'lib/scrapers/pfa/pfa_series.rb'
-# load 'lib/scrapers/pfa/pfa_event.rb'
+load 'lib/scrapers/scrape_logger.rb'
+load 'lib/scrapers/base_classes/venue_scraper.rb'
+load 'lib/scrapers/pfa/pfa_scraper.rb'
+load 'lib/scrapers/base_classes/scraped_series.rb'
+load 'lib/scrapers/base_classes/scraped_event.rb'
+load 'lib/scrapers/pfa/pfa_series.rb'
+load 'lib/scrapers/pfa/pfa_event.rb'
+load 'lib/scrapers/scraped_stills.rb'
+load 'lib/local_resource.rb'
+load 'lib/compare.rb'
 

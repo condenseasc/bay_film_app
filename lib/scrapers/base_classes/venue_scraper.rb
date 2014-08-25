@@ -35,9 +35,18 @@ class VenueScraper
     # self
   end
 
+  def scrape_and_save
+    scrape_and_save_series
+    scrape_and_save_events
+  end
+
   def create_records
     create_series
     create_events
+  end
+
+  def scrape_and_save_series
+    series.scrape_and_save
   end
 
   def create_series
