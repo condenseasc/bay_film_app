@@ -35,7 +35,13 @@ class LocalResource
     Rails.root.join('tmp')
   end
 
-  def self.local_resource_from_url(url)
-    LocalResource.new(URI.parse(url))
+  def self.with_file_from_url(url)
+    f = LocalResource.new(URI.parse(url)).file
+    begin
+      yield f
+    ensure
+      f.close
+      f.unlink
+    end
   end
 end

@@ -49,4 +49,8 @@ module Scrape
   def make_doc(url)
     fix_links( Nokogiri::HTML( open url ), url )
   end
+
+  def make_doc_from_file(path, url)
+    fix_links( Nokogiri::HTML( open path ), url )
+  end
 end

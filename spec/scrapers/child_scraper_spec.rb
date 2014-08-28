@@ -2,6 +2,7 @@ require 'spec_helper'
 require_relative '../../lib/scrapers/base_classes/venue_scraper'
 
 class ChildScraper < VenueScraper
+  # attr_reader :series, :events
   def initialize
     @series = []
     @events = []
@@ -20,6 +21,8 @@ describe ChildScraper do
       expect(defined? scraper.child_scrapers).to be_falsey 
     end
 
+    # so it's only testing that it has #series and #event available for its dummy methods
+    # it doesn't have ScrapedSeries or ScrapedEvent objs to test
     describe '#scrape' do
       it 'returns an instance of the child scraper' do
         expect(scraper.scrape).to be(scraper)

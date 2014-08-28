@@ -3,7 +3,7 @@ require_relative '../../lib/scrapers/base_classes/venue_scraper'
 
 describe VenueScraper do
   let(:venue_scraper) { VenueScraper.new }
-  let(:test_scraper) { TestScraperClass.new }
+  let(:test_scraper)  { TestScraperClass.new }
 
   before(:context) do
     class TestScraperClass < VenueScraper

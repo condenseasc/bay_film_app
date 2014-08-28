@@ -2,9 +2,12 @@ require 'scrapers/scrape'
 
 class ScrapedSeries
   include Scrape
-  ATTRIBUTE_METHODS = %w[venue url name scrape_name description scrape_description]
-
-  attr_reader :url, :doc, :logger, :venue, :title, :description
+  # maximal list of scraping methods
+  SCRAPE_METHODS = %w[scrape_title scrape_description]
+  # maximal list of attributes written by scrapers
+  attr_reader :title, :description
+  # initialized properties, with venue being provided
+  attr_reader :url, :doc, :logger, :venue
 
   def initialize(url)
     @url = url
@@ -25,10 +28,10 @@ class ScrapedSeries
 
   def build_record
     Series.new do |s|
-      s.title = title
+      s.title       = title
       s.description = description
-      s.venue = venue
-      s.url = url
+      s.venue       = venue
+      s.url         = url
     end
   end
 
@@ -40,30 +43,24 @@ class ScrapedSeries
       s.url         = url
     end
 
-    s.send(:save_record)
-    # if s.valid?
-    #   s.save!
-    # else
-    #   logger.invalid_record(s)
-    #   false
-    # end
+    save_record(s)
   end
 
-  def save_record
-    if valid?
-      save!
+  def save_record(r)
+    if r.valid?
+      r.save!
     # elsif 
     else
-      logger.invalid_record(self)
+      logger.invalid_record(r)
       false
     end
   end
 
-  def method_missing(method_id)
-    if ScrapedSeries::ATTRIBUTE_METHODS.include?(method_id.id2name)
+  def method_missing(method_id, *args)
+    if ScrapedSeries::SCRAPE_METHODS.include?(method_id.id2name)
       nil
     else
-      super
+      super(*args)
     end
   end
 end

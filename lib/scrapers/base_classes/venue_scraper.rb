@@ -18,6 +18,8 @@ class VenueScraper
   @child_scrapers = []
   @logger = ActiveSupport::TaggedLogging.new(Logger.new('log/scrape.log')).extend(ScrapeLogger)
 
+  attr_reader :series, :events
+
   def urls(selector)
     find_urls doc, selector
   end
@@ -32,23 +34,23 @@ class VenueScraper
   def scrape
     scrape_series
     scrape_events
-    # self
+    self
   end
-
-  def scrape_and_save
-    scrape_and_save_series
-    scrape_and_save_events
+  def scrape_series
+    series.each do |s|
+      s.scrape
+    end
+  end
+  def scrape_events
+    events.each do |e|
+      e.scrape
+    end
   end
 
   def create_records
     create_series
     create_events
   end
-
-  def scrape_and_save_series
-    series.scrape_and_save
-  end
-
   def create_series
     series.each do |s|
       s.create_record
@@ -60,6 +62,16 @@ class VenueScraper
       e.create_record
     end
   end
+
+  # def scrape_and_save
+  #   scrape_and_save_series
+  #   scrape_and_save_events
+  # end
+
+  # def scrape_and_save_series
+  #   series.scrape_and_save
+  # end
+
 
 
   # def build_records
@@ -75,11 +87,6 @@ class VenueScraper
   # end
 
   # Series
-  def scrape_series
-    series.each do |s|
-      s.scrape
-    end
-  end
 
 
   # def build_series_records
@@ -96,11 +103,6 @@ class VenueScraper
 
 
   # Events
-  def scrape_events
-    events.each do |e|
-      e.scrape
-    end
-  end
 
   # def build_events_records
   #   @events.map! do |e|

@@ -5,3 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+Venue.create do |v|
+  v.name = 'Pacific Film Archive Theater'
+  v.abbreviation = 'PFA' 
+  v.url = 'http://www.bampfa.berkeley.edu/'
+  v.city = 'Berkeley'
+end
+
+Venue.create do |v|
+  v.name = 'Yerba Buena Center for the Arts'
+  v.abbreviation = 'YBCA' 
+  v.url = 'http://www.ybca.org/'
+  v.city = 'Berkeley'
+end

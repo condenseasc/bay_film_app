@@ -1,24 +1,43 @@
 require 'scrapers/scrape'
 require 'scrapers/scraped_stills'
+require 'local_resource'
+
 
 class ScrapedEvent
   include Scrape
   include ScrapedStills
 
-  UPDATEABLE_ASSOCIATIONS = [:series]
-  ATTRIBUTE_METHODS = %w[ venue url
-    title          scrape_title 
-    time           scrape_time
-    description    scrape_description
-    show_notes     scrape_show_notes
-    show_credits   scrape_show_credits
-    admission      scrape_admission
-    location_notes scrape_location_notes
-    stills         scrape_stills
+  UPDATEABLE_ASSOCIATIONS = [:series, :stills]
+  # ATTRIBUTE_METHODS = %w[ venue url
+  #   title          scrape_title 
+  #   time           scrape_time
+  #   description    scrape_description
+  #   show_notes     scrape_show_notes
+  #   show_credits   scrape_show_credits
+  #   admission      scrape_admission
+  #   location_notes scrape_location_notes
+  #   stills         scrape_stills
+  # ]
+  ATTRIBUTE_METHODS = %w[
+    scrape_title 
+    scrape_time
+    scrape_description
+    scrape_show_notes
+    scrape_show_credits
+    scrape_admission
+    scrape_location_notes
+    scrape_stills
   ]
+  attr_reader :title, 
+              :time, 
+              :description, 
+              :show_notes, 
+              :show_credits, 
+              :admission, 
+              :location_notes
 
-  attr_reader :url, :doc, :logger, :venue, :title, :time, :description, :show_notes, :show_credits, :admission, :location_notes
-  attr_writer :venue, :series
+  attr_reader :url, :doc, :logger, :venue
+  # attr_writer :venue, :series
   # Taking care only of the simplest case. Overwrite otherwise
   def initialize(url)
     @url = url

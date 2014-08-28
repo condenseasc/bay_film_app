@@ -1,7 +1,5 @@
-
-
 class PfaScraper < VenueScraper
-
+  VENUE_NAME = 'Pacific Film Archive Theater'
   HOME_URL = "http://www.bampfa.berkeley.edu/filmseries/"
   HOME_SERIES_LINK_SELECTOR = ".textblack a"
 
@@ -18,23 +16,19 @@ class PfaScraper < VenueScraper
   EVENT_IMG = ".media img"
 
   class << self
-    attr_reader :venue, :logger
+    attr_reader :logger
+    # :venue
   end
+  # had to take this out because Rake uses this class to generate tasks...
+  # at which point it hasn't yet loaded the environment :(
+  # @venue = Venue.find_or_create_by(name: 'Pacific Film Archive Theater')
 
-
-  # Ideally, I'd have buckets of events tied to series, so
-  # It's just not
-  @venue = Venue.find_by(name: 'Pacific Film Archive Theater')
-
-  # ScrapeLogger.new(PfaScraper.venue.abbreviation || PfaScraper.venue.name)
-
-  attr_reader :doc, :url, :venue, :series, :events
+  attr_reader :doc, :url, :venue
 
   def initialize(uri = PfaScraper::HOME_URL)
     @url = uri
     @doc = make_doc( url )
     @venue = PfaScraper.venue
-    # @logger = PfaScraper.logger
   end
 
   def make_series
@@ -67,14 +61,15 @@ class PfaScraper < VenueScraper
   end
 end
 
-load 'lib/scrapers/scrape_logger.rb'
-load 'lib/scrapers/base_classes/venue_scraper.rb'
-load 'lib/scrapers/pfa/pfa_scraper.rb'
-load 'lib/scrapers/base_classes/scraped_series.rb'
-load 'lib/scrapers/base_classes/scraped_event.rb'
-load 'lib/scrapers/pfa/pfa_series.rb'
-load 'lib/scrapers/pfa/pfa_event.rb'
-load 'lib/scrapers/scraped_stills.rb'
-load 'lib/local_resource.rb'
-load 'lib/compare.rb'
+# load 'lib/scrapers/scrape_logger.rb'
+# load 'lib/scrapers/scrape.rb'
+# load 'lib/scrapers/base_classes/venue_scraper.rb'
+# load 'lib/scrapers/pfa/pfa_scraper.rb'
+# load 'lib/scrapers/base_classes/scraped_series.rb'
+# load 'lib/scrapers/base_classes/scraped_event.rb'
+# load 'lib/scrapers/pfa/pfa_series.rb'
+# load 'lib/scrapers/pfa/pfa_event.rb'
+# load 'lib/scrapers/scraped_stills.rb'
+# load 'lib/local_resource.rb'
+# load 'lib/compare.rb'
 

@@ -16,10 +16,10 @@ RSpec.describe 'ScrapedSeries' do
   end
 
   describe 'instance method' do 
-    describe 'scraoe_#{attr}' do
+    describe 'scrape_#{attr}' do
       context 'scrape_#{attr} method not defined on subclass' do
         it 'method_missing catches and returns nil if attr is in schema' do
-          expect(TestSeries.scrape_title).to be_nil
+          expect(TestSeries.new.scrape_title).to be_nil
         end
       end
     end
