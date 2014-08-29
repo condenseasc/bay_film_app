@@ -6,6 +6,7 @@ require 'compare'
 
 class ScrapedEvent
   include Scrape
+  include Compare::Records
   # include ScrapedStills
 
   UPDATEABLE_ASSOCIATIONS = [:series]
@@ -42,7 +43,10 @@ class ScrapedEvent
   # Series objects independently. They may be updated, but not removed.
   # Here again, ScrapedSeries have to be processed first.
   def series
-    @series_records ||= @series.map { |s| Series.find_by(title: s.title, venue: s.venue) }
+    # @series_records ||= 
+    if @series && !@series.empty?
+      @series.map { |s| Series.find_by(title: s.title, venue: s.venue) }
+    end
   end
 
   def scrape
@@ -57,6 +61,10 @@ class ScrapedEvent
     puts title
   end
 
+  # def save_record
+  #   save create_record
+  # end
+
   def create_record
     e = Event.new do |e|
       e.title          = title
@@ -67,18 +75,21 @@ class ScrapedEvent
       e.admission      = admission
       e.location_notes = location_notes
       e.venue          = venue
-      e.series = series unless series.empty?
+      if series then e.series = series end
+      # e.series = series unless series
     end
 
     # I need to add stills after I create events, so I can do all those checks
     # because 'those checks' are tied to the event itself, which stills it already holds
-    save_scraped_record(e)
-    stills.each { |s| s.save_still_to(e) }
+    save(e)
+    if stills && !stills.empty? 
+      stills.each { |s| s.save_still_to(e) }
+    end
     # ScrapedStill.save_stills(e, stills)
     # e.send.save_scraped_stills stills
   end
 
-  def method_missing(method_id)
+  def method_missing(method_id, *args)
     if ScrapedEvent::ATTRIBUTE_METHODS.include?(method_id.id2name)
       nil
     else
@@ -93,7 +104,7 @@ class ScrapedEvent
   # # check for and makes updates
   # else
   # # invalid, logs errors
-  def save_scraped_record(r)
+  def save(r)
     if r.valid?
       r.save!
       logger.saved_new_record(r)
@@ -109,10 +120,10 @@ class ScrapedEvent
         persisted = persisted_events[0]
       end
       # Get a hash of attributes and a hash of :association => [records]
-      attributes = Compare::Records.attribute_difference(persisted, r, Compare::Records::EVENT_EXCLUSIONS)
+      attributes = attribute_difference(persisted, r, Compare::Records::EVENT_EXCLUSIONS)
       hash = {}
       UPDATEABLE_ASSOCIATIONS.each do |name|
-        hash[name] = Compare::Records.association_difference(persisted.send(name), r.send(name))
+        hash[name] = association_difference(persisted.send(name), r.send(name))
         hash.delete(name) if hash[name].empty?
       end
       associations = hash

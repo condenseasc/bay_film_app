@@ -2,7 +2,6 @@ require 'spec_helper'
 require_relative '../../../lib/scrapers/base_classes/scraped_series'
 require_relative '../../../lib/scrapers/base_classes/scraped_event'
 require_relative '../../../lib/scrapers/base_classes/scraped_event'
-
 require_relative '../../../lib/scrapers/base_classes/venue_scraper'
 require_relative '../../../lib/scrapers/pfa/pfa_scraper'
 require_relative '../../../lib/scrapers/pfa/pfa_series'
@@ -33,15 +32,9 @@ RSpec.shared_examples 'Pfa Event' do
 end 
 
 RSpec.shared_context 'Local PfaEvent' do
-  # let(:local_series) do
-  #   LocalPfaSeries.create('spec/scrapers/pfa/example_pfa_series.html', 'http://www.bampfa.berkeley.edu/filmseries/ray')
-  # end
   before(:all) do
     class LocalPfaSeries < PfaSeries
       def initialize
-        # @url = url
-        # @doc = make_doc_from_file(path, url)
-        # @logger = VenueScraper.logger
         @venue = PfaSeries.venue
         @title = 'Fall 2014' # needs a title to be saved and found. would generally be scraped
       end
@@ -85,7 +78,7 @@ RSpec.describe 'PfaEvent Offline With Image' do
 
     it 'has ScrapedStills in its stills' do
       expect( @e.stills.first.class ).to eq(ScrapedStill)
-    end
+    end 
   end
 end
 
