@@ -3,10 +3,11 @@ class PfaSeries < ScrapedSeries
   class << self
     attr_reader :venue
   end
+  @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
 
   def initialize(url)
     super
-    @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
+    @venue = PfaSeries.venue
   end
 
   def scrape_title

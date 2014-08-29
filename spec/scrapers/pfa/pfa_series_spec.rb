@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative '../../../lib/scrapers/base_classes/scraped_series'
 require_relative '../../../lib/scrapers/base_classes/scraped_event'
-
+require_relative '../../../lib/scrapers/base_classes/scraped_still'
 require_relative '../../../lib/scrapers/base_classes/venue_scraper'
 require_relative '../../../lib/scrapers/pfa/pfa_scraper'
 require_relative '../../../lib/scrapers/pfa/pfa_series'
@@ -15,7 +15,7 @@ RSpec.shared_examples 'Pfa Series' do
     it 'has values for title and description' do
       expect(@series.title && @series.description).to be_truthy
     end
-
+    
     it 'has Pacific Film Archive Theater as its venue' do
       expect(@series.venue.name).to eq('Pacific Film Archive Theater')
     end
@@ -25,10 +25,6 @@ end
 RSpec.describe 'PfaSeries Offline specs' do
   before(:all) do
     class LocalPfaSeries < PfaSeries
-      class << self
-        attr_reader :venue
-      end
-
       def initialize(path, url)
         @url = url
         @doc = make_doc_from_file(path, url)

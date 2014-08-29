@@ -1,6 +1,8 @@
 require 'spec_helper'
 require_relative '../../../lib/scrapers/base_classes/scraped_series'
 require_relative '../../../lib/scrapers/base_classes/scraped_event'
+require_relative '../../../lib/scrapers/base_classes/scraped_event'
+
 require_relative '../../../lib/scrapers/base_classes/venue_scraper'
 require_relative '../../../lib/scrapers/pfa/pfa_scraper'
 require_relative '../../../lib/scrapers/pfa/pfa_series'
@@ -18,20 +20,45 @@ RSpec.shared_examples 'Pfa Event' do
       it ('has non nil show_notes')   { expect( @e.show_notes ).to be_truthy }
     end
   end
+
+  describe '#save_record' do 
+    context 'with a unique record' do
+      it 'creates a new record' do
+        @e.create_record
+        # PfaEvent.create_record(@e)
+        expect(Event.count).to be(1)
+      end
+    end
+  end
 end 
 
 RSpec.shared_context 'Local PfaEvent' do
+  # let(:local_series) do
+  #   LocalPfaSeries.create('spec/scrapers/pfa/example_pfa_series.html', 'http://www.bampfa.berkeley.edu/filmseries/ray')
+  # end
   before(:all) do
+    class LocalPfaSeries < PfaSeries
+      def initialize
+        # @url = url
+        # @doc = make_doc_from_file(path, url)
+        # @logger = VenueScraper.logger
+        @venue = PfaSeries.venue
+        @title = 'Fall 2014' # needs a title to be saved and found. would generally be scraped
+      end
+    end
+
+    Series.create(title: 'Fall 2014', venue: PfaSeries.venue)
+
     class LocalPfaEvent < PfaEvent
       def initialize(path, url, series)
         @url = url
         @doc = make_doc_from_file(path, url)
-        @series = series
-        @venue = PfaEvent.venue
+        @series = [series]
+        @venue = PfaEvent.venue 
         @logger = VenueScraper.logger
       end
     end
-  end
+  end 
 end
 
 RSpec.describe 'PfaEvent Offline With Image' do
@@ -40,22 +67,26 @@ RSpec.describe 'PfaEvent Offline With Image' do
   before(:all) do
    @e = LocalPfaEvent.new('spec/scrapers/pfa/example_pfa_event.html', 
     'http://www.bampfa.berkeley.edu/film/FN20724',
-    OpenStruct.new(url: nil))
+    LocalPfaSeries.new)
+    # Series.create(title: 'Fall 2014', venue: PfaSeries.venue))
+    # LocalPfaSeries.new('spec/scrapers/pfa/example_pfa_series.html', 'http://www.bampfa.berkeley.edu/filmseries/ray') )
   end
   before(:context) { @e.scrape }
 
   it_behaves_like 'Pfa Event'
+  it 'has the right title' do
+    expect(@e.title).to eq('The Chess Players')
+  end
 
   describe 'stills' do
     it 'has non nil stills' do
       expect( @e.stills.empty? ).to be(false)
     end
 
-    it 'has Stills in its stills' do
-      expect( @e.stills.first.class ).to eq(Still)
+    it 'has ScrapedStills in its stills' do
+      expect( @e.stills.first.class ).to eq(ScrapedStill)
     end
   end
-
 end
 
 RSpec.describe 'PfaEvent Offline No Image' do
@@ -64,7 +95,8 @@ RSpec.describe 'PfaEvent Offline No Image' do
   before(:all) do
    @e = LocalPfaEvent.new('spec/scrapers/pfa/example_pfa_event_no_img.html', 
     'http://www.bampfa.berkeley.edu/film/FN20724',
-    OpenStruct.new(url: nil))
+    LocalPfaSeries.new)
+    # ('spec/scrapers/pfa/example_pfa_series.html', 'http://www.bampfa.berkeley.edu/filmseries/ray')) 
   end
   before(:context) { @e.scrape }
 

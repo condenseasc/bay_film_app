@@ -5,8 +5,10 @@ class Series < ActiveRecord::Base
   # belongs_to :owner, class_name: "Venue", foreign_key: :venue_id
   belongs_to :venue
 
-  validates :title, presence: true
-  validates :url, uniqueness: { scope: [:title] }
+  validates :title, presence: true,
+                    uniqueness: { scope: [:venue], message: 'already taken at this venue' }
+  # hm, this doesn't make sense, it's by default unique per title...
+  # validates :url,   uniqueness: { scope: [:title], message: 'one series allowed per url' }
 
   def check_for_duplicate_association(event)
     self.events.each do |e|

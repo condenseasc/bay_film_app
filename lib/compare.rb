@@ -1,8 +1,8 @@
 module Compare
   module Records
-    EVENT_EXCLUSIONS = %w{id time title venue created_at updated_at still}
-    IMAGE_EXCLUSIONS = %w{}
-    SERIES_EXCLUSIONS = %w{}
+    EVENT_EXCLUSIONS = %w{id time title venue created_at updated_at stills}
+    STILL_EXCLUSIONS = %w{id event_id image_file_name image_content_type image_file_size image_updated_at }
+    SERIES_EXCLUSIONS = %w{id events stills venue created_at updated_at }
     
     # Is this any better than just overwriting the old record?
     # Well, it only gives positive differences, i.e. only non empty values can count as a 'difference'

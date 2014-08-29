@@ -3,10 +3,11 @@ class PfaEvent < ScrapedEvent
   class << self
     attr_reader :venue
   end
+  @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
 
   def initialize(url, series)
     super(url)
-    @series = series
+    @series = [series]
     @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
   end
 
@@ -46,40 +47,46 @@ class PfaEvent < ScrapedEvent
 
   def scrape_stills
     s = doc.css( PfaScraper::EVENT_IMG )
-    stills_array = []
-    if s.length > 0
-      s.map do |img|
-        # note that #attr acts different at node/element level vs nodeset
-        url = CGI.unescapeHTML( img.attr('src').strip )
-        alt = img.attr('alt').strip
 
-        still_info = OpenStruct.new(url: url, alt: alt)
-        stills_array.push still_info
+    @stills = s.map do |img|
+      ScrapedStill.new do |s|
+        s.url = CGI.unescapeHTML( img.attr('src').strip )
+        s.alt = img.attr('alt').strip
       end
     end
-    @stills = stills_array
-  end
-
-  def stills
-    if !@stills.empty? && @stills.first.class == Still 
-      @stills
-    else
-      @stills = @stills.map do |s|
-
-        Still.create do |still|
-          still.alt = s.alt
-          LocalResource.with_file_from_url(s.url) do |l| 
-            still.image = l.open
-          end
-        end
-      end
-    end
-  end
-
-  def series
-    [Series.find_by(url: @series.url)]
   end
 end
+
+
+  #   end
+  #   if s.length > 0
+  #     s.map do |img|
+  #       # note that #attr acts different at node/element level vs nodeset
+  #       url = CGI.unescapeHTML( img.attr('src').strip )
+  #       alt = img.attr('alt').strip
+
+  #       still_info = OpenStruct.new(url: url, alt: alt)
+  #       stills_array.push still_info
+  #     end
+  #   end
+  #   @stills = stills_array
+  # end
+
+#   def stills
+#     if !@stills.empty? && @stills.first.class == Still 
+#       @stills
+#     else
+#       @stills = @stills.map do |s|
+#         Still.create do |still|
+#           still.alt = s.alt
+#           LocalResource.with_file_from_url(s.url) do |l| 
+#             still.image = l.open
+#           end
+#         end
+#       end
+#     end
+#   end
+# end
 
 # load 'lib/scrapers/pfa/pfa_event.rb'
 # class LocalPfaEvent < PfaEvent

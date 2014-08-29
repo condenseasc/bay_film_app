@@ -44,4 +44,15 @@ class LocalResource
       f.unlink
     end
   end
+
+  def self.file_from_url(url)
+    f = LocalResource.new(URI.parse(url)).file
+    # begin
+    #   yield f
+    # ensure
+    #   f.close
+    #   f.unlink
+    # end
+  end
+
 end
