@@ -54,7 +54,7 @@ RSpec.shared_context 'Local PfaEvent' do
         @url = url
         @doc = make_doc_from_file(path, url)
         @series = [series]
-        @venue = PfaEvent.venue 
+        @venue = PfaEvent.venue
         @logger = VenueScraper.logger
       end
     end

@@ -24,6 +24,7 @@
 
 # Ignore paperclip event image directory
 /public/system/events
+/public/system/stills
 
 # html2js templates
 /app/assets/templates/html2js
