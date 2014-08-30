@@ -59,7 +59,7 @@ class VenueScraper
 
   def create_events
     events.each do |e|
-      e.create_record
+      e.save
     end
   end
 

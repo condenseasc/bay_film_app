@@ -20,10 +20,10 @@ RSpec.shared_examples 'Pfa Event' do
     end
   end
 
-  describe '#save_record' do 
+  describe '#save' do 
     context 'with a unique record' do
       it 'creates a new record' do
-        @e.create_record
+        @e.save
         # PfaEvent.create_record(@e)
         expect(Event.count).to be(1)
       end
@@ -36,17 +36,17 @@ RSpec.shared_context 'Local PfaEvent' do
     class LocalPfaSeries < PfaSeries
       def initialize
         @venue = PfaSeries.venue
-        @title = 'Fall 2014' # needs a title to be saved and found. would generally be scraped
+        @series = Series.create(title: 'Fall 2014', venue: PfaSeries.venue)
       end
     end
 
-    Series.create(title: 'Fall 2014', venue: PfaSeries.venue)
+    # Series.create(title: 'Fall 2014', venue: PfaSeries.venue)
 
     class LocalPfaEvent < PfaEvent
       def initialize(path, url, series)
         @url = url
         @doc = make_doc_from_file(path, url)
-        @series = [series]
+        @series = [LocalPfaSeries.new]
         @venue = PfaEvent.venue
         @logger = VenueScraper.logger
       end
@@ -101,8 +101,8 @@ RSpec.describe 'PfaEvent Offline No Image' do
     end
   end
 
-  describe '#create_record' do
-    before(:example) { @e.create_record }
+  describe '#save' do
+    before(:example) { @e.scrape; @e.save }
 
     it 'saves an event' do
       expect(Event.count).to eq(1)

@@ -25,5 +25,4 @@ RSpec.describe 'ScrapedSeries' do
     end
   end
 
-
 end
