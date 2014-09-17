@@ -1,3 +1,6 @@
+require 'scrape/base/scraped_series'
+require 'scrape/pfa/pfa_scraper'
+
 class PfaSeries < ScrapedSeries
 
   class << self
@@ -5,7 +8,7 @@ class PfaSeries < ScrapedSeries
   end
   @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
 
-  def initialize(url)
+  def initialize(url, path:nil)
     super
     @venue = PfaSeries.venue
   end
@@ -19,8 +22,8 @@ class PfaSeries < ScrapedSeries
   end
 
   def make_events_from_series
-    event_urls = urls(PfaScraper::SERIES_EVENT_LINK_SELECTOR).uniq
+    event_urls = doc.find_urls(PfaScraper::SERIES_EVENT_LINK_SELECTOR).uniq
     event_urls.delete_if { |url| url !~ %r'/film/' }
-    event_urls.map { |url| puts url; PfaEvent.new(url, self)}
+    event_urls.map { |url| puts url; PfaEvent.new(url, series:[self])}
   end
 end

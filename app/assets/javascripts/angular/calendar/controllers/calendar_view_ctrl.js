@@ -19,8 +19,8 @@
 //   offset: 0
 // });
 
-ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked',
-  function ($scope, Picked) {
+ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked', 'Visible', 'Name',
+  function ($scope, Picked, Visible, Name) {
 
   // Configuration attributes
   // angular.forEach(['formatDay', 'formatMonth', 'formatYear', 'formatDayHeader', 'formatDayTitle', 'formatMonthTitle',
@@ -29,24 +29,47 @@ ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked',
   // });
 
     $scope.picked = Picked;
+    $scope.visible = Visible;
 
-    this.pickWeek = function (weekId) {
-      Picked.week = weekId;
-      // Picked.pickWeek(weekId);
+    this.isVisibleDay = function(date) {
+      if (!(date instanceof Date && Visible.day.date instanceof Date)) {
+        return false;
+      } else if ( this.compareDates(date, Visible.day.date ) === 0) {
+        return true;
+      } else {
+        return false;
+      }
     };
 
-    this.pickDay = function (dayId) {
-      Picked.day = dayId;
-      // Picked.pickDay(dayId);
+    this.dayId = function (date) {
+      return Name.date(date);
     };
 
-    this.pickEvent = function (eventId) {
-      Picked.event = eventId;
-      // Picked.pickEvent(eventId);
+    this.compareDates = function (date1, date2) {
+      return (new Date( date1.getFullYear(), date1.getMonth(), date1.getDate() ) - new Date( date2.getFullYear(), date2.getMonth(), date2.getDate() ) );
     };
 
-    this.getPickedDay = function () {
-      return Picked.day;
-      // return Picked.getDay();
-    };
+    // this.pickWeek = function (weekId) {
+    //   Picked.week = weekId;
+    //   // Picked.pickWeek(weekId);
+    // };
+
+    // this.pickDay = function (dayId) {
+    //   Picked.day = dayId;
+    //   // Picked.pickDay(dayId);
+    // };
+
+    // this.pickEvent = function (eventId) {
+    //   Picked.event = eventId;
+    //   // Picked.pickEvent(eventId);
+    // };
+
+    // this.getPickedDay = function () {
+    //   return Picked.day;
+    //   // return Picked.getDay();
+    // };
+
+    // this.isPickedDay = function () {
+
+    // }
   }]);

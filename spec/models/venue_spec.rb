@@ -28,10 +28,10 @@ describe Venue do
   describe "event associations" do
     before { venue.save }
     let!(:near_future_event) do
-      FactoryGirl.create(:event, venue: venue, time: Time.now.end_of_hour)
+      FactoryGirl.create(:event, venue: venue, time: Time.now.end_of_day)
     end
     let!(:distant_future_event) do
-      FactoryGirl.create(:event, venue: venue, time: Time.now.end_of_day)
+      FactoryGirl.create(:event, venue: venue, time: Time.now.end_of_day.advance(days: 1))
     end
 
     it "should have the right events in the right order" do

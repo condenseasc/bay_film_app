@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../lib/scrapers/base_classes/venue_scraper'
+require_relative '../../lib/scrape/base/venue_scraper'
 
 describe VenueScraper do
   let(:venue_scraper) { VenueScraper.new }
@@ -8,6 +8,8 @@ describe VenueScraper do
   before(:context) do
     class TestScraperClass < VenueScraper
       def initialize
+        # @logger = ActiveSupport::TaggedLogging.new(Logger.new('log/scrape_test.log')).extend(Scrape::Logging)
+        @log_tags = ['venue_scraper_spec', :timestamp, :test]
         @series = []
         @events = []
       end

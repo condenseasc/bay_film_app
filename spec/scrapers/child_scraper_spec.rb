@@ -1,9 +1,11 @@
 require 'spec_helper'
-require_relative '../../lib/scrapers/base_classes/venue_scraper'
+require_relative '../../lib/scrape/base/venue_scraper'
 
 class ChildScraper < VenueScraper
   # attr_reader :series, :events
   def initialize
+    # @logger = ActiveSupport::TaggedLogging.new(Logger.new('log/scrape_test.log')).extend(Scrape::Logging)
+    @log_tags = ['child_scraper_spec', :timestamp, :test]
     @series = []
     @events = []
   end
@@ -23,11 +25,11 @@ describe ChildScraper do
 
     # so it's only testing that it has #series and #event available for its dummy methods
     # it doesn't have ScrapedSeries or ScrapedEvent objs to test
-    describe '#scrape' do
-      it 'returns an instance of the child scraper' do
-        expect(scraper.scrape).to be(scraper)
-      end
-    end
+    # describe '#scrape' do
+    #   it 'returns an instance of the child scraper' do
+    #     expect(scraper.scrape).to be(scraper)
+    #   end
+    # end
   end
 
   describe 'class instance methods' do

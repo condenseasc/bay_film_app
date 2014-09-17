@@ -1,14 +1,15 @@
-class PfaEvent < ScrapedEvent
+require 'scrape/pfa/pfa_scraper'
 
+class PfaEvent < ScrapedEvent
   class << self
     attr_reader :venue
   end
   @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
 
-  def initialize(url, series)
-    super(url)
-    @series = [series]
-    @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
+  def initialize(url, series:[], path:nil)
+    super(url, path:path)
+    @series = series
+    @venue = PfaEvent.venue
   end
 
   def scrape_title
@@ -20,7 +21,7 @@ class PfaEvent < ScrapedEvent
     if /ldheader/.match(wrapper)
       desc = wrapper.partition(/<div.+class=.*"ldheader">.*<\/div>/m)[2]
       # should set show_notes on Event
-      self.show_notes = @show_notes = doc.css(".ldheader").inner_html.strip
+      self.announcement = @announcement = doc.css(".ldheader").inner_html.strip
     else
       desc = doc.css( PfaScraper::EVENT_TEXT_BLOB ).inner_html
       desc = desc.gsub /<\/?p>/, '' # <p> just wraps the text
@@ -33,13 +34,13 @@ class PfaEvent < ScrapedEvent
     formatted
   end
 
-  def scrape_show_notes
-    @show_notes
+  def scrape_announcement
+    @announcement
   end
 
-  def scrape_show_credits
+  def scrape_short_credit
     title_text = doc.css(PfaScraper::EVENT_TITLE).text
-    doc.css(PfaScraper::EVENT_SHOW_CREDITS).text.sub(title_text, '').strip
+    doc.css(PfaScraper::EVENT_SHORT_CREDIT).text.sub(title_text, '').strip
   end
 
   def scrape_time

@@ -1,10 +1,10 @@
 BayFilmApp::Application.routes.draw do
 
-
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   namespace :api, defaults: {format: :json} do
     resources :events, only: [:index, :show]
-    resources :days, only: [:index, :show]
+    resources :days,   only: [:index, :show]
+    resources :weeks,  only: [:index, :show]
   end
 
   get '/contact', to: 'static_pages#contact'

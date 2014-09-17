@@ -1,36 +1,26 @@
-require 'image_comparison'
-
 class Event < ActiveRecord::Base
   # attr_accessible :title, :time, :description
   belongs_to :venue, inverse_of: :events
   has_many :stills, inverse_of: :event
   has_and_belongs_to_many :series
 
-  validates :title, presence: true
   validates :time, presence: true
   validates :venue, presence: true
-
-  # validates :title, uniqueness: {scope: [:time, :venue_id],
-  #   message: "already exists at this screening time and venue"}
-
-  validates_uniqueness_of :title, scope: [:time, :venue_id],
-    message: "already exists at this screening time and venue"
+  # validates :series_id, uniqueness: true
+  validates :title, presence: true,
+                    uniqueness: { scope: [:time, :venue_id], 
+                      message: 'exists in scope [:time, :venue]' }
 
 
-# validates that there aren't multiple entries with the same description/title combo... slow?
-  validates :description, 
-  on: :update,
-  uniqueness: {scope: [:title]}
 
-# validate that its time, title, and venue are unique. 
-# if not, check if their descriptions are the same.
-# if they're different, update the pre-existing event
-
+# Can't use this if I don't have a Capsule model!! In the meantime repetition is legitimate.
+# # validates that there aren't multiple entries with the same description/title combo... slow?
+#   validates :description, 
+#   on: :update,
+#   uniqueness: {scope: [:title]}
 
 # have a separate validator for updates, which deals withs updating description, time, w/e
 
-# with images, check if the image is the same as the existing one,
-# 
 
   default_scope -> { order("time ASC") }
 
@@ -89,25 +79,5 @@ class Event < ActiveRecord::Base
   # YYYYMMDD
   def self.parse_date(date)
     Time.zone.parse("#{date.slice(0,4)}-#{date.slice(4,2)}-#{date.slice(6,2)}")
-  end
-
-  # takes two activerecord objects, returns a hash, ready to "update"
-  def self.attribute_difference(persisted_record, new_record)
-    updated_attr_hash = {}
-    excluded = %w{id time title venue created_at updated_at still}
-    updated_keys = new_record.attributes.keys.delete_if do |a|
-      excluded.any? { |x| a.match(x) } ||
-        persisted_record["#{a}"] === new_record["#{a}"]
-    end
-
-    updated_keys.each { |a| updated_attr_hash["#{a}".to_sym] = new_record["#{a}"] }
-    updated_attr_hash
-  end
-
-  # Takes relations (not records) and returns the difference as an array of records
-  def self.association_difference(persisted_relation, new_relation)
-    new_relation.to_a.delete_if do |n|
-      persisted_relation.any? { |p| p.id == n.id }
-    end
   end
 end

@@ -23,13 +23,13 @@ ooCalendar.directive('ooCalendarViewSpyChecker', [ '$window', '$document', '$tim
           var elementTop = top, elementBottom = bottom;
 
           function setElementTop (newValue) {
-            if (newValue) {
+            if (newValue || newValue === 0) {
               elementTop = newValue;
             }
           }
 
           function setElementBottom (newValue) {
-            if (newValue) {
+            if (newValue || newValue === 0) {
               elementBottom = newValue;
             }
           }
@@ -46,33 +46,35 @@ ooCalendar.directive('ooCalendarViewSpyChecker', [ '$window', '$document', '$tim
                 return offset <= referenceHeight && (offset + height) > referenceHeight;
               });
 
-              setElementTop( offset );
-              setElementBottom( offset + height );
-              return angular.element(scrolledElement).attr('id');
+              if (scrolledElement) {
+                setElementTop( offset );
+                setElementBottom( offset + height );
+                return angular.element(scrolledElement).attr('id');
+              }
             } 
           };
         }
 
-        weekChecker = makeVisibleElementChecker(0, 0);
-        dayChecker = makeVisibleElementChecker(0, 0);
+        weekChecker  = makeVisibleElementChecker(0, 0);
+        dayChecker   = makeVisibleElementChecker(0, 0);
         eventChecker = makeVisibleElementChecker(0, 0);
 
 
         angular.element($document).on('scroll', function () {
-          windowHeight = $window.innerHeight;
-          scrollTop = $window.pageYOffset;
-          dividingLine = scrollTop + (windowHeight * heightRatio);
+          scrollTop    = $window.pageYOffset;
+          // windowHeight = $window.innerHeight;
+          // dividingLine = scrollTop + (windowHeight * heightRatio);
 
-          weekId = weekChecker(dividingLine, ".week-container");
-          dayId = dayChecker(dividingLine, "#" + (weekId || Visible.getWeek()) + " .day-container");
-          eventId = eventChecker(dividingLine, "#" + (dayId || Visible.getDay()) + " .event-container");
+          weekId  = weekChecker(  scrollTop, ".week-container");
+          dayId   = dayChecker(   scrollTop, "#" + (weekId || Visible.getWeek()) + " .day-container");
+          eventId = eventChecker( scrollTop, "#" + (dayId || Visible.day.id) + " .event-container");
 
           // only trigger a digest if they don't hold null, i.e. if they changed.
           if (weekId || dayId || eventId){
             scope.$apply(function() {
               if (weekId)  { Visible.setWeek(weekId);}
               if (eventId) { Visible.setEvent(eventId);}
-              if (dayId)   { Visible.setDay(dayId);}
+              if (dayId)   { Visible.day.id = dayId;}
             });
           }
         });

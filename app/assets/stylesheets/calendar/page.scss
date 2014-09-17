@@ -1,6 +1,7 @@
 #wrapper {
+  @include make-row();
   margin: 0;
-  padding-left: $sidebar-width;
+  // padding-left: $sidebar-width;
   transition: all .4s ease 0;
   height: 100%;
 }

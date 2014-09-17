@@ -4,7 +4,7 @@ ooCalendar.directive('ooCalendarPickHandler', ['Picked', 'Visible',
   return {
     link: function (scope, element, attrs) {
       scope.picked = Picked.data;
-      scope.visible = Visible.data;
+      scope.visible = Visible;
 
       // var scrol
 
@@ -20,15 +20,15 @@ ooCalendar.directive('ooCalendarPickHandler', ['Picked', 'Visible',
         }
       });
 
-      scope.$watch('visible.event', function(newValue) {
+      scope.$watch('visible.data.event', function(newValue) {
         console.log('VISIBLE:', Visible.getEvent());
       });
 
-      scope.$watch('visible.day', function(newValue) {
-        console.log('VISIBLE:', Visible.getDay());
+      scope.$watch('visible.day.id', function(newValue) {
+        console.log('VISIBLE:', Visible.day.id);
       });
 
-      scope.$watch('visible.week', function(newValue) {
+      scope.$watch('visible.data.week', function(newValue) {
         console.log('VISIBLE:', Visible.getWeek());
       });
 

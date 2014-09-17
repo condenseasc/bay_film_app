@@ -24,7 +24,7 @@ ooCalendar.controller('CalendarCtrl',
         var date = new Date(newDay);
         if (!isWeekLoaded(  date )) { loadWeek(date); }
         if (!isMonthLoaded( date )) { $scope.loadActiveDates(date); }
-        // var week = Name.page(date);
+        // var week = Name.week(date);
         // if (week !== $scope.picked.week) {
         //   Picked.week = week;
         // }
@@ -32,7 +32,7 @@ ooCalendar.controller('CalendarCtrl',
 
       function isWeekLoaded(date) {
         var loaded = $scope.weeks.some(function (element, index, array) {
-          var page_name = Name.page(date);
+          var page_name = Name.week(date);
           return element.page === page_name;
         });
         return loaded;
@@ -98,7 +98,7 @@ ooCalendar.controller('CalendarCtrl',
 
       function weekIdFromDate(date) {
         var dt = new Date(date);
-        var weekId = "week-" + Name.page(dt);
+        var weekId = "week-" + Name.week(dt);
         return weekId;
       }
 
@@ -141,13 +141,13 @@ ooCalendar.controller('CalendarCtrl',
         EventFeed.getWeekContaining(d).$promise.then(function (event_data) {
           var days = makeDays(event_data);
           var week = {
-            page: Name.page(d),
+            page: Name.week(d),
             days: days
           };
 
           collatePages(week, 3);
         });
-      // }
+      }
 
       // // initialize with date, since we always start with the present...
       // // when might this fail?
@@ -214,13 +214,13 @@ ooCalendar.controller('CalendarCtrl',
         weeksLoaded = true;
       }
 
-      $scope.nextWeek = function () {
-        var next_sunday = Week.nextSunday($scope.selected.day);
-        selectDay(next_sunday);
-      };
+      // $scope.nextWeek = function () {
+      //   var next_sunday = Week.nextSunday($scope.selected.day);
+      //   selectDay(next_sunday);
+      // };
 
-      $scope.lastWeek = function () {
-        var last_sunday = Week.lastSunday($scope.selected.day);
-        selectDay(last_sunday);
-      };
+      // $scope.lastWeek = function () {
+      //   var last_sunday = Week.lastSunday($scope.selected.day);
+      //   selectDay(last_sunday);
+      // };
     }]);

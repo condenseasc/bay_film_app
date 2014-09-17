@@ -21,9 +21,14 @@ ooCalendar.factory('Name', [ 'Week', function(Week){
       return date_string;
     },
 
+    id2Date : function (id) {
+      var dateString = id.slice(-8);
+      return this.toDate(dateString);
+    },
+
     // return a YYYYMMDD string representing a page, which in turn represents a week
     // the string name is built from a week's first day, Sunday
-    page: function(date){
+    week: function(date){
       if (!(date instanceof Date)){
         console.log("invalid Date input for Name.page: "+date);
       }

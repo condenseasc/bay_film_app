@@ -3,7 +3,8 @@
 var ooApp = angular.module('ooApp', [
   'ooCalendar',
   'oo.calendar.templates',
-  'ngRoute']);
+  'ngRoute',
+  'ui.scrollfix']);
 
 
 ooApp.config(['$routeProvider', function ($routeProvider) {
@@ -13,7 +14,3 @@ ooApp.config(['$routeProvider', function ($routeProvider) {
       controller: 'CalendarCtrl'
     });
 }]);
-
-ooApp.constant('angularMomentConfig', {
-  timezone: 'America/Los_Angeles'
-});

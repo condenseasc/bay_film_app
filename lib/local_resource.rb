@@ -1,4 +1,6 @@
 # cf http://viget.com/extend/make-remote-files-local-with-ruby-tempfile
+
+require 'open-uri'
 class LocalResource
   attr_reader :uri
 
@@ -14,9 +16,12 @@ class LocalResource
     end
   end
 
-
   def io
-    @io ||= uri.open
+    if uri.respond_to?(:open)
+      @io ||= uri.open
+    elsif uri.respond_to?(:path)
+      @io ||= open(uri.path)
+    end
   end
 
   def encoding
@@ -35,6 +40,14 @@ class LocalResource
     Rails.root.join('tmp')
   end
 
+  def self.file_from_uri(uri)
+    LocalResource.new(uri).file
+  end
+
+  def self.file_from_url(url)
+    LocalResource.new(URI.parse(url)).file
+  end
+
   def self.with_file_from_url(url)
     f = LocalResource.new(URI.parse(url)).file
     begin
@@ -44,15 +57,4 @@ class LocalResource
       f.unlink
     end
   end
-
-  def self.file_from_url(url)
-    f = LocalResource.new(URI.parse(url)).file
-    # begin
-    #   yield f
-    # ensure
-    #   f.close
-    #   f.unlink
-    # end
-  end
-
 end

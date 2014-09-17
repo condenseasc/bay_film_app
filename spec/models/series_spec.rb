@@ -1,6 +1,8 @@
 require 'spec_helper'
 
+
 describe Series do
+  before(:all) { Event.destroy_all; Venue.destroy_all; Series.destroy_all}
   let(:series) { FactoryGirl.build(:series) }
   let(:another_series) { FactoryGirl.build(:series) }
   let(:venue)  { FactoryGirl.create(:venue) }
@@ -38,7 +40,7 @@ describe Series do
 
         it 'has the expected error message' do
           @another_series.valid?
-          expect(@another_series.errors[:title][0]).to eq('already taken at this venue')
+          expect(@another_series.errors[:title][0]).to eq('exists in scope [:venue]')
         end
       end
     end

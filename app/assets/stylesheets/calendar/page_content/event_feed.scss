@@ -8,7 +8,7 @@
 }
 
 .week-container {
-  background-image: $noise-image-02;
+  // background-image: $noise-image-02;
   margin-bottom: 20px;
   padding-top: 10px;
 }
@@ -74,7 +74,7 @@
     top: 0;
   }
 
-  .show-credits {
+  .short-credit {
     position: relative;
     background-color: $credits-banner-color;
     display: inline;
@@ -83,7 +83,7 @@
     height: 20px;
     width: auto;
   }
-  .show-credits::before {
+  .short-credit::before {
     content: '';
     position: absolute;
     width: 0;
@@ -107,7 +107,7 @@
   text-align: justify;
 }
 
-.show-notes {
+.announcement {
   color: red;
 }
 
