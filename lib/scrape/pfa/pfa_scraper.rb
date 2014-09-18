@@ -25,12 +25,12 @@ class PfaScraper < VenueScraper
   attr_reader :doc, :url
 
   def initialize(url = PfaScraper::HOME_URL)
-    @url = uri
-    @doc = NokoDoc.new(url).open_doc
+    @url = url
+    @doc = Scrape::NokoDoc.new(url).open
   end
 
   def make_series
-    if series
+    if series && !series.empty?
       series
     else
       @series = []
@@ -45,7 +45,7 @@ class PfaScraper < VenueScraper
   end
 
   def make_events
-    if events
+    if events && !events.empty?
       events
     else
       @events = []

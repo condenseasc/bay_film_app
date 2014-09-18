@@ -35,6 +35,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     angularjs-rails (1.2.21)
     arel (5.0.1.20140414130214)
     bootstrap-sass (3.0.3.0)
@@ -277,6 +278,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  addressable
   angularjs-rails (~> 1.2.7)
   bootstrap-sass (~> 3.0.3.0)
   bower-rails

@@ -36,16 +36,17 @@ class ScrapedEvent
   # precisely order dependent! matches how it's listed in the Event class
   save_or_update_using_identity_attributes :title, :time, :venue
 
-  attr_accessor :record
-  attr_accessor :series
+  attr_accessor :record, :series
   attr_reader :stills, :url, :doc, :venue
-  def initialize(url, path: nil)
+  def initialize(url, series:nil, path:nil)
     @url = url
-    @doc = Scrape::NokoDoc.new(url, path: path).open_doc
+    @doc = Scrape::NokoDoc.new(url, path: path)
+    @series = series
     super()
   end
 
   def scrape
+    doc.open
     @record = Event.new
     # separate #tap because some scrape methods need to directly call accessors on Event
     record.tap do |e|
@@ -62,10 +63,12 @@ class ScrapedEvent
     
     @stills = scrape_stills
     puts title
+    self
   end
 
   def save_record_with_associations
-    record = save_record
+    save_record
+    # record = save_record
     save_stills
     save_series
   end
@@ -82,12 +85,13 @@ class ScrapedEvent
 
   def save_series
     if series
-      self.series = self.series.compact.map { |s| s.save_record }
-      series.compact!
+      # self.series = self.series.compact.map { |s| s.save_record }
+      series.compact.each(&:save_record)
+      # series.compact!
       
       unless series.empty?
         with_logging([:debug, :info], "Add Series#{series.inject { |str, r| str + ' ' + (r.id || r.title) }} to Event:#{record.id}") do
-          record.series << series
+          record.series << series.map(&:record).compact
         end
       end
     end

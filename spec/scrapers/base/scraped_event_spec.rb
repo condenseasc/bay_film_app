@@ -80,9 +80,4 @@ RSpec.describe ScrapedEvent do
       end
     end
   end
-
-  describe '#save_series' do
-
-
-  end
 end

@@ -15,6 +15,9 @@ guard :rspec, after_all_pass: false, cmd: 'rspec --drb' do
   watch('config/routes.rb')                           { "spec/routing" }
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
 
+  # Scrapers
+  watch(%r{^lib/scrape/(.*)\.rb$})                    { |m| "spec/scrapers/#{m[1]}_spec.rb" }
+
   # Capybara features specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/features/#{m[1]}_spec.rb" }
 

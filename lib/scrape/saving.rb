@@ -32,8 +32,7 @@ module Scrape
       identity_conditions = [identifying_attribute].concat identity_scope
       match_query = ->(x, attr_list){ x.class.where( attr_list.map { |i| [i.to_sym, x.send(i)] }.to_h ) }
 
-      send :define_method, :save_record do
-        
+      send :define_method, :_save_record do
         if record.nil?
           scrape
           sleep 1
@@ -72,6 +71,10 @@ module Scrape
           add_log(:error, "Validation errors. ERRORS: #{record.errors.messages} OBJECT: #{record.inspect} ")
           nil
         end
+      end
+
+      send :define_method, :save_record do
+        self.record = _save_record
       end
     end
   end

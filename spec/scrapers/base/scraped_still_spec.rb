@@ -7,11 +7,11 @@ require 'compare'
 
 
 RSpec.describe ScrapedStill do
-  before(:example)   { @s = ScrapedStill.new( uri_smaller, 'test') }
+  before(:example)   { @s = ScrapedStill.new( uri_smaller, alt:'test') }
   let(:filename_smaller) { 'example_smaller_scraped_still.jpg' }
 
-  let(:path_smaller) { Rails.root.join('spec', 'scrapers', 'example_smaller_scraped_still.jpg') }
-  let(:path_larger)  { Rails.root.join('spec', 'scrapers', 'example_larger_scraped_still.jpg') }
+  let(:path_smaller) { Rails.root.join('spec', 'scrapers', 'base', 'example_smaller_scraped_still.jpg') }
+  let(:path_larger)  { Rails.root.join('spec', 'scrapers', 'base', 'example_larger_scraped_still.jpg') }
   let(:saved_path)   { Rails.root.join('public', 'system', 'stills', 'images') }
   let(:uri_smaller)  { URI.join('file:///', path_smaller.to_s) }
   let(:uri_larger)   { URI.join('file:///', path_larger.to_s) }
@@ -70,7 +70,7 @@ RSpec.describe ScrapedStill do
         before(:example) do
           @s.save_still_to(event)
 
-          dup_still = LocalScrapedStill.new(uri_smaller, 'something same-y')
+          dup_still = LocalScrapedStill.new(uri_smaller, alt: 'something same-y')
           dup_still.build_record
           dup_still.save_still_to(event)
         end
@@ -100,7 +100,7 @@ RSpec.describe ScrapedStill do
         end
 
         it 'grows up' do
-          @larger_still = LocalScrapedStill.new(uri_larger, 'bigger bugger better')
+          @larger_still = LocalScrapedStill.new(uri_larger, alt: 'bigger bugger better')
           @larger_still.build_record
           @larger_still.save_still_to(event)
 
@@ -113,7 +113,7 @@ RSpec.describe ScrapedStill do
         before(:example) do
           @s.save_still_to(event)
 
-          @larger_still = LocalScrapedStill.new(uri_larger, 'bigger bugger butter')
+          @larger_still = LocalScrapedStill.new(uri_larger, alt: 'bigger bugger butter')
           @larger_still.build_record
           @larger_still.save_still_to(event)
         end

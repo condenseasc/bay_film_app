@@ -10,7 +10,7 @@ RSpec.shared_examples 'a scraper' do
   end
 
   it 'initializes successfully' do
-    expect(@scraper.doc.class).to eq(Nokogiri::HTML::Document)
+    expect(@scraper.doc.noko_doc.class).to eq(Nokogiri::HTML::Document)
   end
 
   describe '#make_series' do
@@ -40,10 +40,4 @@ RSpec.shared_examples 'a scraper' do
       expect(@scraper.events.first.class.superclass).to eq(ScrapedEvent)
     end
   end
-end
-
-# scrapers - > [PfaScraper, ]
-
-RSpec.describe 'PfaScraper' do
-  it_behaves_like 'a scraper'
 end

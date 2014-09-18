@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'addressable/uri'
 
 module Scrape
   class NokoDoc
@@ -14,43 +15,52 @@ module Scrape
     def initialize(url, path: nil)
       @doc_url = url
       @doc_path = path
-      @noko_doc = Nokogiri::HTML::Document.new
     end
 
     def_delegators :@noko_doc, *@nokogiri_html_document_methods
 
-    def open_doc
+    def open
+      return self if noko_doc.class == Nokogiri::HTML::Document
+
       if doc_path
-        @noko_doc = Nokogiri::HTML( open doc_path )
+        @noko_doc = Nokogiri::HTML( Kernel.open(doc_path) )
       else
-        @noko_doc = Nokogiri::HTML( open doc_url )
+        @noko_doc = Nokogiri::HTML( Kernel.open(doc_url) )
       end
 
-      fix_links
+      absolutize_urls
+      normalize_urls
       self
     end
 
-    # converts all links in a document to absolute links
-    def fix_links
-      noko_doc.traverse {|node| fix_node_link( node ) }
+    def normalize_urls
+      map_doc_urls { |url| Addressable::URI.parse( url ).normalize.to_s }
     end
 
-    def fix_node_link( node )
-      if node.name === 'a' && node.attr('href')
-        fixed = to_absolute_url( URI.encode(node.attr('href')))
+    def absolutize_urls
+      map_doc_urls { |url| to_absolute_url( url ) }
+    end
+
+    def map_doc_urls
+      noko_doc.traverse do |node|
+        replace_node_url( node ) do |url|
+          yield url
+        end
+      end
+    end
+
+    def replace_node_url( node )
+      if node.name == 'a' && node.attr('href')
+        fixed = yield node.attr('href')
         node.set_attribute('href', fixed)
-      elsif node.name === 'img' && node.attr('src')
-        fixed = to_absolute_url( URI.encode(node.attr('src')))
+      elsif node.name == 'img' && node.attr('src')
+        fixed = yield node.attr('src')
         node.set_attribute('src', fixed)
       end
     end
 
     def to_absolute_url( href )
-      if (URI(href).relative?)
-       URI.join( doc_url, href ).to_s
-      else
-       href
-      end
+      URI(href).relative? ? URI.join( doc_url, href ).to_s : href
     end
 
     def find_urls( selector )
@@ -72,11 +82,5 @@ module Scrape
         return subbed
       end
     end
-
-    #   if uri.is_a? URI::HTTP
-    #     @noko_doc = Nokogiri::HTML( open uri )
-    #   elsif uri.is_a? URI::Generic
-    #     @noko_doc = Nokogiri::HTML( open path )
-    #   end
   end
 end

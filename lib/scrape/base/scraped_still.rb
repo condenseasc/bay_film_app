@@ -5,7 +5,7 @@ require 'scrape/base/venue_scraper'
 class ScrapedStill
   include Scrape::Logging
   
-  RECORD_METHODS = %w[id image]
+  RECORD_METHODS = %w[id image persisted? new_record? valid?]
 
 
   def method_missing(method_id, *args)
@@ -21,7 +21,7 @@ class ScrapedStill
 
   attr_accessor :url, :alt, :logger, :record, :temp_image
 
-  def initialize(url=nil, alt=nil)
+  def initialize(url=nil, alt: nil)
     @url = url
     @alt = alt
     super()
@@ -65,24 +65,30 @@ class ScrapedStill
   end
 
   def save_still_to(r)
+    self.record = _save_still_to(r)
+  end
+
+  def _save_still_to(r)
     p r.title
+
+    r.save_record if r.new_record?
+
     begin
       build_image
       record.image = temp_image.open
       if !record.valid?
         add_log(:error, "Validation errors. ERRORS: #{record.errors.messages} OBJECT: #{record.inspect}")
-      elsif r.new_record?
-        add_log(:error, "#save_record before adding Stills: #{r.inspect}")
-        return
+        nil
       else
         match = false
-        r.stills.each do |p|
-          if Compare::Images.duplicate?(p.image.path, temp_image.path)
+        r.stills.each do |persisted|
+          if Compare::Images.duplicate?(persisted.image.path, temp_image.path)
             match = true
-            if p.image.size < temp_image.size
-              p.image = temp_image
+            if persisted.image.size < temp_image.size
+              persisted.image = temp_image
               
-              with_logging([:debug, :info], "Update Still:#{p.id} with #{record.url}") { p.save! }
+              with_logging([:debug, :info], "Update Still:#{persisted.id} with #{record.url}") { persisted.save! }
+              return persisted
             end
           end
         end
@@ -91,6 +97,7 @@ class ScrapedStill
           with_logging([:debug, :info], "Add new still to #{r.class}:#{r.id} from #{record.url}", :id) do
             record.save!
             r.stills << record
+            return record
           end
         end
       end

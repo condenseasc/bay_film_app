@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../lib/scrape/base/venue_scraper'
+require 'scrape/base/venue_scraper'
 
 describe VenueScraper do
   let(:venue_scraper) { VenueScraper.new }

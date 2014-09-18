@@ -38,11 +38,12 @@ class ScrapedSeries
 
   def initialize(url, path:nil)
     @url = url
-    @doc = Scrape::NokoDoc.new(url, path:path).open_doc
+    @doc = Scrape::NokoDoc.new(url, path:path)
     super()
   end
 
   def scrape
+    doc.open
     @record = Series.new do |s|
       s.title = scrape_title
       s.description = scrape_description
@@ -51,10 +52,12 @@ class ScrapedSeries
     end
     @stills = scrape_stills # not yet an attribute on series
     puts title
+    self
   end
 
   def save_record_with_associations
-    record = save_record
+    save_record
+    # record = save_record
   end
 
   def method_missing(method_id, *args)

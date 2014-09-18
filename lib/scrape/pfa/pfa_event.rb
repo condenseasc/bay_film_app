@@ -6,11 +6,14 @@ class PfaEvent < ScrapedEvent
   end
   @venue = Venue.find_or_create_by(name: PfaScraper::VENUE_NAME)
 
-  def initialize(url, series:[], path:nil)
-    super(url, path:path)
-    @series = series
+  ###
+
+  def initialize(url, series:nil, path:nil)
+    super
     @venue = PfaEvent.venue
   end
+
+  ###
 
   def scrape_title
     doc.css(PfaScraper::EVENT_TITLE).text
@@ -54,22 +57,13 @@ class PfaEvent < ScrapedEvent
   def scrape_stills
     s = doc.css( PfaScraper::EVENT_IMG )
 
-    stills = s.map do |img|
+    st = s.map do |img|
       ScrapedStill.new do |s|
         s.url = CGI.unescapeHTML( img.attr('src').strip )
         s.alt = img.attr('alt').strip
       end
     end
+
+    stills = st unless st.empty?
   end
 end
-
-# load 'lib/scrapers/pfa/pfa_event.rb'
-# class LocalPfaEvent < PfaEvent
-#   def initialize(path, url, series)
-#     @url = url
-#     @doc = make_doc_from_file(path, url)
-#     @series = series
-#     @venue = PfaScraper.venue
-#     @logger = VenueScraper.logger
-#   end
-# end
