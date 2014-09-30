@@ -19,14 +19,20 @@ describe Series do
 
       context 'shared with another series at some venue' do
         before(:example) do
-          @series = FactoryGirl.build(:series)
-          @series.venue = venue
-          @series.title = 'test'
+          @series = FactoryGirl.build(:series).tap do |s|
+            s.venue = venue
+            s.title = 'test'
+          end
+          # @series.venue = venue
+          # @series.title = 'test'
           @series.save
 
-          @another_series = FactoryGirl.build(:series)
-          @another_series.title = @series.title
-          @another_series.venue = @series.venue
+          @another_series = FactoryGirl.build(:series).tap do |s|
+            s.title = @series.title
+            s.venue = @series.venue
+          end
+          # @another_series.title = @series.title
+          # @another_series.venue = @series.venue
         end
 
         it 'is invalid' do

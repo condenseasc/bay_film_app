@@ -8,13 +8,15 @@ module Scrape
     def self.extended(klass)
       klass.include Scrape::Logging
       klass.include Compare::Records
-      # klass.include Saving::Stills
     end
 
     module Stills
       def save_stills
         if record && stills && !stills.empty? 
-          stills.each { |s| s.build_record; s.save_still_to(record) }
+          stills.each do |s|
+            if log_tags.include?(:test) then s.log_tags.unshift(*log_tags) end
+            s.save_still_to(record)
+          end
         end
       end
     end
@@ -75,6 +77,7 @@ module Scrape
 
       send :define_method, :save_record do
         self.record = _save_record
+        self
       end
     end
   end

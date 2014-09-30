@@ -49,30 +49,32 @@ $datepicker-today-btn-color: green;
   }
 
   .pz-cal-picked-day {
-    @include button-variant($datepicker-btn-color, 
-                            $datepicker-picked-btn-background, 
-                            $datepicker-btn-border);
+    background-color: $datepicker-picked-btn-background;
+    // @include button-variant($datepicker-btn-color, 
+    //                         $datepicker-picked-btn-background, 
+    //                         $datepicker-btn-border);
   }
 
   .pz-cal-active-day {
-    @include button-variant($datepicker-btn-color, 
-                            $datepicker-btn-background, 
-                            $datepicker-active-btn-border);
-    border: 1px solid;
+    // @include button-variant($datepicker-btn-color, 
+    //                         $datepicker-btn-background, 
+    //                         $datepicker-active-btn-border);
+    border: 1px solid $datepicker-active-btn-border;
   }
 
   .pz-cal-visible-day {
-    @include button-variant($datepicker-btn-color, 
-                            $datepicker-btn-background, 
-                            $datepicker-visible-btn-border);
-    border: 3px solid;
+    // @include button-variant($datepicker-btn-color, 
+    //                         $datepicker-btn-background, 
+    //                         $datepicker-visible-btn-border);
+    border: 3px solid $datepicker-visible-btn-border;
   }
 
   // modifies just the text label
   // could easily change that
   .pz-cal-today {
-    @include button-variant($datepicker-today-btn-color, 
-                            $datepicker-btn-background, 
-                            $datepicker-btn-border);
+    color: $datepicker-today-btn-color;
+    // @include button-variant($datepicker-today-btn-color, 
+    //                         $datepicker-btn-background, 
+    //                         $datepicker-btn-border);
   }
 }

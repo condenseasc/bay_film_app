@@ -6,13 +6,12 @@ require 'scrape/pfa/pfa_series'
 
 
 RSpec.shared_examples 'Pfa Series' do
-  before(:example) { @series.log_tags = ['pfa_series_spec', :timestamp, :test] }
-  before(:context) { @series.scrape }
+  before(:context) { @series = series_with_test_logs.scrape }
 
   context 'after scraping,' do
     describe 'Series' do
-      it 'has values for title and description' do
-        expect(@series.title && @series.description).to be_truthy
+      it 'has values for title and body' do
+        expect(@series.title && @series.body).to be_truthy
       end
       
       it 'has Pacific Film Archive Theater as its venue' do
@@ -23,16 +22,22 @@ RSpec.shared_examples 'Pfa Series' do
 end 
 
 RSpec.describe 'PfaSeries Offline specs' do
-  before(:example) { @series.log_tags = ['pfa_series_spec', :timestamp, :test] }
-  let(:pfa_series) { PfaSeries.new('http://www.bampfa.berkeley.edu/filmseries/ray', path:'spec/scrapers/pfa/example_pfa_series.html') }
-  before(:context) { @series = PfaSeries.new('http://www.bampfa.berkeley.edu/filmseries/ray', path:'spec/scrapers/pfa/example_pfa_series.html') }
+  def series_with_test_logs
+    s = series
+    s.log_tags = ['pfa_series_spec', :timestamp, :test]
+    s
+  end
+
+  def series
+    PfaSeries.new('http://www.bampfa.berkeley.edu/filmseries/ray', 
+      path:'spec/scrapers/pfa/example_pfa_series.html')
+  end
 
   it_behaves_like 'Pfa Series'
   context 'after scraping' do
-    before(:example) { @series.scrape }
+    before(:context) { @series = series_with_test_logs.scrape }
 
     it 'has the right title' do
-      @series.scrape
       expect(@series.title).to eq('The Brilliance of Satyajit Ray')
     end
 
@@ -57,15 +62,17 @@ RSpec.describe 'PfaSeries Offline specs' do
 
 
   context 'without scraping' do
+    before(:example) { @series = series_with_test_logs; puts @series.record }
+
     describe 'saving' do
-      describe 'using #save_with_associations' do
+      context 'using #save_with_associations' do
         it 'starts out with a nil record' do
-          expect(pfa_series.record).to be(nil)
+          expect(@series.record).to be(nil)
         end
 
         it 'still manages to save' do
-          pfa_series.save_record_with_associations
-          expect(pfa_series.record.persisted?).to be(true)
+          @series.save_record_with_associations
+          expect(@series.record.persisted?).to be(true)
         end
       end
     end

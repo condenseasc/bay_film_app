@@ -1,6 +1,20 @@
 require 'scrape/pfa/pfa_scraper'
+require 'scrape/helpers'
 
 class PfaEvent < ScrapedEvent
+  extend Scrape::Helpers
+
+  TITLE             = "#sub_maintext span"
+  DATE_TEXT         = ".sub_wrapper div:nth-child(3)"
+  TIME_TEXT         = ".sub_wrapper tr:nth-child(1) td:nth-child(1)"
+  DATE_NO_IMG       = "#sub_maintext div+ div"
+  TEXT_BLOB_WRAPPER = ".sub_wrapper"
+  TEXT_BLOB         = ".sub_wrapper p"
+  TEXT_BLOB_CALLOUT = ".ldheader"
+  SUBTITLE          = ".sub_wrapper tr:nth-child(1) td:nth-child(2)" #minus the title
+  IMG               = ".media img"
+
+
   class << self
     attr_reader :venue
   end
@@ -13,49 +27,52 @@ class PfaEvent < ScrapedEvent
     @venue = PfaEvent.venue
   end
 
-  ###
+  scrape_text :title, :time_text, :date_text, :date_no_img
+  scrape_inner_html :text_blob, :text_blob_callout, :text_blob_wrapper
 
-  def scrape_title
-    doc.css(PfaScraper::EVENT_TITLE).text
-  end
-
-  def scrape_description
-    wrapper = doc.css( ".sub_wrapper" ).inner_html
+  def scrape_body
+    wrapper = scrape_text_blob_wrapper
     if /ldheader/.match(wrapper)
       desc = wrapper.partition(/<div.+class=.*"ldheader">.*<\/div>/m)[2]
-      # should set show_notes on Event
-      self.announcement = @announcement = doc.css(".ldheader").inner_html.strip
+      self.callout = @callout = scrape_text_blob_callout
     else
-      desc = doc.css( PfaScraper::EVENT_TEXT_BLOB ).inner_html
+      desc = scrape_text_blob
       desc = desc.gsub /<\/?p>/, '' # <p> just wraps the text
+      # desc = scrape_text_blob.gsub /<\/?p>/, '' # <p> just wraps the text
     end
+
     # format description with <p> tags instead of <br>
     formatted = ""
     d = desc.split "<br>"
     d.reject! { |string| string.strip.empty? }
     d.each { |s| formatted.concat "<p>"+s+"</p>" }
+
+    # d = desc.split("<br>").reject { |str| str.stip.empty? }
+    # d.inject("") { | formatted_s, s |  formatted_s.concat "<p>"+s+"</p>" }
+
     formatted
   end
 
-  def scrape_announcement
-    @announcement
+  def scrape_callout
+    @callout
   end
 
-  def scrape_short_credit
-    title_text = doc.css(PfaScraper::EVENT_TITLE).text
-    doc.css(PfaScraper::EVENT_SHORT_CREDIT).text.sub(title_text, '').strip
+  def scrape_subtitle # country, year
+    title_text = scrape_title
+    doc.css(PfaEvent::SUBTITLE).text.sub(title_text, '').strip
   end
 
-  def scrape_time
+  def scrape_times
     Time.zone = VenueScraper::PACIFIC_TIME_ZONE
-    t = doc.css( PfaScraper::EVENT_TIME ).text
-    d = doc.css( PfaScraper::EVENT_DATE ).text
-    if d.empty? then d = doc.css( PfaScraper::EVENT_DATE_NO_IMG ).text end
+    t = scrape_time_text
+    d = scrape_date_text
+
+    if d.empty? then d = scrape_date_no_img end
     Time.zone.parse("#{d}, #{t}")
   end
 
   def scrape_stills
-    s = doc.css( PfaScraper::EVENT_IMG )
+    s = doc.css( PfaEvent::IMG )
 
     st = s.map do |img|
       ScrapedStill.new do |s|

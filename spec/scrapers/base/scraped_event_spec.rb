@@ -52,7 +52,7 @@ RSpec.describe ScrapedEvent do
 
     context 'with updated event' do
       before(:example) { scraped_event.save_record }
-      let(:edited_event) { e = Event.new(event.attributes); e.description = "fresh text!"; e }
+      let(:edited_event) { e = Event.new(event.attributes); e.body = "fresh text!"; e }
       let(:edited_scraped_event) { s = scraped_event; s.record = edited_event; s }
       let(:returned_event) { edited_scraped_event.save_record }
 
@@ -61,17 +61,17 @@ RSpec.describe ScrapedEvent do
       end
 
       it 'has the right update' do
-        expect(returned_event.description).to eq('fresh text!')
+        expect(returned_event.body).to eq('fresh text!')
       end
 
       it 'did not mess up the other fields' do
         diff = Compare::Records.attribute_difference_between(event, returned_event)
-        expect(diff).to eq({description: 'fresh text!'})
+        expect(diff).to eq({body: 'fresh text!'})
       end 
     end
 
     context 'with invalid event' do
-      let(:invalid_event) { e=event; e.time=nil; e }
+      let(:invalid_event) { e=event; e.times=nil; e }
       let(:invalid_scraped_event) { s=scraped_event; s.record=invalid_event; s}
       let(:returned_event) { invalid_scraped_event.save_record }
 

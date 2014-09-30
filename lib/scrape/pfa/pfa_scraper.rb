@@ -7,7 +7,7 @@ class PfaScraper < VenueScraper
   HOME_SERIES_LINK_SELECTOR = ".textblack a"
 
   SERIES_TITLE_SELECTOR = 'h2'
-  SERIES_DESCRIPTION = 'p:nth-child(6)'
+  SERIES_BODY = 'p:nth-child(6)'
   SERIES_EVENT_LINK_SELECTOR = 'p a'
 
   EVENT_TITLE = "#sub_maintext span"

@@ -17,8 +17,8 @@ class PfaSeries < ScrapedSeries
     @title = doc.css(PfaScraper::SERIES_TITLE_SELECTOR).text.strip
   end
 
-  def scrape_description
-    @description = doc.css(PfaScraper::SERIES_DESCRIPTION).inner_html
+  def scrape_body
+    @body = doc.css(PfaScraper::SERIES_BODY).inner_html
   end
 
   def make_events_from_series

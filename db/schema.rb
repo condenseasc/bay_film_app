@@ -11,24 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140917005220) do
+ActiveRecord::Schema.define(version: 20140925213528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
+
+  create_table "event_times", force: true do |t|
+    t.datetime "start",      null: false
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "event_times", ["event_id"], name: "index_event_times_on_event_id", using: :btree
 
   create_table "events", force: true do |t|
-    t.datetime "time"
-    t.string   "title"
-    t.text     "description"
+    t.text     "title"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "venue_id"
-    t.string   "url"
-    t.text     "announcement"
-    t.string   "short_credit"
-    t.string   "admission"
+    t.text     "url"
+    t.text     "callout"
+    t.text     "subtitle"
     t.string   "location_note"
-    t.text     "full_credits"
+    t.text     "footer"
+    t.hstore   "admission"
+    t.text     "supertitle"
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id", using: :btree
@@ -39,12 +49,17 @@ ActiveRecord::Schema.define(version: 20140917005220) do
   end
 
   create_table "series", force: true do |t|
-    t.string   "title"
-    t.text     "description"
+    t.text     "title"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "venue_id"
     t.string   "url"
+    t.integer  "capsule_id"
+    t.text     "supertitle"
+    t.text     "subtitle"
+    t.text     "callout"
+    t.text     "footer"
   end
 
   add_index "series", ["venue_id"], name: "index_series_on_venue_id", using: :btree

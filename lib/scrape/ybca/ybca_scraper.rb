@@ -9,9 +9,7 @@ class YbcaScraper < VenueScraper
   HOME_EVENT_LINK = ".upcoming-programs-content-pane .views-field-title a"
   SERIES_EVENT_LINK = ".views-field-field-mini-program-1 a"
 
-  PULL_QUOTE = '.field-name-field-pullquote'
-
-  attr_accessor :series, :events, :doc, :url, :series_urls, :series_events, :bare_events
+  attr_accessor :series, :events, :doc, :url
 
   def initialize(url=YbcaScraper::YBCA_URL)
     @url = url
@@ -20,18 +18,7 @@ class YbcaScraper < VenueScraper
     @events = []
     @series_urls = []
     @event_urls = []
-    # @event_in_series_url = []
   end
-
-  # find_series_urls
-
-  # find_event_urls
-
-  # def open_series
-  # end
-
-  # def open_events
-  # end
 
   def make_series
     return true if ( !series.empty? && series.first.is_a?(YbcaSeries) )
@@ -78,15 +65,11 @@ class YbcaScraper < VenueScraper
   end
 end
 
-
-# two strategies. One is to create the documents but without opening them!!!
-# the other is to just use urls. put that off to scrape.
-
-
 # load 'lib/local_resource.rb'
 # load 'lib/compare.rb'
 # load 'lib/scrape/logging.rb'
 # load 'lib/scrape/noko_doc.rb'
+# load 'lib/scrape/helpers.rb'
 
 # load 'lib/scrape/base/venue_scraper.rb'
 # load 'lib/scrape/ybca/ybca_scraper.rb'

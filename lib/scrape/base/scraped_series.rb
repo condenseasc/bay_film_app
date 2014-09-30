@@ -18,16 +18,33 @@ class ScrapedSeries
 
 
   SCRAPE_METHODS = %w[scrape_title 
-                      scrape_description
+                      scrape_body
                       scrape_stills]  # maximal list of scraping methods
 
-  SERIES_METHODS = %w[title 
-                      description 
-                      id 
-                      persisted? 
-                      new_record? 
-                      created_at 
-                      updated_at]                # maximal list of attributes written by scrapers
+  # SERIES_METHODS = %w[title 
+  #                     description 
+  #                     id 
+  #                     persisted? 
+  #                     new_record? 
+  #                     created_at 
+  #                     updated_at]                # maximal list of attributes written by scrapers
+
+  SERIES_METHODS = %w[
+    title       title=
+    supertitle  supertitle=
+    subtitle    subtitle=
+    callout     callout=
+    body        body=
+    footer      footer=
+    url         url=
+    created_at
+    updated_at      
+    persisted?
+    new_record?
+    valid?
+    id
+  ]
+
 
   attr_reader :url, :doc, :venue
   attr_accessor :record
@@ -46,7 +63,7 @@ class ScrapedSeries
     doc.open
     @record = Series.new do |s|
       s.title = scrape_title
-      s.description = scrape_description
+      s.body = scrape_body
       s.venue = venue
       s.url = url
     end

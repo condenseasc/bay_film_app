@@ -15,6 +15,9 @@ module Scrape
     def initialize(url, path: nil)
       @doc_url = url
       @doc_path = path
+
+      @absolutize = ->(x){ to_absolute_url( x ) }
+      @normalize  = ->(x){ Addressable::URI.parse( x ).normalize.to_s }
     end
 
     def_delegators :@noko_doc, *@nokogiri_html_document_methods
@@ -22,34 +25,38 @@ module Scrape
     def open
       return self if noko_doc.class == Nokogiri::HTML::Document
 
-      if doc_path
-        @noko_doc = Nokogiri::HTML( Kernel.open(doc_path) )
-      else
-        @noko_doc = Nokogiri::HTML( Kernel.open(doc_url) )
-      end
-
-      absolutize_urls
-      normalize_urls
+      openable = doc_path ? doc_path : doc_url
+      @noko_doc = Nokogiri::HTML( Kernel.open openable )
+      
+      map_urls_do( @absolutize, @normalize )
       self
     end
 
-    def normalize_urls
-      map_doc_urls { |url| Addressable::URI.parse( url ).normalize.to_s }
+    def map_urls_do(*functions)
+      noko_doc.traverse do |node|
+        map_node_url( node ) do |url|
+          functions.inject(url) { |_url, func| func.call( _url )  }
+        end
+      end
     end
 
-    def absolutize_urls
-      map_doc_urls { |url| to_absolute_url( url ) }
-    end
+    # def normalize_urls
+    #   map_doc_urls { |url| Addressable::URI.parse( url ).normalize.to_s }
+    # end
+
+    # def absolutize_urls
+    #   map_doc_urls { |url| to_absolute_url( url ) }
+    # end
 
     def map_doc_urls
       noko_doc.traverse do |node|
-        replace_node_url( node ) do |url|
+        map_node_url( node ) do |url|
           yield url
         end
       end
     end
 
-    def replace_node_url( node )
+    def map_node_url( node )
       if node.name == 'a' && node.attr('href')
         fixed = yield node.attr('href')
         node.set_attribute('href', fixed)

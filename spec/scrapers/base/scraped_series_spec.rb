@@ -65,7 +65,7 @@ RSpec.describe 'ScrapedSeries' do
       context 'with updated record' do
         before(:example) { scraped_series.save_record }
         let(:original_series) { series }
-        let(:edited_series) { s=Series.new(original_series.attributes); s.description='boondogle'; s.id=nil; s }
+        let(:edited_series) { s=Series.new(original_series.attributes); s.body='boondogle'; s.id=nil; s }
         let(:edited_scraped_series) { scraped_series.record = edited_series; scraped_series }
         let(:returned_series) { edited_scraped_series.save_record }
 
@@ -93,7 +93,7 @@ RSpec.describe 'ScrapedSeries' do
         end
 
         it 'returns a record with the same id as the original' do
-          expect(returned_series).to eq(original_series)
+          expect(returned_series.record).to eq(original_series)
         end
 
         it 'indeed updates a record' do
@@ -101,12 +101,12 @@ RSpec.describe 'ScrapedSeries' do
         end
 
         it 'has the new field' do
-          expect(returned_series.description).to eq('boondogle')
+          expect(returned_series.body).to eq('boondogle')
         end
 
         it 'does not alter any other fields' do
           diff = Compare::Records.attribute_difference_between(original_series, returned_series)
-          expect(diff).to eq({description: 'boondogle'})
+          expect(diff).to eq({body: 'boondogle'})
         end
       end
     end

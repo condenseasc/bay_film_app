@@ -3,17 +3,13 @@ module Scrape
     class MyIO
       def initialize(filename = nil)
         @file = File.open(filename, 'a+')
-        # @history = StringIO.new "", "w"
       end
 
       def file=(filename)
         @file = File.open(filename, 'a+')
-        # @file.write @history.string if @history
-        # @history = nil
       end
 
       def write(data)
-        # @history.write(data) if @history
         @file.write(data) if @file
       end
 
@@ -60,7 +56,7 @@ module Scrape
     end
 
     def test
-      log_io.file = 'log/test_tag_scrape.log'
+      log_io.file = 'log/test_scrape.log'
       nil
     end
 
@@ -90,6 +86,7 @@ module Scrape
     def add_log(log_level, message, *more_tags)
       tag_instructions = more_tags ? log_tags.concat(more_tags) : log_tags # does this change the instance variable? I don't think so. Just the returned value from my accessor
       tags = make_tags(tag_instructions)
+      log_tags.pop( more_tags.length )
 
       log_level = :info unless [:unknown, :fatal, :error, :warn, :info, :debug].include? log_level
       logger.tagged(*tags) { logger.send(log_level, message) }
@@ -99,11 +96,11 @@ module Scrape
       log_level_before, log_level_after = log_level.is_a?(Array) ? [log_level[0], log_level[1]] : log_level
 
       begin
-        add_log(log_level_before, 'Starting ' + message, more_tags)
+        add_log( log_level_before, 'Starting ' + message, *more_tags )
         yield self
-        add_log(log_level_after, 'Finished ' + message, more_tags)
+        add_log( log_level_after,  'Finished ' + message, *more_tags )
       rescue
-        add_log(:error, 'Could not complete ' + message, more_tags)
+        add_log( :error, 'Could not complete ' + message, *more_tags )
         raise
       end
     end

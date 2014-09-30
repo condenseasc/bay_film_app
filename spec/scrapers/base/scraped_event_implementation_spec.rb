@@ -4,7 +4,11 @@ require 'scrape/pfa/pfa_series'
 require 'scrape/pfa/pfa_event'
 
 RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
-  before(:example) { @event.log_tags = ['scraped_event_implementation_spec', :timestamp, :test] if @event }
+  def event_with_test_logs
+    e = event
+    e.log_tags = ['scraped_event_implementation_spec', :timestamp, :test]
+    e
+  end
 
   describe 'with Series' do
     def event
@@ -18,7 +22,7 @@ RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
 
 
     describe '#save_record_with_associations' do
-      before(:context) { @event = event }
+      before(:context) { @event = event_with_test_logs }
       context 'without scraping' do
         it 'still saves' do
           @event.save_record_with_associations
@@ -29,7 +33,7 @@ RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
       end
 
       context 'after scraping, with a unique record' do
-        before(:context) { @event = event.scrape; @event.series.each(&:scrape) }
+        before(:context) { @event = event_with_test_logs.scrape; @event.series.each(&:scrape) }
         
         it('has series in an array') { expect(@event.series.class).to be(Array) }
         it('holds ScrapedSeries') { expect(@event.series.first.class.superclass).to be(ScrapedSeries) }
@@ -44,7 +48,7 @@ RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
         end
 
         describe 'using #save_record_with_associations' do
-          before(:context) { @event = event.scrape; @event.series.each(&:scrape) }
+          before(:context) { @event = event_with_test_logs.scrape; @event.series.each(&:scrape) }
           before(:context) { @event.save_record_with_associations}
 
           it 'has matching series on object and in record' do
@@ -78,7 +82,7 @@ RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
     end
 
     before(:context) { Event.destroy_all; Series.destroy_all; Still.destroy_all }
-    before(:context) { @event = event.scrape }
+    before(:context) { @event = event_with_test_logs.scrape }
 
     it('has non nil stills')     { expect( @event.stills.empty? ).to be(false) }
     it('holds ScrapedStills')    { expect( @event.stills.first.class ).to eq(ScrapedStill) }
@@ -106,7 +110,7 @@ RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
     before(:context) { Event.destroy_all; Still.destroy_all; Series.destroy_all }
 
     context 'after scraping' do
-      before(:context) { @event = event.scrape }
+      before(:context) { @event = event_with_test_logs.scrape }
 
       it('has nil series') { expect( @event.series ).to be(nil) }
       it('has nil stills') { expect( @event.stills ).to be(nil) }
@@ -131,17 +135,17 @@ RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
     before(:context) { Event.destroy_all }
 
     context 'after calling #scrape' do
-      before(:context) { @event = event.scrape }
+      before(:context) { @event = event_with_test_logs.scrape }
 
       it('has non nil title') { expect( @event.title).to be_truthy }
-      it('has non nil time')  { expect( @event.time ).to be_truthy }
+      it('has non nil times') { expect( @event.times).to be_truthy }
       it('has non nil venue') { expect( @event.venue).to be_truthy }
     end
 
     describe 'saving' do    
       context 'with #save_record_with_associations' do
         before(:context) do
-          @event = event.scrape
+          @event = event_with_test_logs.scrape
           @event.save_record_with_associations
         end
 
@@ -151,7 +155,7 @@ RSpec.describe 'ScrapedEvent implemented as PfaEvent' do
 
       context 'with #save_record' do
         before(:context) do
-          @event = event.scrape
+          @event = event_with_test_logs.scrape
           @event.save_record
         end
         it('creates a new Event record') { expect(Event.count).to be(1) }

@@ -1,9 +1,21 @@
 FactoryGirl.define do
   factory :event do 
     sequence(:title) { |n| "Napoleon Reel #{n}" }
-    sequence(:time) { |n| Time.now.advance(hours: n) }
-    description "Lorem ipsum"
     venue
+
+    factory :event_with_times do
+      ignore do
+        event_times_count 1
+      end
+
+      after(:build) do |event, evaluator|
+        build_list(:event_time, evaluator.event_times_count, event: event)
+      end
+    end
+  end
+
+  factory :event_time do
+    sequence(:start) { |n| Time.now.advance(hours: n) }
   end
 
   # factory :day do
@@ -18,7 +30,7 @@ FactoryGirl.define do
 
   factory :series do
     sequence(:title) { |n| "Films from Territory #{n}" }
-    description "Lorem ipsum"
+    body "Lorem ipsum"
   end
 
   # class WeekSerializer

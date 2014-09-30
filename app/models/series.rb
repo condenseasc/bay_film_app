@@ -4,9 +4,12 @@ class Series < ActiveRecord::Base
   has_and_belongs_to_many :events, before_add: :check_for_duplicate_association
   has_many :stills, inverse_of: :series
   belongs_to :venue
-
   validates :title, presence: true,
                     uniqueness: { scope: [:venue], message: 'exists in scope [:venue]' }
+
+  def to_a
+    [self]
+  end
 
   def check_for_duplicate_association(event)
     self.events.each do |e|
