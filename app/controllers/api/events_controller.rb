@@ -3,15 +3,15 @@ class Api::EventsController < ApplicationController
 
   def index
     if params[:page]
-      @events = Event.get_week(params[:page]).includes_venue_series
+      @events = Event.get_week(params[:page]).all_associations
     elsif params[:active_dates]
       @dates = Event.get_active_dates(params[:from], params[:to])
     elsif params[:from] && params[:to]
-      @events = Event.get_range_between(params[:from], params[:to]).includes_venue_series
+      @events = Event.get_range_between(params[:from], params[:to]).all_associations
     elsif params[:from]
-      @events = Event.get_range(params[:from], 7).includes_venue_series
+      @events = Event.get_range(params[:from], 7).all_associations
     else
-      @events = Event.this_week.includes_venue_series
+      @events = Event.this_week.all_associations
     end
 
     if @dates

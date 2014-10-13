@@ -15,12 +15,17 @@ module Scrape
     def initialize(url, path: nil)
       @doc_url = url
       @doc_path = path
+      @open = false
 
       @absolutize = ->(x){ to_absolute_url( x ) }
       @normalize  = ->(x){ Addressable::URI.parse( x ).normalize.to_s }
     end
 
     def_delegators :@noko_doc, *@nokogiri_html_document_methods
+
+    def to_s
+      "#<Scrape::NokoDoc:#{self.object_id} @doc_url:#{@doc_url}, @doc_path:#{@doc_path}, @open:#{@open}>"
+    end
 
     def open
       return self if noko_doc.class == Nokogiri::HTML::Document
@@ -29,7 +34,12 @@ module Scrape
       @noko_doc = Nokogiri::HTML( Kernel.open openable )
       
       map_urls_do( @absolutize, @normalize )
+      @open = true
       self
+    end
+
+    def open?
+      @open
     end
 
     def map_urls_do(*functions)

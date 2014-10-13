@@ -1,4 +1,4 @@
-class ShapeshifterScraper < VenueScraper 
+class ShapeshifterScraper < CalendarScraper 
   HOME_URL = 'http://shapeshifterscinema.com/'
   HOME_EVENTS_SELECTOR = '#upcoming .last'
 

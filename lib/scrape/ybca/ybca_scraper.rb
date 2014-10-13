@@ -1,29 +1,29 @@
 require 'scrape/noko_doc'
-require 'scrape/base/venue_scraper'
+require 'scrape/base/site_scraper'
 
-class YbcaScraper < VenueScraper
+class YbcaScraper < SiteScraper
   VENUE_NAME = "Yerba Buena Center for the Arts"
-  LAST_EVENT_PAGE = '.arrow.last a'
+  LAST_TOPIC_PAGE = '.arrow.last a'
   YBCA_URL = "http://www.ybca.org/programs/upcoming/film-and-video"
-  HOME_SERIES_LINK = ".views-field-field-key-program-cluster a"
-  HOME_EVENT_LINK = ".upcoming-programs-content-pane .views-field-title a"
-  SERIES_EVENT_LINK = ".views-field-field-mini-program-1 a"
+  HOME_CALENDAR_LINK = ".views-field-field-key-program-cluster a"
+  HOME_TOPIC_LINK = ".upcoming-programs-content-pane .views-field-title a"
+  CALENDAR_TOPIC_LINK = ".views-field-field-mini-program-1 a"
 
-  attr_accessor :series, :events, :doc, :url
+  attr_accessor :calendar, :topics, :doc, :url
 
   def initialize(url=YbcaScraper::YBCA_URL)
     @url = url
     @doc = Scrape::NokoDoc.new(url).open
-    @series = []
-    @events = []
-    @series_urls = []
-    @event_urls = []
+    @calendars = []
+    @topics = []
+    @calendar_urls = []
+    @topic_urls = []
   end
 
-  def make_series
-    return true if ( !series.empty? && series.first.is_a?(YbcaSeries) )
+  def make_calendars
+    return true if ( !calendars.empty? && calendars.first.is_a?(YbcaCalendar) )
 
-    last_page_url = URI.parse(doc.css(YbcaScraper::LAST_EVENT_PAGE).attr('href').value)
+    last_page_url = URI.parse(doc.css(YbcaScraper::LAST_TOPIC_PAGE).attr('href').value)
     number_of_pages = CGI.parse(last_page_url.query)['page'].pop.to_i
     url_array = [url]
 
@@ -37,45 +37,45 @@ class YbcaScraper < VenueScraper
 
     url_array.each do |url|
       doc = Scrape::NokoDoc.new(url).open
-      @series_urls.concat doc.find_urls(YbcaScraper::HOME_SERIES_LINK)
-      @event_urls.concat  doc.find_urls(YbcaScraper::HOME_EVENT_LINK)
-      @event_urls.uniq!
+      @calendar_urls.concat doc.find_urls(YbcaScraper::HOME_CALENDAR_LINK)
+      @topic_urls.concat  doc.find_urls(YbcaScraper::HOME_TOPIC_LINK)
+      @topic_urls.uniq!
     end
 
-    @series_urls.uniq.each { |url| @series.push YbcaSeries.new(url) }
+    @calendar_urls.uniq.each { |url| @calendars.push YbcaCalendar.new(url) }
     true
   end
 
-  def make_events
-    return true if ( !events.empty? && events.first.is_a?(YbcaEvent) )
+  def make_topics
+    return true if ( !topics.empty? && topics.first.is_a?(YbcaTopic) )
 
-    @series.each do |series|
-      series.doc.open.find_urls( YbcaScraper::SERIES_EVENT_LINK ).each do |event_url|
-        print event_url
-        @event_urls.delete( event_url )
-        @events.push YbcaEvent.new( event_url, series:[series] )
+    @calendars.each do |calendar|
+      calendar.doc.open.find_urls( YbcaScraper::CALENDAR_TOPIC_LINK ).each do |topic_url|
+        print topic_url
+        @topic_urls.delete( topic_url )
+        @topics.push YbcaTopic.new( topic_url, calendar_scraper:calendar )
         puts " opened"
       end
     end
 
-    puts 'done with series events. moving to seriesless'
+    puts 'done with calendar topics. moving to calendarless'
 
-    @event_urls.each { |event_url| print event_url; @events.push YbcaEvent.new(event_url); puts " Opened" }
+    @topic_urls.each { |topic_url| print topic_url; @topics.push YbcaTopic.new(topic_url); puts " Opened" }
     true
   end
 end
 
 # load 'lib/local_resource.rb'
 # load 'lib/compare.rb'
-# load 'lib/scrape/logging.rb'
+# load 'lib/scrape/logger.rb'
 # load 'lib/scrape/noko_doc.rb'
 # load 'lib/scrape/helpers.rb'
 
-# load 'lib/scrape/base/venue_scraper.rb'
+# load 'lib/scrape/base/site_scraper.rb'
 # load 'lib/scrape/ybca/ybca_scraper.rb'
 
-# load 'lib/scrape/base/scraped_series.rb'
-# load 'lib/scrape/base/scraped_still.rb'
-# load 'lib/scrape/base/scraped_event.rb'
-# load 'lib/scrape/ybca/ybca_series.rb'
-# load 'lib/scrape/ybca/ybca_event.rb'
+# load 'lib/scrape/base/calendar_scraper.rb'
+# load 'lib/scrape/base/still_scraper.rb'
+# load 'lib/scrape/base/topic_scraper.rb'
+# load 'lib/scrape/ybca/ybca_calendar.rb'
+# load 'lib/scrape/ybca/ybca_topic.rb'

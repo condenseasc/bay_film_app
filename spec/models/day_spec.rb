@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Day do
-  let(:event) { FactoryGirl.create(:event) }
-  let(:day) { Day.new(event.time) }
+  let(:event)    { create :event }
+  let(:day)      { Day.new(event.time) }
   let(:day_json) { DaySerializer.new(day).to_json }
 
   describe 'date to id' do
@@ -29,7 +29,7 @@ describe Day do
       end
 
       it 'is a valid JSON object' do
-        expect(@json_response['events'][0].keys).to include('title', 'time', 'description', 'venue') 
+        expect(@json_response['events'][0].keys).to include('title', 'time', 'body', 'venue') 
       end
     end
   end

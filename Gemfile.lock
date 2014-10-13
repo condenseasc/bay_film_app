@@ -112,6 +112,7 @@ GEM
       guard (>= 1.1)
       spork (>= 0.8.4)
     hike (1.2.3)
+    hirb (0.7.2)
     i18n (0.6.11)
     jasmine (2.0.2)
       jasmine-core (~> 2.0.0)
@@ -295,6 +296,7 @@ DEPENDENCIES
   growl
   guard-rspec (~> 4.3.1)
   guard-spork (~> 1.5.1)
+  hirb
   jasmine
   jbuilder (~> 1.2)
   jquery-rails

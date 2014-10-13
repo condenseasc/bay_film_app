@@ -1,6 +1,6 @@
 require 'scrape/ybca/ybca_scraper'
-require 'scrape/ybca/ybca_series'
-require 'scrape/ybca/ybca_event'
+require 'scrape/ybca/ybca_calendar'
+require 'scrape/ybca/ybca_topic'
 require 'scrapers/scraper_shared_examples'
 
 RSpec.describe YbcaScraper do
@@ -9,52 +9,52 @@ RSpec.describe YbcaScraper do
 
   before(:context) { @scraper = YbcaScraper.new }
 
-  context 'after making series and events' do
-    before(:context) { @scraper.make_series; @scraper.make_events }
+  context 'after making calendar and topics' do
+    before(:context) { @scraper.make_calendars; @scraper.make_topics }
 
-    it 'holds YbcaSeries' do
-      expect(@scraper.series.all? { |s| s.class == YbcaSeries }).to be(true)
+    it 'holds YbcaCalendar' do
+      expect(@scraper.calendars.all? { |s| s.class == YbcaCalendar }).to be(true)
     end
 
-    it 'holds YbcaEvents' do
-      expect(@scraper.events.all? { |e| e.class == YbcaEvent }).to be(true)
+    it 'holds YbcaTopics' do
+      expect(@scraper.topics.all? { |e| e.class == YbcaTopic }).to be(true)
     end
 
-    context 'with events inside and outside series' do
+    context 'with topics inside and outside calendars' do
       before(:context) do
-        @e_alone          = @scraper.events.select { |e| e.series == nil }
-        @e_alone_set      = @e_alone.map( &:url ).to_set
+        @t_alone          = @scraper.topics.select { |e| e.calendar_scraper == nil }
+        @t_alone_set      = @t_alone.map( &:url ).to_set
 
-        @e_in_series      = @scraper.events.select { |e| e.series != nil }
-        @e_in_series_set  = @e_in_series.map( &:url ).to_set
+        @t_in_calendar      = @scraper.topics.select { |e| e.calendar_scraper != nil }
+        @t_in_calendar_set  = @t_in_calendar.map( &:url ).to_set
 
-        @e_in_ybca_series = @scraper.events.select do |e|
-          e.series != nil && e.series.first.class == YbcaSeries
+        @t_in_ybca_calendar = @scraper.topics.select do |e|
+          e.calendar_scraper != nil && e.calendar_scraper.class == YbcaCalendar
         end
       end
 
-      it 'has more than zero events without series' do
-        puts "Events in YBCA without Series: #{@e_alone.size}"
-        expect( @e_alone.size ).to be > 0
+      it 'has more than zero topics without calendar' do
+        puts "Topics in YBCA without Calendar: #{@t_alone.size}"
+        expect( @t_alone.size ).to be > 0
       end
 
-      it 'keeps only unique events, by url' do
-        puts "Unique Events in YBCA without Series: #{@e_alone_set.size}"
-        expect( @e_alone.size ).to eq( @e_alone_set.size )
+      it 'keeps only unique topics, by url' do
+        puts "Unique Topics in YBCA without Calendar: #{@t_alone_set.size}"
+        expect( @t_alone.size ).to eq( @t_alone_set.size )
       end
 
-      it 'has proper series on events in series' do
-        expect( @e_in_series.size ).to eq( @e_in_ybca_series.size )
+      it 'has proper calendar on topics in calendar' do
+        expect( @t_in_calendar.size ).to eq( @t_in_ybca_calendar.size )
       end
 
 
       it 'only has these two groups, kept separate' do
-        unique_event_total = @e_alone_set.size + @e_in_series_set.size
-        expect( unique_event_total ).to eq(@scraper.events.size)
+        unique_topic_total = @t_alone_set.size + @t_in_calendar_set.size
+        expect( unique_topic_total ).to eq(@scraper.topics.size)
       end
 
-      it 'has no overlap between these events' do
-        expect( @e_alone_set.disjoint? @e_in_series_set ).to be(true)
+      it 'has no overlap between these topics' do
+        expect( @t_alone_set.disjoint? @t_in_calendar_set ).to be(true)
       end
 
     end

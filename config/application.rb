@@ -34,6 +34,8 @@ module BayFilmApp
   end
 end
 
+Paperclip::Attachment.default_options[:path] = "#{Rails.root}/spec/test_files/:class/:id_partition/:style.:extension"
+
 
 Time::DATE_FORMATS[:today] = "today at %-l:%M%P"
 # Time::DATE_FORMATS[:month_ordinal] = lambda { |time| time.strftime("%B #{time.day.ordinalize} at %-l:%M%P")}

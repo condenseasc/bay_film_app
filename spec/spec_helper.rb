@@ -98,6 +98,9 @@ Spork.prefork do
     config.raise_errors_for_deprecations!
 
     config.include Capybara::DSL
+    config.after(:suite) do
+      FileUtils.rm_rf(Dir["#{Rails.root}/spec/test_files/"])
+    end
   end
 end
 

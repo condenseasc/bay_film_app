@@ -1,9 +1,10 @@
 module Compare
   module Records
-    EVENT_EXCLUSIONS = %w{id time title venue created_at updated_at stills}
-    STILL_EXCLUSIONS = %w{id event_id image_file_name image_content_type image_file_size image_updated_at }
-    SERIES_EXCLUSIONS = %w{id events stills venue created_at updated_at }
-    
+    # only compare their fungible, secondary attributes
+    TOPIC_EXCLUSIONS    = %w{id created_at updated_at images type parent_id scraped }
+    CALENDAR_EXCLUSIONS = %w{id created_at updated_at images type parent_id scraped }
+    STILL_EXCLUSIONS = %w{id imageable_id imageable_type asset_file_name asset_content_type asset_file_size asset_updated_at }
+
     # Is this any better than just overwriting the old record?
     # Well, it only gives positive differences, i.e. only non empty values can count as a 'difference'
 

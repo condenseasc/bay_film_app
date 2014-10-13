@@ -1,17 +1,27 @@
 require 'spec_helper'
-require 'scrape/base/venue_scraper'
+require 'scrape/base/site_scraper'
 
-class ChildScraper < VenueScraper
-  # attr_reader :series, :events
-  def initialize
-    # @logger = ActiveSupport::TaggedLogging.new(Logger.new('log/scrape_test.log')).extend(Scrape::Logging)
-    @log_tags = ['child_scraper_spec', :timestamp, :test]
-    @series = []
-    @events = []
-  end
+class ChildScraper < SiteScraper
 end
 
+#   # attr_reader :series, :events
+#   def initialize
+#     # @logger = ActiveSupport::TaggedLogging.new(Logger.new('log/scrape_test.log')).extend(Scrape::Logging)
+#     @log_tags = ['child_scraper_spec', :timestamp, :test]
+#     @series = []
+#     @events = []
+#   end
+# end
+ 
+
 describe ChildScraper do
+
+  # before(:example) { @event.log_tags = ['pfa_event_spec', :timestamp, :test] if @event}
+
+  # def scraper
+
+  # end
+
   let(:scraper) { ChildScraper.new }
   # let(:scraper) { instance_double 'ChildScraper' }
 
@@ -19,8 +29,8 @@ describe ChildScraper do
     it 'include scrape_#{attribute names}' do
     end
 
-    it 'do not include attr_reader :child_scrapers' do
-      expect(defined? scraper.child_scrapers).to be_falsey 
+    it 'do not include attr_reader :scrapers' do
+      expect(defined? scraper.scrapers).to be_falsey 
     end
 
     # so it's only testing that it has #series and #event available for its dummy methods
@@ -34,9 +44,9 @@ describe ChildScraper do
 
   describe 'class instance methods' do
     context 'accessing inherited class instance variable' do
-      describe '#child_scrapers' do
+      describe '#scrapers' do
         it 'returns nil' do
-          expect(ChildScraper.child_scrapers).to be_nil
+          expect(ChildScraper.scrapers).to be_nil
         end
       end
     end

@@ -18,6 +18,13 @@ group :development, :test do
 	gem 'childprocess', '~>0.3.9'
 end
 
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'hirb'
+end
 
 group :test do
 	gem 'selenium-webdriver', '~> 2.0'
@@ -60,13 +67,6 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
-# Use Capistrano for deployment
-group :development do
-  gem 'capistrano'
-  gem 'capistrano-rbenv'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
-end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
