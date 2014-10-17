@@ -27,12 +27,12 @@
       <div class="event-container group" ng-repeat="event in day.events" id="event-{{event.id}}" ng-init="innerIndex=$index; innerLast=$last" oo-inner-load-watcher>
         <div class="event-header">
         <!-- <div class="event-banner"> -->
-          <div class="event-space-time">
-            <span class="event-time inline-block">{{event.time | ooSmallTime}}</span>
-            <span class="event-venue inline-block"> {{event.venue.name}}</span>
-          </div>
           <div class="title-spacer">
             <h3 class="event-title">{{event.title}}</h3>
+          </div>
+          <div class="event-space-time">
+            <span class="event-time">{{event.time | ooSmallTime}}</span>
+            <span class="event-venue"> {{event.venue.name}}</span>
           </div>
         <!-- </div> -->
           <img class="event-still" ng-src="{{event.image_url_medium}}">

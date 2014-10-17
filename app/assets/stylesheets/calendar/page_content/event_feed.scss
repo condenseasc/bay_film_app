@@ -13,6 +13,15 @@
   padding-top: 10px;
 }
 
+.content-header {
+  font-weight: 100;
+  font-style: italic;
+  font-size: 64px;
+  text-align: center;
+  margin-bottom: -20px;
+  background-color: $sidebar-background-color;
+}
+
 h2.event-feed-date {
   font-weight: 100;
 }
@@ -77,10 +86,9 @@ h3.event-title {
 
 .title-spacer {
   height: 33px;
-  font-size: 30px;
+  // font-size: 30px;
   content: ' ';
   display: inline-block;
-
 }
 
 .event-space-time {
@@ -181,9 +189,10 @@ h3.event-title {
 }
 
 .event-callout {
-  padding: 10px 0;
+  padding: 10px;
   text-align: center;
   font-size: $medium-text;
+  font-weight: 300;
 
 }
 

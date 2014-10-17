@@ -1,5 +1,5 @@
 .week-list.visible {
-  background-color: $sidebar-accent-color;
+  background-color: $sidebar-accent-color-alpha;
   // #fffddc; <- most subtle, 
   // #fffbaf; <- 
   // #fffab3;
@@ -12,7 +12,7 @@
   background-color: $sidebar-background-color;
   // padding-left: 20px;
   // padding-right: 10px;
-    padding-left: 15px;
+  padding-left: 15px;
   padding-right: 5px;
 
   margin: 10px;
