@@ -5,7 +5,9 @@ class LocalResource
   attr_reader :uri
 
   def initialize(uri)
-    @uri = uri
+    @uri = uri.is_a?(URI) ? uri : URI.parse(uri)
+    # @uri = uri
+    @original_file_name = Pathname.new(@uri.path).basename
   end
 
   def file
@@ -38,6 +40,14 @@ class LocalResource
 
   def tmp_folder
     Rails.root.join('tmp')
+  end
+
+  def self.from_uri(uri)
+    LocalResource.new(uri)
+  end
+
+  def self.from_url(url)
+    LocalResource.new(URI.parse(url))
   end
 
   def self.file_from_uri(uri)

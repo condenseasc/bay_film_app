@@ -12,7 +12,7 @@ class YbcaTopic < TopicScraper
   TIMES         = ".pane-node-field-performance-times .date-display-single"
   BODY          = ".panel-pane-program-overview .body"
   CALLOUT       = '.field-name-field-pullquote'
-  IMAGE         = '.program-hero-large-970'
+  IMAGES        = '.program-hero-large-970'
 
   def venue
     Venue.find_by(name: 'Yerba Buena Center for the Arts')

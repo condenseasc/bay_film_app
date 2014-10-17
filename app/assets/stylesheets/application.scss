@@ -9,14 +9,14 @@
  * compiled file, but it's generally better to create a new file per style scope.
  */
 
-$grid-gutter-width: 10;
 $btn-default-bg: rgba(86, 228, 232, .2);
 
 @import 'bootstrap';
+@import 'ionicons/css/ionicons';
 @import 'universal';
 @import 'calendar/page';
-@import 'calendar/sidebar/sidebar_bs';
-@import 'calendar/sidebar/event_titles_by_week_bs';
-@import 'calendar/sidebar/datepicker_day';
+@import 'calendar/sidebar/sidebar';
+@import 'calendar/sidebar/titles_nav';
+@import 'calendar/sidebar/calendar_nav';
 @import 'calendar/page_content/page_content';
 @import 'calendar/page_content/event_feed';

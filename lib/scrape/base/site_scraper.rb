@@ -18,6 +18,11 @@ class SiteScraper
 
   attr_reader :calendars, :topics
 
+  def initialize(url)
+    @url = url
+    @doc = Scrape::NokoDoc.new(url).open
+  end
+
   ## The Machinery. Calendar is always processed before Topic. Very important assumption.
   ##
   # OPENING

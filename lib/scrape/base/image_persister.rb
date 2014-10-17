@@ -29,18 +29,24 @@ module Scrape
       @scraper.with_temp_image do |tmp_img|
         record.asset = tmp_img
         if !record.valid?
-          logger.add_log(:error, "Validation errors. ERRORS: #{record.errors.messages} OBJECT: #{record.inspect}", subject:record)
+          log_msg = "Validation errors. ERRORS: #{record.errors.messages} OBJECT: #{record.inspect}"
+          logger.add_log(:error, log_msg, subject:record)
           record.errors
         else # check whether other has this image. if so, update that record if this one's bigger.
           match = false
           other.record.images.each do |persisted|
+            puts "#{other.record}"
+            puts persisted.asset.path
+            puts tmp_img.path
             if Compare::Images.duplicate?(persisted.asset.path, tmp_img.path)
               match = true
 
               if persisted.asset.size < tmp_img.size
                 persisted.asset = tmp_img
+                persisted.asset_file_name = @scraper.original_file_name
 
-                success = logger.with_logging([:debug, :info], "Update Image:#{persisted.id} with #{record.source_url}", subject:persisted) do
+                log_msg = "Update Image:#{persisted.id} with #{record.source_url}"
+                success = logger.with_logging([:debug, :info], log_msg, subject:persisted) do
                   persisted.save!
                 end
 
@@ -54,6 +60,7 @@ module Scrape
           if !match # No matches found, save new Image in ImageScraper, put that Image on other's record
             log_msg = "Add new image to #{other.record.class}:#{other.record.id} from #{record.source_url}"
             success = logger.with_logging([:debug, :info], log_msg, :subject_id, subject:record) do
+              record.asset_file_name = @scraper.original_file_name
               record.save!
             end
             other.record.images << record if success

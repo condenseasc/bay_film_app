@@ -1,0 +1,36 @@
+<!-- <div ng-repeat="week in loadedWeeks" class="week-list" id="list-weeek-{{week.page}}">
+  <ul class="day-list" ng-repeat="day in week.days">
+    <div class="list-date-label">
+      <a class="date-label-text" href scroll-to="{{'day' + day.date.getDate()}}">
+        {{ day.date | date:'EEEE MMMM d' | uppercase }}</a>
+    </div>
+    <li ng-repeat="event in day.events">
+      <a class="list-event-container" id="list-event-{{event.id}}" href scroll-to="{{'event-' + event.id}}">
+        <span class="list-event-time">{{event.time | ooSmallTime }}</span>
+        <span class="list-event-title">{{event.title}} </span>
+        <span class="list-venue-name">{{event.venue.abbreviation}} </span>
+      </a>
+    </li>
+  </ul>
+</div> -->
+
+<div ng-controller="CalendarViewCtrl as view">
+  <div ng-repeat="week in weeks" class="week-list" id="titles-nav-week-{{week.page}}" ng-class="{'visible':view.isVisibleWeek(week.page)}">
+    <ul class="day-list" ng-repeat="day in week.days">
+      <div class="list-date-label">
+        <a  ng-click="view.picked.day.date=day.date" 
+            class="date-label-text small-caps" 
+            href
+            ng-class="{'visible':view.isVisibleDay(day.date)}">
+          {{ day.date | date:'EEEE MMMM d' }}</a>
+      </div>
+      <li ng-repeat="event in day.events" class="list-event-container">
+        <a ng-click="view.picked.event.id=event.id" ng-class="{'visible':view.isVisibleEvent(event.id)}" id="titles-nav-event-{{event.id}}" href>
+          <span class="list-event-time">{{event.time | ooSmallTime }}</span>
+          <span class="list-event-title">{{event.title}} </span>
+          <span class="list-venue-name">{{event.venue.abbreviation}} </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

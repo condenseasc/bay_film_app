@@ -1,24 +1,6 @@
 // 'use strict';
 // /*global ooCalendar, console*/
 
-// ooCalendar.constant('scrollConfig', {
-//   // 'easeInQuad'
-//   // 'easeOutQuad'
-//   // 'easeInOutQuad'
-//   // 'easeInCubic'
-//   // 'easeOutCubic'
-//   // 'easeInOutCubic'
-//   // 'easeInQuart'
-//   // 'easeOutQuart'
-//   // 'easeInOutQuart'
-//   // 'easeInQuint'
-//   // 'easeOutQuint'
-//   // 'easeInOutQuint'
-//   easing: 'easeOutQuart',
-//   duration: 800,
-//   offset: 0
-// });
-
 ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked', 'Visible', 'Name',
   function ($scope, Picked, Visible, Name) {
 
@@ -28,7 +10,7 @@ ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked', 'Visible', 'Name'
   //   self[key] = angular.isDefined($attrs[key]) ? (index < 8 ? $interpolate($attrs[key])($scope.$parent) : $scope.$parent.$eval($attrs[key])) : datepickerConfig[key];
   // });
 
-    $scope.picked = Picked;
+    this.picked = Picked;
     $scope.visible = Visible;
 
     this.isVisibleDay = function(date) {
@@ -39,6 +21,23 @@ ooCalendar.controller('CalendarViewCtrl', ['$scope', 'Picked', 'Visible', 'Name'
       } else {
         return false;
       }
+    };
+
+    this.pickEvent = function(id) {
+      $scope.picked.event = id;
+    };
+
+    this.pickDay = function(id) {
+      var date = new Date(id);
+      $scope.picked.day = date;
+    };
+
+    this.isVisibleEvent = function(id) {
+      return Visible.isVisibleEvent(id);
+    };
+
+    this.isVisibleWeek = function(id) {
+      return Visible.isVisibleWeek(id);
     };
 
     this.dayId = function (date) {

@@ -1,15 +1,63 @@
 // Application wide variables
 
-$sidebar-width: 320px;
+$sidebar-width: 300px;
 $sidebar-gutter: 10px;
 
+$calendar-height: 220px;
+
+$body-h2: 40px;
+$body-h3: 18px;
+$large-text: 22px;
+$medium-large-text: 18px;
+$medium-text: 16px;
+$body-text: 15px;
+
+
+
+
+$background-color: #fff;
+// rgb(250, 250, 250);
+$background-color-a: rgba(250, 250, 250, 0);
+
+// purple 500 rgb(186,104,200)
+// $accent-color: #ba68c8;
+// amber 50 rgb(255,248,225)
+$primary-color-a: #fff8e1; 
+// amber 100 rgb(255,236,179)
+$background-color-b: #ffecb3; 
+
 // $event-feed-gutter: 
-$sidebar-color: rgb(253, 252, 244);
-$sidebar-color-a: rgba(253, 252, 244, 0);
+
+// vox slate gray rgb(68,71,69)
+// $sidebar-background-color: #444745;
+
+
+// soft gray <--------
+$sidebar-background-color: #f5f6f5;
+// yellow
+$sidebar-accent-color: #fffddc;
+
+// CURRENT PURPLES
+$accent-color: #540ead;
+// #640cab
+
+
+
+$sidebar-background-color-alpha: rgba(68,71,69, .25);
+
+$sidebar-background-color-inset: #444745;
+
+
+$sidebar-background-color-a: rgba(253, 252, 244, 0);
+
+$sidebar-accent: $primary-color-a;
+
+
+
 $noise-image-02: url(<%= asset_data_uri 'noise2-3.png' %>);
 
-$background-color: rgb(250, 250, 250);
-$background-color-a: rgba(250, 250, 250, 0);
+
+// $background-color: #fff8e1;
 
 $title-banner-color: rgba(255, 102, 102, .6);
 $credits-banner-color: rgba(251, 248, 161, .6);
@@ -17,10 +65,24 @@ $credits-banner-color: rgba(251, 248, 161, .6);
 $text-body-color: rgba(0, 0, 0, .87);
 
 // universal
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
 ul {
   list-style-type: none;
   padding: 0;
-  margin-left: 0;
+  margin: 0;
 }
 
 li {
@@ -39,6 +101,10 @@ body {
 
 .btn {
   border-radius: 0;
+}
+
+.small-caps {
+  font-variant: small-caps;
 }
 
 // clearfix solution

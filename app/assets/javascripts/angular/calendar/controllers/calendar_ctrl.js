@@ -18,9 +18,12 @@ ooCalendar.controller('CalendarCtrl',
       // load current week
       var d = new Date();
       // var weekCollater = makeWeekManager(d, 3);
-      Picked.day = d;
+      Picked.day.date = d;
 
-      $scope.$watch('picked.day', function (newDay) {
+
+      // interface with Datepicker, titlesNav
+      $scope.$watch('picked.day.date', function (newDay) {
+        console.log('picked.day.date', newDay);
         var date = new Date(newDay);
         if (!isWeekLoaded(  date )) { loadWeek(date); }
         if (!isMonthLoaded( date )) { $scope.loadActiveDates(date); }
@@ -129,7 +132,6 @@ ooCalendar.controller('CalendarCtrl',
           }
           day.events.push(event);
         }
-
         return days;
       }
 
@@ -144,7 +146,6 @@ ooCalendar.controller('CalendarCtrl',
             page: Name.week(d),
             days: days
           };
-
           collatePages(week, 3);
         });
       }

@@ -64,6 +64,7 @@ class TopicScraper
       t.callout     = scrape_callout
       t.body        = scrape_body
       t.footer      = scrape_footer
+      t.url         = @url
       t.events      << make_events
       t.scraped     = true
     end

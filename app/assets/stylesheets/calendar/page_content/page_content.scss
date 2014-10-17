@@ -1,12 +1,18 @@
 
 #page-content-wrapper {
-  // @include make-row();
-  // width: 100%;
+
+  @media(min-width: $screen-sm-min) {
+      overflow-x: hidden;
+    .container {
+      padding-right: $sidebar-width;
+    }
+  }
+  padding: 20px;
+
 }
 
 .page-content {
-  @include make-md-column(9);
-  // @include make-lg-column(9);
+  width: 100%;
 }
 
 .inset {

@@ -7,7 +7,7 @@ class ImageScraper
   extend Forwardable
   RECORD_METHODS = %w[id source_url source_url= alt alt= image image= persisted? new_record? valid?]
 
-  attr_accessor :record, :temp_image, :logger
+  attr_accessor :record, :temp_image, :logger, :original_file_name
   def_delegators :@record, :title, :title=, :alt, :alt=, :source_url, :source_url=
 
   def initialize(url=nil, alt:nil, title:nil, log_tags:nil)
@@ -37,12 +37,17 @@ class ImageScraper
     end
   end
 
+
   def _build_temp_image_from_url
-    @temp_image = LocalResource.file_from_url( source_url )
+    resource = LocalResource.from_url( source_url )
+    @temp_image = resource.file
+    @original_file_name = resource.tmp_filename[0].to_s
   end
 
   def _build_temp_image_from_uri
-    @temp_image = LocalResource.file_from_uri( source_url )
+    resource = LocalResource.from_uri( source_url )
+    @temp_image = resource.file
+    @original_file_name = resource.tmp_filename[0].to_s
   end
 
   def save

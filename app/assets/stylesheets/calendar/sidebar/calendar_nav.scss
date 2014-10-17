@@ -1,0 +1,119 @@
+
+$datepicker-btn-color:      $text-color;
+$datepicker-btn-background: $sidebar-background-color;
+$datepicker-btn-border:     $background-color;
+
+$datepicker-picked-btn-background: red;
+$datepicker-visible-btn-border: black;
+$datepicker-active-btn-border: black;
+$datepicker-today-btn-color: green;
+
+// <button type="button" style="width:100%;" 
+//   class="btn btn-sm" ng-class="{'btn-info': dt.selected}" 
+//   ng-click="select(dt.date); view.pickDay(dt.date)" 
+//   ng-disabled="dt.disabled">
+
+//   <span ng-class="{'text-muted': dt.secondary, 'text-info': dt.current}">{{dt.label}}</span>
+// </button>
+          // pz-cal-picked-day  --> red
+          // pz-cal-active-day  --> border 1px
+          // pz-cal-today       --> green
+          // pz-cal-visible-day --> 2 pz border 
+
+
+
+// selected - btn-info --> pz-picked-day
+// current  - text-info --> pz-today       (<-- means it's today, like Date.new())
+
+// (dt.label is just the text version of the date. they don't have id's, only weeks do)
+
+
+// In order to avoid loading all the borders first, let's do !
+// so I would want to set ENABLED through !disabled
+
+.calendar-nav {
+  padding: 5px;
+  // height: $calendar-height;
+  // width: $sidebar-width;
+
+  .month-nav {
+    height: 35px;
+    position: relative;
+    text-align: justify;
+  }
+
+  .inline-block { display: inline-block; }
+
+  .month-nav:after {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 0;
+    line-height: 0;
+    content: '';
+  }  
+  
+  table {
+
+    width: 95%;
+    margin: auto;
+    // width: $sidebar-width - 10px;
+    // height: $calendar-height - 10px;
+    border-collapse: collapse;
+
+    i.icon.arrow {
+      font-size: 24px;
+      line-height: 1px;
+      color: $sidebar-accent;
+    }
+
+    small {
+      font-weight: lighter;
+    }
+  }
+
+  li a {
+    display: block;
+    // width: 100%;
+  }
+
+  button {
+    // margin: 0;
+    // padding:
+  }
+
+  .pz-cal-header-btn {
+    background-color: $sidebar-background-color;
+  }
+
+  .pz-cal-btn {
+  	@include button-variant($datepicker-btn-color, 
+                            $datepicker-btn-background, 
+                            $datepicker-btn-border);
+    // background-color: $background-color;
+    border: 0 none;
+  }
+
+  .pz-cal-picked-day {
+    // background-color: $datepicker-picked-btn-background;
+  }
+
+  .pz-cal-active-day::hover {
+    background-color: $accent-color;
+    // box-shadow: 3px 3px 2px darken($datepicker-btn-background, 10%);
+  }
+
+  .pz-cal-visible-day {
+    // border: 3px solid $datepicker-visible-btn-border;
+    // box-shadow: 3px 3px 2px darken($datepicker-btn-background, 20%);
+    // z-index: 1000;
+    background-color: $sidebar-accent-color;
+  }
+
+  // modifies just the text label
+  // could easily change that
+  .pz-cal-today {
+    color: lighten($datepicker-btn-color, 10%);
+    box-shadow: 3px, 3px, 2px, darken($datepicker-btn-background, 15%);
+  }
+}

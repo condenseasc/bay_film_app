@@ -8,6 +8,8 @@ class Topic < Document
   validates :title, presence: true
   validates_associated :events
 
+  default_scope -> { includes :images }
+
   def times
     # Event.joins(:topic).where(topic: self).order(time: :asc).map { |e| e.time }
     events.sort.map { |e| e.time }

@@ -1,0 +1,47 @@
+<!-- <div class="week-container" ng-repeat='week in weeks' id="week-{{week.page}}">
+  <div smooth-scroll scroll-if="{{selected.day.getDate() === day.date.getDate()}}" easing="easeOutQuart" class="day-container" ng-repeat="day in week.days" id="day-{{day.date | date: 'd'}}">
+      <div class="event-feed-date" >
+        <div class="date-label-text">{{day.date | date:'EEEE MMMM d' | uppercase}}</div>
+      </div>
+    <div class="event-container group is-this-working" ng-repeat="event in day.events" id="event-{{event.id}}">
+      <img class="event-still" ng-src="{{event.image_url_capsule_medium}}">
+      <div class="event-top-line">
+        <div class="event-title">{{event.title}}</div
+        ><div class="event-subtitle">{{event.subtitle}}</div>
+      </div>
+      <div>
+        <span class="event-time">{{event.time | ooSmallTime}}</span>
+        <span class="event-venue"> at {{event.venue.name}}</span>
+      </div>
+      <div class="event-calendar">In: {{event.calendar.title}}</div>
+      <div class="event-callout" ng-bind-html="event.callout"></div>
+      <div class="event-body" ng-bind-html="event.body"></div>
+    </div>
+  </div>
+</div>
+ -->
+<div ng-controller="CalendarViewCtrl as view">
+  <div class="week-container" ng-repeat='week in weeks' id="week-{{week.page}}" ng-init="outerIndex=$index; outerLast=$last">
+    <div class="day-container" ng-repeat="day in week.days" id="day-{{view.dayId(day.date)}}" ng-init="middleIndex=$index; middleLast=$last" oo-middle-load-watcher>
+      <h2 class="event-feed-date">{{day.date | date:'EEEE MMMM d'}}</h2>
+      <div class="event-container group" ng-repeat="event in day.events" id="event-{{event.id}}" ng-init="innerIndex=$index; innerLast=$last" oo-inner-load-watcher>
+        <div class="event-header">
+        <!-- <div class="event-banner"> -->
+          <div class="event-space-time">
+            <span class="event-time inline-block">{{event.time | ooSmallTime}}</span>
+            <span class="event-venue inline-block"> {{event.venue.name}}</span>
+          </div>
+          <div class="title-spacer">
+            <h3 class="event-title">{{event.title}}</h3>
+          </div>
+        <!-- </div> -->
+          <img class="event-still" ng-src="{{event.image_url_medium}}">
+          <div class="event-subtitle" ng-if="event.subtitle != ''" >{{event.subtitle}}</div>
+          <div class="event-calendar" ng-if="event.subtitle != ''">{{event.calendar_title}}</div>
+        </div>
+        <div class="event-callout" ng-bind-html="event.callout"></div>
+        <div class="event-body" ng-bind-html="event.body"></div>
+      </div>
+    </div>
+  </div>
+</div>

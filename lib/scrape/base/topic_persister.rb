@@ -30,7 +30,7 @@ module Scrape
         if new_cal
           # :#{ new_cal.id || new_cal.title}
           log_msg = "Add Calendar to Topic:#{record.id || record.title}"
-          logger.with_logging([:debug, :info], :subject_id, subject:new_cal) do
+          logger.with_logging([:debug, :info], log_msg, :subject_id, subject:new_cal) do
             @scraper.record.calendar = new_cal
           end
         end
@@ -68,7 +68,7 @@ module Scrape
         new_times = record.events.map          { |e| [e.time, e.venue_id] }
 
         if ((old_times & new_times) == new_times)
-          logger.write :debug, "Topic found! #{persisted.first.inspect}", subject:persisted.first
+          # logger.write :debug, "Topic found! #{persisted.first.inspect}", subject:persisted.first
           return persisted.first
         end
       elsif persisted.size > 1
@@ -77,30 +77,5 @@ module Scrape
       end unless !persisted
       nil
     end
-
-
-
-
-
-
-    # def save_calendar
-    #   if calendar_scraper
-    #     # Don't pollute logs from test
-    #     tags = 
-    #     calendar_scraper.log_tags.unshift(*self.log_tags) if log_tags.include?(:test)
-    #     calendar.save if calendar.new_record?
-
-    #     if calendar
-    #       with_logging([:debug, :info], "Add Topic:#{record.id} to Calendar#{calendar.id || calendar.title}") do
-    #         record.calendar = calendar
-    #       end
-    #     end
-    #   end
-    # end
-
-
-
-
-
   end
 end

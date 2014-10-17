@@ -2,6 +2,7 @@
   "name": "bay_film",
   "dependencies": {
     "underscore": "^1.6.0",
-    "angular-ui-utils": "*"
+    "angular-ui-utils": "*",
+    "ionicons":"*"
   }
 }

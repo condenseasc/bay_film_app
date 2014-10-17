@@ -49,6 +49,7 @@ ooCalendar.directive('ooCalendarViewSpyChecker', [ '$window', '$document', '$tim
               if (scrolledElement) {
                 setElementTop( offset );
                 setElementBottom( offset + height );
+
                 return angular.element(scrolledElement).attr('id');
               }
             } 
@@ -66,15 +67,15 @@ ooCalendar.directive('ooCalendarViewSpyChecker', [ '$window', '$document', '$tim
           // dividingLine = scrollTop + (windowHeight * heightRatio);
 
           weekId  = weekChecker(  scrollTop, ".week-container");
-          dayId   = dayChecker(   scrollTop, "#" + (weekId || Visible.getWeek()) + " .day-container");
-          eventId = eventChecker( scrollTop, "#" + (dayId || Visible.day.id) + " .event-container");
+          dayId   = dayChecker(   scrollTop, "#" + (weekId || Visible.week.selector) + " .day-container");
+          eventId = eventChecker( scrollTop, "#" + (dayId || Visible.day.selector) + " .event-container");
 
           // only trigger a digest if they don't hold null, i.e. if they changed.
           if (weekId || dayId || eventId){
             scope.$apply(function() {
-              if (weekId)  { Visible.setWeek(weekId);}
-              if (eventId) { Visible.setEvent(eventId);}
-              if (dayId)   { Visible.day.id = dayId;}
+              if (weekId)  { Visible.week.selector = weekId;}
+              if (eventId) { Visible.event.selector = eventId;}
+              if (dayId)   { Visible.day.selector = dayId;}
             });
           }
         });

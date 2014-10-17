@@ -1,34 +1,46 @@
-<table ng-controller="CalendarViewCtrl as view">
-  <thead>
-    <tr>
-      <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="move(-1)"><i class="glyphicon glyphicon-chevron-left"></i></button></th>
-      <th colspan="5"><button type="button" class="btn btn-default btn-sm btn-block" ng-click="toggleMode()"><strong>{{title}}</strong></button></th>
-      <th><button type="button" class="btn btn-default btn-sm pull-right" ng-click="move(1)"><i class="glyphicon glyphicon-chevron-right"></i></button></th>
-    </tr>
-    <tr>
-      <th ng-repeat="label in labels track by $index" class="text-center"><small>{{label}}</small></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="row in rows track by $index" class="week-row" id="week-{{ weekNumbers[$index] }}">
-      <td ng-repeat="dt in row track by dt.date" class="text-center">
+<div ng-controller="CalendarViewCtrl as view">
 
-        <button type="button" style="width:100%;" 
-          class="btn pz-cal-btn btn-sm" 
-          ng-class="{
-            'pz-cal-picked-day': dt.selected, 
-            'pz-cal-active-day': !dt.disabled, 
-            'pz-cal-today': dt.current, 
-            'pz-cal-visible-day':view.isVisibleDay(dt.date)}"
-          ng-click="select(dt.date); view.picked.day=dt.date" 
-          ng-disabled="dt.disabled">
+  <ul class="month-nav">
+    <li class="inline-block">
+      <button type="button" class="btn pz-cal-header-btn" ng-click="move(-1)">
+        <i class="icon arrow ion-ios7-arrow-thin-left"></i></button>
+    </li>
+    
+    <li class="inline-block">
+      <button type="button" class="btn pz-cal-header-btn">{{title}}</button>
+    </li>
+    <li class="inline-block">
+      <button type="button" class="btn pz-cal-header-btn" ng-click="move(1)">
+      <i class="icon arrow ion-ios7-arrow-thin-right"></i></button></li>
+  </ul>
 
-          <span 
-            ng-class="{'text-muted': dt.secondary}">{{dt.label}}
-          </span>
-        </button>
+  <table>
+    <thead>
+      <tr>
+        <th ng-repeat="label in labels track by $index" class="text-center"><small>{{label}}</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in rows track by $index" class="week-row" id="week-{{ weekNumbers[$index] }}">
+        <td ng-repeat="dt in row track by dt.date" class="text-center">
 
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <button type="button" style="width:100%;" 
+            class="btn pz-cal-btn btn-sm" 
+            ng-class="{
+              'pz-cal-picked-day': dt.selected, 
+              'pz-cal-active-day': !dt.disabled, 
+              'pz-cal-today': dt.current, 
+              'pz-cal-visible-day':view.isVisibleDay(dt.date)}"
+            ng-click="select(dt.date)" 
+            ng-disabled="dt.disabled">
+
+            <span 
+              ng-class="{'text-muted': dt.secondary}">{{dt.label}}
+            </span>
+          </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

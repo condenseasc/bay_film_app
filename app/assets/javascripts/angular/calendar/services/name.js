@@ -26,6 +26,10 @@ ooCalendar.factory('Name', [ 'Week', function(Week){
       return this.toDate(dateString);
     },
 
+    // date2Id : function (date) {
+
+    // },
+
     // return a YYYYMMDD string representing a page, which in turn represents a week
     // the string name is built from a week's first day, Sunday
     week: function(date){

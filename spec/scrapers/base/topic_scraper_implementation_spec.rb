@@ -75,7 +75,7 @@ RSpec.describe 'ScrapedTopic implemented as PfaTopic' do
 
           it('creates a new Calendar record') { expect(Calendar.count).to be 1 }
           it('creates a new Topic record')    { expect(Topic.count).to be 1 }
-          it('creates a new Image record')    { expect(Image.count).to be 1 }
+          it('creates a new Image record')    { expect(Image.count).to be 2 }
         end
       end
     end
@@ -105,8 +105,10 @@ RSpec.describe 'ScrapedTopic implemented as PfaTopic' do
       before(:context) { @topic.save }
 
       it('creates a new Topic record') { expect( Topic.count ).to be(1) }
-      it('creates a new Image record') { expect( Image.count ).to be(1) }
-      it('creates a new Calendar record'){ expect( Calendar.count ).to be(1) }
+      it('creates a new Image record') { expect( Image.count ).to be(2) }
+      it('creates an image for topic') {expect(@topic.record.images.size).to be 1 }
+      it('creates an image for cal')   { expect(@topic.record.calendar.images.size).to be 1 }
+      it('creates new Calendar record'){ expect( Calendar.count ).to be(1) }
       it('persists Topic')             { expect( @topic.persisted? ).to be(true) }
       it('persists Image')             { expect( @topic.image_scrapers.all?(&:persisted?) ).to be(true) }
       it('persists Calendar')          { expect( @topic.calendar_scraper.persisted? ).to be(true) }

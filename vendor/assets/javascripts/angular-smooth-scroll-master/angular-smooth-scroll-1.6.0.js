@@ -131,6 +131,8 @@ angular.module('smoothScroll', [])
 			};
 			var endLocation = getEndLocation(element);
 			var distance = endLocation - startLocation;
+			console.log("endLocation", endLocation);
+			console.log("element.offsetTop", element.offsetTop);
 
 
 			// Stop the scrolling animation when the anchor is reached (or at the top/bottom of the page)

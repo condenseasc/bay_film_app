@@ -12,8 +12,7 @@ class YbcaScraper < SiteScraper
   attr_accessor :calendar, :topics, :doc, :url
 
   def initialize(url=YbcaScraper::YBCA_URL)
-    @url = url
-    @doc = Scrape::NokoDoc.new(url).open
+    super
     @calendars = []
     @topics = []
     @calendar_urls = []
@@ -64,18 +63,3 @@ class YbcaScraper < SiteScraper
     true
   end
 end
-
-# load 'lib/local_resource.rb'
-# load 'lib/compare.rb'
-# load 'lib/scrape/logger.rb'
-# load 'lib/scrape/noko_doc.rb'
-# load 'lib/scrape/helpers.rb'
-
-# load 'lib/scrape/base/site_scraper.rb'
-# load 'lib/scrape/ybca/ybca_scraper.rb'
-
-# load 'lib/scrape/base/calendar_scraper.rb'
-# load 'lib/scrape/base/still_scraper.rb'
-# load 'lib/scrape/base/topic_scraper.rb'
-# load 'lib/scrape/ybca/ybca_calendar.rb'
-# load 'lib/scrape/ybca/ybca_topic.rb'

@@ -16,7 +16,7 @@
 class Image < ActiveRecord::Base
   belongs_to :imageable, polymorphic: true
 
-  has_attached_file :asset
+  has_attached_file :asset, styles: { medium: "300" }
   validates_attachment :asset, 
     presence: true,
     content_type: { content_type: ["image/jpeg", "image/png", "image/gif"] }

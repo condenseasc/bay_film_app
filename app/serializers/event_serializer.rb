@@ -1,14 +1,25 @@
 class EventSerializer < ActiveModel::Serializer
   extend Forwardable
-  attributes :id, :time, :image_url_capsule_medium, 
-                         :title, :supertitle, :subtitle, :callout, :body, :footer
+  attributes :id, :time, :image_url_medium, :title, :supertitle, :subtitle, :callout, :body, :footer, :calendar_title
   def_delegators :object_topic, :title, :supertitle, :subtitle, :callout, :body, :footer
 
   has_one :venue, embed: :objects
   # has_many :series, embed: :objects
 
-  def image_url_capsule_medium
-    object.topic.images.first.asset.url(:capsule_medium) if object.topic.images.first && object.topic.images.first.asset.exists?
+  def image_url_medium
+    if object.topic && object.topic.images  && object.topic.images.first.asset.exists?
+      object.topic.images.first.asset.url(:medium) 
+    end
+  end
+
+  def calendar_title
+    if object.topic.calendar
+      object.topic.calendar.title
+    end
+  end
+
+  def title
+    object.topic.title
   end
 
   def object_topic

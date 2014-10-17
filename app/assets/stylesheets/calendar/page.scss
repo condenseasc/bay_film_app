@@ -1,7 +1,8 @@
 #wrapper {
-  @include make-row();
-  margin: 0;
-  // padding-left: $sidebar-width;
+  @media(min-width: $screen-sm-min) {
+  padding-left: $sidebar-width;
+  }
+
+  padding-left: 0;
   transition: all .4s ease 0;
-  height: 100%;
 }
