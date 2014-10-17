@@ -33,7 +33,7 @@ group :test do
 	gem 'factory_girl_json'
 	gem 'database_cleaner', github: 'bmabey/database_cleaner'
   gem 'libnotify' if /linux/ =~ RUBY_PLATFORM
-  gem 'growl' if /darwin/ =~ RUBY_PLATFORM
+  # gem 'growl' if /darwin/ =~ RUBY_PLATFORM
 	gem 'jasmine'
 	gem 'faker', '~> 1.2.0'
 

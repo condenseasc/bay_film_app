@@ -16,7 +16,7 @@
 # used to set extended properties on the server.
 
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-server 'projection.zone', user: 'deployer', roles: %w{web app db}
+server 'www.projection.zone', user: 'deployer', roles: %w{web app db}
 
 # Custom SSH Options
 # ==================
