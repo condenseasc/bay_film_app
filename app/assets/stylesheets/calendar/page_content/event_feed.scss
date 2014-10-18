@@ -15,7 +15,7 @@
 
 .content-header {
   font-weight: 100;
-  font-style: italic;
+  // font-style: italic;
   font-size: 64px;
   text-align: center;
   margin-bottom: -20px;
@@ -76,7 +76,8 @@ h3.event-title {
   position: absolute;
   display: inline;
   font-size: 30px;
-  background-color: rgba(215,195,255, .5);
+  background-color: $accent-color-alpha-50;
+  // rgba(215,195,255, .5);
   // #d7c3ff; rgb(215,195,255)
   // #c8abff;
   // #ddc3ff;
